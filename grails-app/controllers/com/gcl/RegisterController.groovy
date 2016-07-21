@@ -28,15 +28,38 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 		}
 		
 		String url = generateLink('verifyRegistration', [t: registrationCode.token])
-		
-				def body = registerEmailBody
-				if (body.contains('$')) {
-					body = evaluate(body, [user: user, url: url])
-				}
-
 		//sendVerifyRegistrationMail registrationCode, user, registerCommand.email
 		redirect(url: url)
 		//[emailSent: true, registerCommand: registerCommand,registrationCode:registrationCode,url:url]
 	}
+	
+	@Override
+	def verifyRegistration() {
+		
+				String token = params.t
+		
+				RegistrationCode registrationCode = token ? RegistrationCode.findByToken(token) : null
+				if (!registrationCode) {
+					flash.error = message(code: 'spring.security.ui.register.badCode')
+					redirect uri: successHandlerDefaultTargetUrl
+					return
+				}
+		
+				def user = uiRegistrationCodeStrategy.finishRegistration(registrationCode)
+		
+				if (!user) {
+					flash.error = message(code: 'spring.security.ui.register.badCode')
+					redirect uri: successHandlerDefaultTargetUrl
+					return
+				}
+		
+				if (user.hasErrors()) {
+					// expected to be handled already by ErrorsStrategy.handleValidationErrors
+					return
+				}
+				def r = registerPostRegisterUrl ?: successHandlerDefaultTargetUrl 
+				flash.message = message(code: 'spring.security.ui.register.complete')
+				redirect uri: r + "?autologout=true"
+		}
 
 }

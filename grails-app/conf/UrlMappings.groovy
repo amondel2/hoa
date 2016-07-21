@@ -1,3 +1,5 @@
+
+
 class UrlMappings {
 
 	static mappings = {
@@ -7,7 +9,7 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/"(controller:"home",params:params)
         "500"(view:'/error')
 	}
 }
