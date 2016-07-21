@@ -1,4 +1,4 @@
-package com.glc
+package com.gcl
 
 import com.gcl.Profile
 

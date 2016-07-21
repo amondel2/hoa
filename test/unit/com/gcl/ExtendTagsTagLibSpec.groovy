@@ -1,4 +1,4 @@
-package com.glc
+package com.gcl
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
