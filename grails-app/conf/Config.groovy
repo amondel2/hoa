@@ -31,7 +31,7 @@ grails.mime.types = [ // the first one is the default format
     xml:           ['text/xml', 'application/xml']
 ]
 
-
+grails.mime.use.accept.header = true
 // URL Mapping Cache Max Size, defaults to 5000
 //grails.urlmapping.cache.maxsize = 1000
 
@@ -138,6 +138,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/user/**':  		['ROLE_ADMIN'],
 	'/role/**': 		['ROLE_ADMIN'],
 	'/securityInfo/**':  ['ROLE_ADMIN'],
-	'/registrationCode/**': ['ROLE_ADMIN']
+	'/registrationCode/**': ['ROLE_ADMIN'],
+	'/messRole/**': 		['ROLE_ADMIN']
 ]
 

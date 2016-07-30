@@ -1,8 +1,6 @@
 package com.gcl
-
-
-
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -28,6 +26,8 @@ class ProfileController {
     def create() {
         respond new Profile(params), model:[user: springSecurityService.currentUser]
     }
+	
+	
 
     @Transactional
     def save(Profile profileInstance) {
@@ -37,7 +37,7 @@ class ProfileController {
         }
 
         if (profileInstance.hasErrors()) {
-            respond profileInstance.errors, view:'create'
+            respond profileInstance.errors, view:'create', model:[user: springSecurityService.currentUser]
             return
         }
 
@@ -67,7 +67,7 @@ class ProfileController {
         }
 
         if (profileInstance.hasErrors()) {
-            respond profileInstance.errors, view:'edit'
+            respond profileInstance.errors, view:'edit', model:[user: springSecurityService.currentUser]
             return
         }
 

@@ -7,6 +7,7 @@
 //
 //= require jquery_new
 //= require bootstrap
+//= require jquery-ui
 //= require_self
 
 $(document).ready(function(){

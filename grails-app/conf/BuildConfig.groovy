@@ -20,7 +20,7 @@ grails.project.fork = [
     // configure settings for the Console UI JVM
     console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
 ]
-
+grails.plugin.location.'spring-security-ui' = "/home/aaron/git/grails-spring-security-ui"
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -71,8 +71,8 @@ grails.project.dependency.resolution = {
         runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
-		compile ":spring-security-core:2.0.0"
-		compile ":spring-security-ui:1.0-RC3"
+//		compile ":spring-security-core:2.0.0"
+//		compile ":spring-security-ui:1.0-RC3"
 		
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"

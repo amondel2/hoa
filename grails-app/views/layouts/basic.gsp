@@ -15,7 +15,9 @@
 		<link rel="shortcut icon" href="${assetPath(src: 'Favicon.ico')}" type="image/x-icon">
 		<link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
 		<link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
+  		<!--<asset:stylesheet src="mainjquery.css"/>-->
   		<asset:stylesheet src="mainapp.css"/>
+  		<!--<asset:stylesheet src="mainbt.css"/>-->
 		<asset:javascript src="main.js"/>
 		<g:layoutHead/>
 	</head>
@@ -40,12 +42,23 @@
              <sec:ifLoggedIn>
              	<li><a href="/board">Board</a></li>
              </sec:ifLoggedIn>
+              	<sec:ifAllGranted roles="ROLE_BOARDMEMBER">
+          		<li class="dropdown">
+          			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Messages
+        				<span class="caret"></span></a>
+        				<ul class="dropdown-menu">
+          					<li><g:link controller="messageEditor" action="index">List</g:link></li>
+          					<li><g:link controller="messageEditor" action="create">Create New</g:link></li>
+        				</ul>
+          		</li>
+          		</sec:ifAllGranted>
             </ul>
           <ul class="nav navbar-nav navbar-right"><li>
           <sec:ifLoggedIn>
           	<a href="/profile" title="Edit Profile" class="navbar-brand">Welcome <glc:getUserFName /></a>
           	<g:link controller="logout" class="navbar-brand" elementId="logout"><g:message code='spring.security.ui.login.logout'/></g:link>
           </sec:ifLoggedIn>
+         
           <sec:ifNotLoggedIn>
           	<g:link controller='login' action='auth'>Login</g:link>
        		</sec:ifNotLoggedIn>
