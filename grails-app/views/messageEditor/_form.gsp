@@ -4,7 +4,7 @@
 
 
 
-<div class="form-group fieldcontain ${hasErrors(bean: messagesInstance, field: 'expireDate', 'error')} ">
+<div class="form-group fieldcontain ${hasErrors(bean: messagesInstance, field: 'expireDate', 'has-error')} ">
 	<label for="expireDate">
 		<g:message code="messages.expireDate.label" default="Expire Date" />
 		
@@ -13,7 +13,7 @@
 
 </div>
 
-<div class="form-group fieldcontain ${hasErrors(bean: messagesInstance, field: 'orderNumber', 'error')} required">
+<div class="form-group fieldcontain ${hasErrors(bean: messagesInstance, field: 'orderNumber', 'has-error')} required">
 	<label for="orderNumber">
 		<g:message code="messages.orderNumber.label" default="Order Number" />
 		<span class="required-indicator">*</span>
@@ -22,7 +22,7 @@
 
 </div>
 
-<div class="form-group fieldcontain ${hasErrors(bean: messagesInstance, field: 'text', 'error')} required">
+<div class="form-group fieldcontain ${hasErrors(bean: messagesInstance, field: 'text', 'has-error')} required">
 	<label for="text">
 		<g:message code="messages.text.label" default="Text" />
 		<span class="required-indicator">*</span>

@@ -10,37 +10,41 @@
 		<g:if test='${flash.message}'>
 			<div class='login_message'>${flash.message}</div>
 		</g:if>
-		<div class="login s2ui_center ui-corner-all" style='text-align:center;'>
-			<div class="login-inner">
+			<h1>Login</h1>
 			<s2ui:form type='login' focus='username'>
-				<div class="sign-in">
-				<h2><g:message code='spring.security.ui.login.signin'/></h2>
-				<table>
-					<tr>
-						<td><label for="username"><g:message code='spring.security.ui.login.username'/></label></td>
-						<td><input type="text" name="${securityConfig.apf.usernameParameter}" id="username" class='formLogin' size="20"/></td>
-					</tr>
-					<tr>
-						<td><label for="password"><g:message code='spring.security.ui.login.password'/></label></td>
-						<td><input type="password" name="${securityConfig.apf.passwordParameter}" id="password" class="formLogin" size="20"/></td>
-					</tr>
-					<tr>
-						<td colspan='2'>
+			<fieldset class="form">
+					<div class="form-group required">
+						<label for="username">Username<span  class="required-indicator">*</span></label>
+						<input type="text" name="${securityConfig.apf.usernameParameter}" id="username" class="form-control" required="${username}"/>
+					</div>
+					<div class="form-group required"><label for="password">Password <span  class="required-indicator">*</span></label>
+						<input type="password" name="${securityConfig.apf.passwordParameter}" id="password" class="form-control" required=""/>
+					</div>
+			</fieldset>
+			<fieldset class="buttons">
+						
 							<span class="forgot-link">
-								<g:link controller='register' action='forgotPassword'><g:message code='spring.security.ui.login.forgotPassword'/></g:link>
+								<a href="#" id="forgot-linkhref"><g:message code='spring.security.ui.login.forgotPassword'/></a>
 							</span>
-						</td>
-					</tr>
-					<tr>
-						<td colspan='2'>
 							<s2ui:linkButton elementId='register' controller='register' messageCode='spring.security.ui.login.register'/>
-							<input id="loginButton_submit" class="s2ui_hidden_button" type="submit" value="<g:message code='spring.security.ui.login.login'/>" /> 
-						</td>
-					</tr>
-				</table>
-				</div>
+							<input id="loginButton_submit" class="btn btn-primary btn-sm active" type="submit" value="<g:message code='spring.security.ui.login.login'/>" /> 
+						
+				</fieldset>
 			</s2ui:form>
+			<div style="display:none">
+				<g:form controller='register' action='showChanallage' useToken="true" name='forgotFrm'>
+					<input type="hidden" name="usernameForgot" id="usernameForgot" value=""/>
+				</g:form>
 			</div>
-		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#forgot-linkhref").on("click",function(e){
+					e.preventDefault();
+					$("#usernameForgot").val($("#username").val());
+					$("#forgotFrm").submit();
+				});
+			});
+		</script>
 	</body>
 </html>

@@ -2,7 +2,7 @@
 
 
 
-<div class="form-group fieldcontain ${hasErrors(bean: messRoleInstance, field: 'role', 'error')} required">
+<div class="form-group fieldcontain ${hasErrors(bean: messRoleInstance, field: 'role', 'has-error')} required">
 	<label for="role">
 		<g:message code="messRole.role.label" default="Role" />
 		<span class="required-indicator">*</span>
@@ -11,7 +11,7 @@
 
 </div>
 
-<div class="form-group fieldcontain ${hasErrors(bean: messRoleInstance, field: 'mess', 'error')} required">
+<div class="form-group fieldcontain ${hasErrors(bean: messRoleInstance, field: 'mess', 'has-error')} required">
 	<label for="mess">
 		<g:message code="messRole.mess.label" default="Mess" />
 		<span class="required-indicator">*</span>
