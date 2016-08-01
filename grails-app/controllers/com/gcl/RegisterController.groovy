@@ -14,6 +14,7 @@ import org.codehaus.groovy.grails.web.servlet.mvc.SynchronizerTokensHolder
 class RegisterController extends grails.plugin.springsecurity.ui.RegisterController {
 
 	def registrationService
+	def springSecurityService
 	
 	def register(RegisterCommand registerCommand) {
 
@@ -111,7 +112,8 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 		}
 		def r = registerPostRegisterUrl ?: successHandlerDefaultTargetUrl
 		flash.message = message(code: 'spring.security.ui.register.complete')
-		redirect uri: r + "?autologout=true"
+		springSecurityService.reauthenticate user.username
+		redirect uri: "/profile/create" //+ "?autologout=true"
 	}
 	
 	

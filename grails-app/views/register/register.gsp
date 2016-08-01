@@ -25,7 +25,7 @@
 					
 					</div>
 					<div class="form-group ${hasErrors(bean: registerCommand, field: 'password', 'has-error')} required">
-					<label for="password">Password <span  class="required-indicator">*</span></label>
+					<label for="password">Password (Must have at least one letter, number, and special character: !@#$%^&) <span  class="required-indicator">*</span></label>
 					<input type="password" name="password" id="password" class="form-control" required="" value="" />
 					
 					</div>
