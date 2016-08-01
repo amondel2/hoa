@@ -34,9 +34,8 @@
 <div class="form-group ${hasErrors(bean: profileInstance, field: 'phoneNumber', 'has-error')} required">
 	<label for="phoneNumber">
 		<g:message code="profile.phoneNumber.label" default="Phone Number" />
-		<span class="required-indicator">*</span>
 	</label>
-	<input type="tel" id="phoneNumber" name="phoneNumber" required class="form-control" value="${profileInstance?.phoneNumber}"/>
+	<input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" value="${profileInstance?.phoneNumber}"/>
 
 </div>
 

@@ -32,5 +32,6 @@ class Profile implements Serializable {
 			if(val.trim().toLowerCase() == obj.answer1?.trim()?.toLowerCase())
 				return ["default.not.unique.message",'answer2','Profile',val]
 		}
+		phoneNumber nullable:true,blank:true
     }
 }
