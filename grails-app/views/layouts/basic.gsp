@@ -41,6 +41,7 @@
             <li><a href="/">Home</a></li>
              <sec:ifLoggedIn>
              	<li><a href="/board">Board</a></li>
+             	<li><a href="/home/contact">Contact Us</a></li>
              </sec:ifLoggedIn>
               	<sec:ifAllGranted roles="ROLE_BOARDMEMBER">
           		<li class="dropdown">

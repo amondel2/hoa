@@ -9,8 +9,8 @@ class MessagesService {
 		def c = Messages.createCriteria()
 		def rtn = c.list(params){
 		  ge('expireDate', new Date())
-		  order 'expireDate','asc'
 		  order 'orderNumber','asc'
+		  order 'expireDate','asc'
 		}
     }
 }
