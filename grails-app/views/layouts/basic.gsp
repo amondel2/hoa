@@ -42,6 +42,7 @@
              <sec:ifLoggedIn>
              	<li><a href="/board">Board</a></li>
              	<li><a href="/home/contact">Contact Us</a></li>
+             	<li><a href="/documents">HOA Documents</a></li>
              </sec:ifLoggedIn>
               	<sec:ifAllGranted roles="ROLE_BOARDMEMBER">
           		<li class="dropdown">
