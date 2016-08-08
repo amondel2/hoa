@@ -8,6 +8,7 @@
 //= require jquery_new
 //= require bootstrap
 //= require jquery-ui
+//= require bootstrap-dialog
 //= require_self
 
 $(document).ready(function(){

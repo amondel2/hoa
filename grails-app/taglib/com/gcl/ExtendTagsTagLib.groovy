@@ -1,10 +1,14 @@
 package com.gcl
 
 import com.gcl.Profile
+import com.gcl.fin.HouseMonth
+import com.gcl.fin.DueMonths
+import com.gcl.fin.House
 
 class ExtendTagsTagLib {
 	static namespace="glc"
     static defaultEncodeAs = [taglib:'html']
+	static encodeAsForTags = [renderMonthlyBox: 'raw']
 	def springSecurityService
 	
 	def getUserFName = {attrs,body->
@@ -12,4 +16,26 @@ class ExtendTagsTagLib {
 		  def name =  user ? user.firstName : ""
 		  out << body() <<name
 	}
+	
+	def renderMonthlyBox = {attrs,body->
+
+		def hmCal = new GregorianCalendar(attrs.year,attrs.month,1)
+		def hmeCal = new GregorianCalendar(attrs.year,attrs.month,1)
+		hmeCal.add(hmCal.DAY_OF_MONTH, hmCal.getActualMaximum(hmCal.DAY_OF_MONTH))
+		hmeCal.add(hmCal.SECOND, -1)
+		def output=""
+		def hmd = HouseMonth.withCriteria {
+			eq("house",attrs.hm)
+			months{
+				between('startDate',hmCal.getTime(),hmeCal.getTime())
+			}
+		}?.getAt(0)
+		if(hmd) {
+			output = "<input type='checkbox' name='${attrs.hm.number}myCheckbox${attrs.month}' hn='${attrs.hm.number}' hmdm='${hmd.months.id}' hmhn='${attrs.hm.id}' year='${attrs.year}' month='${attrs.month}' id='${attrs.hm.number}myCheckbox${attrs.month}' class='dueMonthCheckBox'" + (hmd.paid ? "checked" :  '')  +  '/>'
+		} else {
+			output = "<button id='${attrs.hm.number}addMonthsBtn' class='dueMonthAddButton' hnid='${attrs.hm.id}' hn='${attrs.hm.number}' year='${attrs.year}' month='${attrs.month}' name='${attrs.hm.number}addMonthsBtn'>Add Due Month</button>"
+		}
+		out << body() << output
+	}
+	
 }
