@@ -9,6 +9,7 @@
 //= require bootstrap
 //= require jquery-ui
 //= require bootstrap-dialog
+//= require jquery.contextMenu.js
 //= require_self
 
 $(document).ready(function(){

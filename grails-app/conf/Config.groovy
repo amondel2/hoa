@@ -104,8 +104,8 @@ log4j.main = {
     //appenders {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
-		debug 'org.hibernate.SQL'
-		trace 'org.hibernate.type.descriptor.sql.BasicBinder'
+//		debug 'org.hibernate.SQL'
+//		trace 'org.hibernate.type.descriptor.sql.BasicBinder'
 	
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP

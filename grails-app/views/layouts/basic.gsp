@@ -15,7 +15,7 @@
 		<link rel="shortcut icon" href="${assetPath(src: 'Favicon.ico')}" type="image/x-icon">
 		<link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
 		<link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
-  		<!--<asset:stylesheet src="mainjquery.css"/>-->
+  		<asset:stylesheet src="mainjquery.css"/>
   		<asset:stylesheet src="mainapp.css"/>
   		<!--<asset:stylesheet src="mainbt.css"/>-->
 		<asset:javascript src="main.js"/>
@@ -51,6 +51,16 @@
         				<ul class="dropdown-menu">
           					<li><g:link controller="messageEditor" action="index">List</g:link></li>
           					<li><g:link controller="messageEditor" action="create">Create New</g:link></li>
+        				</ul>
+          		</li>
+          		<li class="dropdown">
+          			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration
+        				<span class="caret"></span></a>
+        				<ul class="dropdown-menu">
+          					<li><g:link controller="house" action="index">House</g:link></li>
+          					<li><g:link controller="financial" action="index">Financial</g:link></li>
+          					<li><g:link controller="fee" action="index">Fees</g:link></li>
+          					<li><g:link controller="capitalContrib" action="index">Capital Contribution</g:link></li>
         				</ul>
           		</li>
           		</sec:ifAllGranted>

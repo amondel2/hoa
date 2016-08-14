@@ -1,4 +1,3 @@
-
 <%@ page import="com.gcl.fin.House" %>
 <!DOCTYPE html>
 <html>
@@ -35,15 +34,6 @@
 				</td></tr>
 				</g:if>
 			
-				<g:if test="${houseInstance?.number}">
-				<tr>
-         				<td><g:message code="house.number.label" default="Number" />
-         				</td><td>
-					
-						<span class="property-value" aria-labelledby="number-label"><g:fieldValue bean="${houseInstance}" field="number"/></span>
-					
-				</td></tr>
-				</g:if>
 			
 				<g:if test="${houseInstance?.type}">
 				<tr>

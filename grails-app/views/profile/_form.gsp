@@ -11,23 +11,12 @@
 
 </div>
 
-
-
 <div class="form-group ${hasErrors(bean: profileInstance, field: 'lastName', 'has-error')} required">
 	<label for="lastName">
 		<g:message code="profile.lastName.label" default="Last Name" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="lastName" class="form-control" required="" value="${profileInstance?.lastName}"/>
-
-</div>
-
-<div class="form-group ${hasErrors(bean: profileInstance, field: 'houseNumber', 'has-error')} required">
-	<label for="houseNumber">
-		<g:message code="profile.houseNumber.label" default="House Number" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="houseNumber" class="form-control" required="" value="${profileInstance?.houseNumber}"/>
 
 </div>
 
@@ -69,5 +58,14 @@
 	</label>
 	<input type="text" id="answer2" name="answer2" required class="form-control" value="${profileInstance?.answer2}"/>
 </div>
+
+<div class="form-group">
+	<label for="House">
+		Select a House
+	</label>
+	<g:select name="home" from="${hl}" value="${profileInstance.homeId}" optionKey="id" />
+</div>
+
+
 
 <input type="hidden" style="display:none" id="user" name="user.id" required="" value="${user.id}" />

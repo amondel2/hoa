@@ -2,6 +2,7 @@ package com.gcl
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
+import com.gcl.fin.House
 
 @Transactional(readOnly = true)
 class ProfileController {
@@ -24,7 +25,7 @@ class ProfileController {
     }
 
     def create() {
-        respond new Profile(params), model:[user: springSecurityService.currentUser]
+        respond new Profile(params), model:[user: springSecurityService.currentUser,hl:House.list()]
     }
 	
 	
@@ -56,7 +57,7 @@ class ProfileController {
 		if(!profileInstance) {
 			profileInstance = Profile.findByUser(springSecurityService.currentUser)
 		}
-        respond profileInstance, model:[user: springSecurityService.currentUser]
+        respond profileInstance, model:[user: springSecurityService.currentUser,hl:House.list()]
     }
 
     @Transactional

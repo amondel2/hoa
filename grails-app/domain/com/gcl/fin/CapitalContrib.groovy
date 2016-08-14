@@ -8,6 +8,7 @@ class CapitalContrib implements Serializable {
 
     static constraints = {
 		dueDate unique:true
+		amount min: new BigDecimal(0)
 	}
 	
 	BigDecimal amount

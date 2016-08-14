@@ -5,8 +5,5 @@ class Duemonth {
     def serviceMethod() {
 		["text":"version1"]
     }
-	
-	public Duemonth() {
-		println "Constructed"
-	}
+
 }

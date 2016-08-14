@@ -12,9 +12,8 @@ class HomeController {
 		if(springSecurityService.isLoggedIn()) {
 			messages = messagesService.getMessages(params)
 			if(!Profile.findByUser(springSecurityService.currentUser)){
-				flash.message = "Please Complete Your Profile By clicking on 'Welecome' in the Nav Bar!"
+				flash.message = "Please Complete Your Profile By clicking on 'Welcome' in the Nav Bar!"
 			}
-			
 		}
 		render(view:"index",model:[param:params,messages:messages])		
 	}

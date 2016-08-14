@@ -17,7 +17,7 @@ class DueMonths implements Serializable {
 				return ["default.not.before.messag",'endDate',val,'startDate',obj.startDate]
 			}
 		}
-		
+		amount min: new BigDecimal(0)
 	
     }
 	

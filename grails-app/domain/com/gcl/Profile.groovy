@@ -1,21 +1,25 @@
 package com.gcl
 
+import com.gcl.fin.House;
+
 class Profile implements Serializable {
 
 	private static final long serialVersionUID = 1
 
-	static belongsTo = [ user: User ]
+	static belongsTo = [ user: User, home:House ]
 	User user
 	String firstName
 	String lastName
+	House home
 	String phoneNumber
-	String houseNumber
 	String question1
 	String answer1
 	String question2
 	String answer2
 	Long id
     static constraints = {
+		user unique:true
+		home  nullable:true
 		question1 minSize: 10, maxSize: 300,validator: { val, obj -> 
 			if(val.trim().toLowerCase() == obj.question2?.trim()?.toLowerCase())
 				return ["default.not.unique.message",'question1','Profile',val]

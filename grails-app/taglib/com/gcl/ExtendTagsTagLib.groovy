@@ -8,7 +8,7 @@ import com.gcl.fin.House
 class ExtendTagsTagLib {
 	static namespace="glc"
     static defaultEncodeAs = [taglib:'html']
-	static encodeAsForTags = [renderMonthlyBox: 'raw']
+	static encodeAsForTags = [renderMonthlyBox: 'raw',renderCheckAllBox: 'raw']
 	def springSecurityService
 	
 	def getUserFName = {attrs,body->
@@ -36,6 +36,23 @@ class ExtendTagsTagLib {
 			output = "<button id='${attrs.hm.number}addMonthsBtn' class='dueMonthAddButton' hnid='${attrs.hm.id}' hn='${attrs.hm.number}' year='${attrs.year}' month='${attrs.month}' name='${attrs.hm.number}addMonthsBtn'>Add Due Month</button>"
 		}
 		out << body() << output
+	}
+	
+	def renderCheckAllBox = { attrs, body ->
+		out << body() <<  """
+		<ul class='nav navbar-nav'><li><a href='#' style="padding:0px;">${attrs.header}</a></li><li>
+		<li class='dropdown'>
+		  <a class='dropdown-toggle' data-toggle='dropdown' href='#' style="padding:0px;">
+			<span class="checkBox_Bass"></span>
+			<span class='caret'></span></a>
+			<ul class='dropdown-menu'>
+				  <li class="checkAllBtn" orient="${attrs.orient}"><a href='#'>All</a></li>
+				  <li class="checkNoneBtn" orient="${attrs.orient}"><a href='#'>None</a></li>
+			</ul>
+		  </li>
+		</ul>
+	 """	
+	
 	}
 	
 }

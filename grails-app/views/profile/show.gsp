@@ -31,13 +31,7 @@
          				<td><g:fieldValue bean="${profileInstance}" field="lastName"/></td>
          			</tr>
 				</g:if>
-				
-				<g:if test="${profileInstance?.houseNumber}">
-				<tr>
-         				<td><g:message code="profile.houseNumber.label" default="House Number" /></td>
-         				<td><g:fieldValue bean="${profileInstance}" field="houseNumber"/></td>
-         			</tr>
-				</g:if>
+			
 			
 				<g:if test="${profileInstance?.phoneNumber}">
 					<tr>
