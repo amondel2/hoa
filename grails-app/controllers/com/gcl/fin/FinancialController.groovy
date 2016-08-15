@@ -13,6 +13,7 @@ class FinancialController {
 		redirect(action:"admin")
 	}
 
+	@Secured(["ROLE_BOARDMEMBER"])
 	def admin(){
 		def cal = new GregorianCalendar().getInstance()
 		def currYear = cal.get(cal.YEAR)
