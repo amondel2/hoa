@@ -1,10 +1,12 @@
-package com.gcl.fin
+package com.gcl
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 
 import java.sql.Timestamp
 
-import com.gcl.House;
+import com.gcl.House
+import com.gcl.DueMonths
+import com.gcl.HouseMonth
 
 @Secured(["ROLE_BOARDMEMBER"])
 class FinancialController {
@@ -94,7 +96,7 @@ class FinancialController {
 			def hmCal = new GregorianCalendar().getInstance()
 			hmCal.setTime(dm.startDate)
 			def output = c.renderMonthlyBox(year:hmCal.get(hmCal.YEAR),month:hmCal.get(hmCal.MONTH),hm:h)
-			obj = [status:true,amount:hm.house.calculateAmountOwed(),output:output]
+			obj = [status:true,amount:hm.house.calculateAmountOwed(),output:output,month:hmCal.get(hmCal.MONTH)]
 		} catch(Exception e) {
 			obj = ["status":false,"message":e.getMessage()]
 		}

@@ -1,11 +1,9 @@
-package com.gcl.fin
+package com.gcl
 
 import grails.gorm.DetachedCriteria
 import groovy.transform.ToString
 
 import org.apache.commons.lang.builder.HashCodeBuilder
-
-import com.gcl.House;
 
 @ToString(cache=true, includeNames=true, includePackage=false)
 class HouseMonth implements Serializable {

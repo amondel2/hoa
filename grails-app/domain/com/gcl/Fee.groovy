@@ -1,6 +1,5 @@
-package com.gcl.fin
-import com.gcl.House;
-import com.gcl.fin.FeeType
+package com.gcl
+import com.gcl.FeeType;
 
 class Fee {
 	

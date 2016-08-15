@@ -1,4 +1,4 @@
-package com.gcl.fin
+package com.gcl
 
 import java.io.Serializable;
 

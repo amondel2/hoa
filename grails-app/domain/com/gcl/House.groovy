@@ -1,8 +1,4 @@
 package com.gcl
-import com.gcl.fin.Fee;
-import com.gcl.fin.HouseCapital;
-import com.gcl.fin.HouseMonth;
-
 import java.util.Calendar
 
 import org.apache.commons.logging.LogFactory
