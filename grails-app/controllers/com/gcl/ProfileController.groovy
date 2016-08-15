@@ -2,7 +2,6 @@ package com.gcl
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
-import com.gcl.fin.House
 
 @Transactional(readOnly = true)
 class ProfileController {

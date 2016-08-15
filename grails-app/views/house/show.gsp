@@ -1,4 +1,4 @@
-<%@ page import="com.gcl.fin.House" %>
+<%@ page import="com.gcl.House" %>
 <!DOCTYPE html>
 <html>
 	<head>
