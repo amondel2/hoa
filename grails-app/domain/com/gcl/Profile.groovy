@@ -1,6 +1,5 @@
 package com.gcl
 
-import com.gcl.fin.House;
 
 class Profile implements Serializable {
 

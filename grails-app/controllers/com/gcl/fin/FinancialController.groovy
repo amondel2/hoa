@@ -1,7 +1,10 @@
 package com.gcl.fin
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
+
 import java.sql.Timestamp
+
+import com.gcl.House;
 
 @Secured(["ROLE_BOARDMEMBER"])
 class FinancialController {

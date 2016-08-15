@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
+import com.gcl.House;
+
 @ToString(cache=true, includeNames=true, includePackage=false)
 class HouseCapital implements Serializable {
 

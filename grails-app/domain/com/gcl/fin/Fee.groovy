@@ -1,4 +1,5 @@
 package com.gcl.fin
+import com.gcl.House;
 import com.gcl.fin.FeeType
 
 class Fee {

@@ -1,6 +1,7 @@
-package com.gcl.fin
-import com.gcl.Profile;
-import com.gcl.fin.HouseType
+package com.gcl
+import com.gcl.fin.Fee;
+import com.gcl.fin.HouseCapital;
+import com.gcl.fin.HouseMonth;
 
 import java.util.Calendar
 

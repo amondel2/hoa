@@ -3,6 +3,10 @@
 	<head>
 		<meta name="layout" content="basic"/>
 		<title>Finacial Controller</title>
+		<asset:stylesheet src="bootstrap-dialog.css"/>
+		<asset:stylesheet src="jquery-contextMenu.css"/>
+		<asset:javascript src="bootstrap-dialog.js" />
+		<asset:javascript src="jquery.contextMenu.js" />
 	</head>
 	<body>
 		<div>

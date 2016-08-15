@@ -2,7 +2,6 @@ package com.gcl
 import grails.converters.JSON
 import grails.converters.XML
 import grails.plugin.springsecurity.annotation.Secured
-import com.gcl.fin.House
 
 class UserController extends grails.plugin.springsecurity.ui.UserController {
 

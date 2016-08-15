@@ -3,7 +3,6 @@ package com.gcl
 import com.gcl.Profile
 import com.gcl.fin.HouseMonth
 import com.gcl.fin.DueMonths
-import com.gcl.fin.House
 
 class ExtendTagsTagLib {
 	static namespace="glc"

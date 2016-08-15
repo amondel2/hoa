@@ -1,5 +1,7 @@
 package com.gcl.fin
 
+import com.gcl.House;
+
 import grails.transaction.Transactional
 
 @Transactional

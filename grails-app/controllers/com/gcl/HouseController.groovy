@@ -1,6 +1,9 @@
-package com.gcl.fin
+package com.gcl
 
 import static org.springframework.http.HttpStatus.*
+
+import com.gcl.House;
+
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
