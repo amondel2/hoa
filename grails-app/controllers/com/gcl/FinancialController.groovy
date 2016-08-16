@@ -78,6 +78,7 @@ class FinancialController {
 			obj = financialService.createSingDue(amount,params.int('months'),params.int('year'))
 			obj['hnid'] = h.id
 			obj['hn'] = h.number
+			obj.month = params.int('months')
 		} catch (Exception e) {
 			obj = ["status":false,"message":e.getMessage()]
 		}

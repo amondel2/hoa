@@ -60,7 +60,6 @@
           					<li><g:link controller="house" action="index">House</g:link></li>
           					<li><g:link controller="financial" action="index">Financial</g:link></li>
           					<li><g:link controller="fee" action="index">Fees</g:link></li>
-          					<li><g:link controller="capitalContrib" action="index">Capital Contribution</g:link></li>
         				</ul>
           		</li>
           		</sec:ifAllGranted>

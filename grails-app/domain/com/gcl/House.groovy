@@ -60,14 +60,7 @@ class House implements Serializable {
 			}
 			}?.each{
 				sum += it.months.amount
-			}
-		
-			HouseCapital.withCriteria{
-				eq('house',this)
-				eq('paid',false)}?.each{
-				sum += it.cap.amount
-			}
-		
+			}	
 		
 		sum.setScale(2,BigDecimal.ROUND_CEILING)
 	}	   

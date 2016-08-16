@@ -1,5 +1,5 @@
 package com.gcl
 
 public enum FeeType {
-	Late,Violation,SpecialAssessment
+	Late,Violation,SpecialAssessment,CapitalContribution
 }

@@ -84,7 +84,7 @@ var feeAddSingle = {
             		}).done(function(data){
             			if(data.status == true) {
             				var frmDate = {'dmId':data.dmId,'hnid':data.hnid};
-            				createDm(frmDate,$("#" + data.hn + "addMonthsBtn"));
+            				createDm(frmDate,$("#" + data.hn + "addMonthsBtn_" + data.month));
             			} else {
             				alert("Issues " + data.message);
             			}
