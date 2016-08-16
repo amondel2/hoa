@@ -5,7 +5,7 @@
 		<title>Lansdale Gwynedd Chase</title>
 	</head>
 	<body>
-		<h1>Gwynedd Chase Community Contact</h1>
+		<h1>Gwynedd Chase Community Contact & Payments/h1>
         <p class="lead">
         	<div>
 			  <strong> E-mail</strong>
