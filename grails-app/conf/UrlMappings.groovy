@@ -9,6 +9,7 @@ class UrlMappings {
             }
         }
 		"/home/contact" (view:"/home/contact")
+		"/home/cal" (view:"/home/cal")
         "/"(controller:"home",params:params)
         "500"(view:'/error')
 	}

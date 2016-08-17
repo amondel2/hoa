@@ -17,7 +17,6 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
   		<asset:stylesheet src="mainjquery.css"/>
   		<asset:stylesheet src="mainapp.css"/>
-  		<!--<asset:stylesheet src="mainbt.css"/>-->
 		<asset:javascript src="main.js"/>
 		<g:layoutHead/>
 	</head>
@@ -42,6 +41,7 @@
              <sec:ifLoggedIn>
              	<li><a href="/board">Board</a></li>
              	<li><a href="/home/contact">Contact Us</a></li>
+             	<li><a href="/home/cal">Calendar</a></li>
              	<li><a href="/documents">HOA Documents</a></li>
              </sec:ifLoggedIn>
               	<sec:ifAllGranted roles="ROLE_BOARDMEMBER">
