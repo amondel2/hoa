@@ -40,7 +40,7 @@ class House implements Serializable {
 	def getUnpaidPaidFee() {
 		Fee.withCriteria {
 			eq("house", this)
-			eq("paid",false)
+			isNull("paidDate")
 			projections {
 				sum("amount")
 			}

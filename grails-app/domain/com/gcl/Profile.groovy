@@ -37,4 +37,9 @@ class Profile implements Serializable {
 		}
 		phoneNumber nullable:true,blank:true
     }
+	
+	String toString() {
+		return this.firstName + " " + this.lastName 	
+	}
+	
 }

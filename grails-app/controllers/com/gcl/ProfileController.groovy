@@ -2,20 +2,32 @@ package com.gcl
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.SpringSecurityUtils
 
+@Secured(["ROLE_BOARDMEMBER"])
 @Transactional(readOnly = true)
 class ProfileController {
 
 	def springSecurityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-    def index() {
-
-        redirect(action:"show")
+	static scaffold=Profile
+	
+	@Secured(["permitAll"])
+    def index(Integer max) {
+		if(SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
+			params.max = Math.min(max ?: 10, 100)
+			respond Profile.list(params), model:[profileInstanceCount: Profile.count()]
+		} else {
+        	redirect(action:"show")
+		}
     }
 
-    def show() {
-		Profile profileInstance = Profile.findByUser(springSecurityService.currentUser)
+	@Secured(["permitAll"])
+    def show(Profile profileInstance) {
+		if (!profileInstance) {
+			profileInstance = Profile.findByUser(springSecurityService.currentUser)
+		}
+	
 		if(!profileInstance) {
 			redirect(action:"create")
 		} else {
@@ -23,6 +35,7 @@ class ProfileController {
 		}
     }
 
+	@Secured(["permitAll"])
     def create() {
         respond new Profile(params), model:[user: springSecurityService.currentUser,hl:House.list()]
     }
@@ -30,6 +43,7 @@ class ProfileController {
 	
 
     @Transactional
+	@Secured(["permitAll"])
     def save(Profile profileInstance) {
         if (profileInstance == null) {
             notFound()
@@ -52,6 +66,7 @@ class ProfileController {
         }
     }
 
+	@Secured(["permitAll"])
     def edit(Profile profileInstance) {
 		if(!profileInstance) {
 			profileInstance = Profile.findByUser(springSecurityService.currentUser)
@@ -60,6 +75,7 @@ class ProfileController {
     }
 
     @Transactional
+	@Secured(["permitAll"])
     def update(Profile profileInstance) {
         if (profileInstance == null) {
             notFound()
@@ -82,32 +98,4 @@ class ProfileController {
         }
     }
 
-    @Transactional
-    def delete(Profile profileInstance) {
-
-        if (profileInstance == null) {
-            notFound()
-            return
-        }
-
-        profileInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Profile.label', default: 'Profile'), profileInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'profile.label', default: 'Profile'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

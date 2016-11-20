@@ -18,6 +18,8 @@
   		<asset:stylesheet src="mainjquery.css"/>
   		<asset:stylesheet src="mainapp.css"/>
 		<asset:javascript src="main.js"/>
+		<asset:stylesheet src="bootstrap-datepicker3.min.css"/>
+		<asset:javascript src="bootstrap-datepicker.min.js" />
 		<g:layoutHead/>
 	</head>
 	<body>
@@ -57,9 +59,13 @@
           			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration
         				<span class="caret"></span></a>
         				<ul class="dropdown-menu">
+        					<li><g:link controller="bank" action="index">Bank Account Manager</g:link></li>
+        					<li><g:link controller="vendorFin" action="index">Contractor Manager</g:link></li>
+        					<li><g:link controller="vendor" action="index">Contractors</g:link></li>
+        					<li><g:link controller="fee" action="index">Fees</g:link></li>
           					<li><g:link controller="house" action="index">House</g:link></li>
-          					<li><g:link controller="financial" action="index">Financial</g:link></li>
-          					<li><g:link controller="fee" action="index">Fees</g:link></li>
+          					<li><g:link controller="financial" action="admin">Hoa Manager</g:link></li>
+          					<li><g:link controller="financial" action="index">Financial Overview</g:link></li>
         				</ul>
           		</li>
           		</sec:ifAllGranted>

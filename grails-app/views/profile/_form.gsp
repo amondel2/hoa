@@ -59,13 +59,14 @@
 	<input type="text" id="answer2" name="answer2" required class="form-control" value="${profileInstance?.answer2}"/>
 </div>
 
+<sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_BOARDMEMBER">
 <div class="form-group">
 	<label for="House">
 		Select a House
 	</label>
 	<g:select name="home" from="${hl}" value="${profileInstance.homeId}" optionKey="id" />
 </div>
-
+</sec:ifAnyGranted>
 
 
 <input type="hidden" style="display:none" id="user" name="user.id" required="" value="${user.id}" />

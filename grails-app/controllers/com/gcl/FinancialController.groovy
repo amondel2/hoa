@@ -3,6 +3,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 
 import java.sql.Timestamp
+import java.text.SimpleDateFormat
 
 import com.gcl.House
 import com.gcl.DueMonths
@@ -14,10 +15,34 @@ class FinancialController {
 	def financialService
 	def grailsApplication
 
+	@Secured(["ROLE_BOARDMEMBER"])
 	def index() {
-		redirect(action:"admin")
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date endDate,startDate
+		try {
+		  endDate = sdf.parse(params.todate )
+		} catch(Exception e) {
+			endDate = null
+		}
+		try {
+			startDate = sdf.parse(params.fromdate )
+		  } catch(Exception e) {
+			  startDate = null
+		  }
+		render(view:"index",model:[
+			fees:financialService.getHOATotalFee(startDate,endDate),
+			totalOwed:financialService.getHOATotalOwed(startDate,endDate),
+			hoaOwed:financialService.getHOAOutTotalStandingDues(startDate,endDate),
+			debt:financialService.getHOATotalDebt(startDate,endDate),
+			feesPaid:financialService.getHOATotalFeePaid(startDate,endDate),
+			hoaPaid:financialService.getHOAOutTotalStandingDuesPaid(startDate,endDate),
+			totalPaid:financialService.getHOATotalDebtPaid(startDate,endDate),
+			moneyInBank:financialService.getMoneyInBack(),
+			collected:financialService.getHOATotalPaid(startDate,endDate),endDate:params.todate,startDate:params.fromdate
+			
+		])
 	}
-
+	
 	@Secured(["ROLE_BOARDMEMBER"])
 	def admin(){
 		def cal = new GregorianCalendar().getInstance()
@@ -35,7 +60,7 @@ class FinancialController {
 
 		params.year = params.year ? params.int('year') : currYear
 
-		render(view:"index",model:[viewYear:params.year,hms:House.list(),lastYear:lastYear,firstYear:firstYear,currMonth:cal.get(cal.MONTH) + 1,currYear:currYear,endYear: cal.get(cal.YEAR)  + 5])
+		render(view:"admin",model:[viewYear:params.year,hms:House.list(),lastYear:lastYear,firstYear:firstYear,currMonth:cal.get(cal.MONTH) + 1,currYear:currYear,endYear: cal.get(cal.YEAR)  + 5])
 	}
 
 	def createDues(){

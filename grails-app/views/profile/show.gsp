@@ -43,7 +43,7 @@
 			</tbody></table>
 			<g:form url="[resource:profileInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
-					<g:link class="btn btn-primary btn-sm active" action="edit"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:link class="btn btn-primary btn-sm active" id="${profileInstance.id}"  action="edit"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="btn btn-secondary btn-sm active" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>
