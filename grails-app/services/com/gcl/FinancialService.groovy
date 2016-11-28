@@ -174,7 +174,7 @@ class FinancialService {
 //			money = row.amount
 //		}
 //		money.toString()
-		Bank.list()?.get(0)?.amount ?: 0
+		Bank.list()?.getAt(0)?.amount ?: 0
 	}
 
 	def getHOATotalDebtPaid(startDate,endDate){
