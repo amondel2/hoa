@@ -3,47 +3,55 @@ import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.SpringSecurityUtils
+import grails.converters.JSON
 
-@Secured(["ROLE_BOARDMEMBER"])
+@Secured(["ROLE_USER"])
 @Transactional(readOnly = true)
 class ProfileController {
 
-	def springSecurityService
+    def springSecurityService
+    def houseMonthService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	static scaffold=Profile
-	
-	@Secured(["permitAll"])
+    static scaffold=Profile
+
+    @Secured(["permitAll"])
     def index(Integer max) {
-		if(SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
-			params.max = Math.min(max ?: 10, 100)
-			respond Profile.list(params), model:[profileInstanceCount: Profile.count()]
-		} else {
-        	redirect(action:"show")
-		}
+        if(SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
+            params.max = Math.min(max ?: 10, 100)
+            respond Profile.list(params), model:[profileInstanceCount: Profile.count()]
+        } else {
+            redirect(action:"show")
+        }
     }
 
-	@Secured(["permitAll"])
+    @Secured(["permitAll"])
     def show(Profile profileInstance) {
-		if (!profileInstance) {
-			profileInstance = Profile.findByUser(springSecurityService.currentUser)
-		}
-	
-		if(!profileInstance) {
-			redirect(action:"create")
-		} else {
-        	respond profileInstance, model:[user: springSecurityService.currentUser]
-		}
+
+        if (!profileInstance) {
+            profileInstance = Profile.findByUser(springSecurityService.currentUser)
+        }
+
+        if(!profileInstance) {
+            redirect(action:"create")
+        } else {
+            def getFirstPayment
+            if(profileInstance.homeId) {
+                getFirstPayment = houseMonthService.getFirstPaymentYear(profileInstance.homeId)
+            }
+            def myCal  = new GregorianCalendar().getInstance()
+            respond profileInstance, model:[user: springSecurityService.currentUser,getFirstPayment:getFirstPayment,endYear:myCal.get(myCal.YEAR)]
+        }
     }
 
-	@Secured(["permitAll"])
+    @Secured(["permitAll"])
     def create() {
         respond new Profile(params), model:[user: springSecurityService.currentUser,hl:House.list()]
     }
-	
-	
+
+
 
     @Transactional
-	@Secured(["permitAll"])
+    @Secured(["permitAll"])
     def save(Profile profileInstance) {
         if (profileInstance == null) {
             notFound()
@@ -66,16 +74,44 @@ class ProfileController {
         }
     }
 
-	@Secured(["permitAll"])
+
+    @Secured(["permitAll"])
     def edit(Profile profileInstance) {
-		if(!profileInstance) {
-			profileInstance = Profile.findByUser(springSecurityService.currentUser)
-		}
+        if(!profileInstance) {
+            profileInstance = Profile.findByUser(springSecurityService.currentUser)
+        }
         respond profileInstance, model:[user: springSecurityService.currentUser,hl:House.list()]
     }
 
+
     @Transactional
-	@Secured(["permitAll"])
+    @Secured(["ROLE_BOARDMEMBER","ROLE_ADMIN","ROLE_USER"])
+    def readOnlyHoaPayments(){
+        def year = params.year ?  params.int('year') : 2016
+        def rtn = []
+        def hms = houseMonthService.getHouseMonthByHouseId(params.hid,year);
+        def cal = new GregorianCalendar(year, 0, 1, 0, 0, 1)
+        if(hms) {
+            def i = 0, z = 1
+            HouseMonth hm = hms[0]
+            while(i <= 11) {
+                if(hm && (hm?.months?.startDate <= cal.getTime())) {
+                    rtn[i] = hm.paid
+                    hm = hms[z++]
+                } else {
+                    rtn[i] = -1
+                }
+                cal.add(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH))
+                i++
+            }
+        }
+        withFormat{
+           '*' { render rtn as JSON }
+        }
+    }
+
+    @Transactional
+    @Secured(["permitAll"])
     def update(Profile profileInstance) {
         if (profileInstance == null) {
             notFound()
@@ -83,7 +119,7 @@ class ProfileController {
         }
 
         if (profileInstance.hasErrors()) {
-            respond profileInstance.errors, view:'edit', model:[user: springSecurityService.currentUser]
+            respond profileInstance.errors, view:'edit', model:[user: springSecurityService.currentUser,hl:House.list()]
             return
         }
 
