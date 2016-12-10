@@ -105,6 +105,7 @@ class ProfileController {
                 i++
             }
         }
+        rtn[12] = House.load(params.hid)?.calculateAmountOwed()
         withFormat{
            '*' { render rtn as JSON }
         }

@@ -52,8 +52,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-
-<!--	<th>Amount Owed</th> -->
+                            <th>Amount Owed</th>
                             <th>Jan</th>
                             <th>Feb</th>
                             <th>Mar</th>

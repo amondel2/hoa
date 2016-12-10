@@ -14,7 +14,7 @@ function generateReadOnlyHoa(year) {
         cache: false
     }).done(function (data) {
 
-        var htmlData = "";
+        var htmlData = "<td>" + data[12] + "</td>";
         if (data && Object.keys(data).length > 0) {
             for (var i = 0; i < 12; i++) {
                 var item = data[i];
@@ -22,9 +22,9 @@ function generateReadOnlyHoa(year) {
                 if (item == -1) {
                     htmlData += "N/A";
                 } else if (item == 0 || !item) {
-                    htmlData += "not Paid";
+                    htmlData += "<span class='glyphicon glyphicon glyphicon-remove'></span>";
                 } else {
-                    htmlData += "Paid";
+                    htmlData += "<span class='glyphicon glyphicon glyphicon-ok'></span>";
                 }
                 htmlData += "</td>";
             }
