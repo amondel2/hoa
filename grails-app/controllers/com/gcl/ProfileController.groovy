@@ -4,6 +4,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.converters.JSON
+import java.util.UUID
 
 @Secured(["ROLE_USER"])
 @Transactional(readOnly = true)
@@ -46,6 +47,32 @@ class ProfileController {
     @Secured(["permitAll"])
     def create() {
         respond new Profile(params), model:[user: springSecurityService.currentUser,hl:House.list()]
+    }
+
+    @Transactional
+    @Secured(['ROLE_BOARDMEMBER'])
+    def createFromUser() {
+        Profile p = new Profile()
+        def rtn = []
+        try{
+            p.user = User.load(params.uid)
+            p.firstName =  p.user.username
+            p.lastName = "ChangeME"
+            p.question1 = "What is the  number (Please change me)"
+            p.answer1 = UUID.randomUUID().toString().replaceAll("-", "");
+            p.question2 =  "What is the letters (Please change me)"
+            p.answer2 = UUID.randomUUID().toString().replaceAll("-", "");
+            if (!p.validate()) {
+                thorw new Exception(p.errors.join(" "))
+            }
+            p.save(flush:true,failOnError:true)
+            rtn = [true]
+        } catch (Exception e) {
+            rtn= [false,e.message]
+        }
+        withFormat{
+           '*' { render rtn as JSON }
+        }
     }
 
 
