@@ -36,11 +36,13 @@ class ProfileController {
             redirect(action:"create")
         } else {
             def getFirstPayment
+            def fees
             if(profileInstance.homeId) {
                 getFirstPayment = houseMonthService.getFirstPaymentYear(profileInstance.homeId)
+                fees = Fee.findAllByHouseAndPaidDateIsNull(profileInstance.home)
             }
             def myCal  = new GregorianCalendar().getInstance()
-            respond profileInstance, model:[user: springSecurityService.currentUser,getFirstPayment:getFirstPayment,endYear:myCal.get(myCal.YEAR)]
+            respond profileInstance, model:[fee:fees,user: springSecurityService.currentUser,getFirstPayment:getFirstPayment,endYear:myCal.get(myCal.YEAR)]
         }
     }
 
@@ -114,7 +116,17 @@ class ProfileController {
     @Transactional
     @Secured(["ROLE_BOARDMEMBER","ROLE_ADMIN","ROLE_USER"])
     def readOnlyHoaPayments(){
-        def year = params.year ?  params.int('year') : 2016
+
+        def year
+        try{
+            year = params.int('year')
+            if(!year){
+                throw new Exception("null year")
+            }
+        } catch(Exception e) {
+            def cal1 = new GregorianCalendar().getInstance()
+            year = cal1.get(cal1.YEAR)
+        }
         def rtn = []
         def hms = houseMonthService.getHouseMonthByHouseId(params.hid,year);
         def cal = new GregorianCalendar(year, 0, 1, 0, 0, 1)

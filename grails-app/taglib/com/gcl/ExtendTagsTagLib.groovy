@@ -1,42 +1,43 @@
 package com.gcl
 
 import com.gcl.Profile
+import com.gcl.HouseType
 
 class ExtendTagsTagLib {
-	static namespace="glc"
+    static namespace="glc"
     static defaultEncodeAs = [taglib:'html']
-	static encodeAsForTags = [renderMonthlyBox: 'raw',renderCheckAllBox: 'raw']
-	def springSecurityService
-	
-	def getUserFName = {attrs,body->
-		  Profile user = Profile.findByUser(springSecurityService.currentUser)
-		  def name =  user ? user.firstName : ""
-		  out << body() <<name
-	}
-	
-	def renderMonthlyBox = {attrs,body->
+    static encodeAsForTags = [renderMonthlyBox: 'raw',renderCheckAllBox: 'raw',renderHouseTypes:'raw']
+    def springSecurityService
 
-		def hmCal = new GregorianCalendar(attrs.year,attrs.month,1)
-		def hmeCal = new GregorianCalendar(attrs.year,attrs.month,1)
-		hmeCal.add(hmCal.DAY_OF_MONTH, hmCal.getActualMaximum(hmCal.DAY_OF_MONTH))
-		hmeCal.add(hmCal.SECOND, -1)
-		def output=""
-		def hmd = HouseMonth.withCriteria {
-			eq("house",attrs.hm)
-			months{
-				between('startDate',hmCal.getTime(),hmeCal.getTime())
-			}
-		}?.getAt(0)
-		if(hmd) {
-			output = "<input type='checkbox' name='${attrs.hm.number}myCheckbox${attrs.month}' hn='${attrs.hm.number}' hmdm='${hmd.months.id}' hmhn='${attrs.hm.id}' year='${attrs.year}' month='${attrs.month}' id='${attrs.hm.number}myCheckbox${attrs.month}' class='dueMonthCheckBox'" + (hmd.paid ? "checked" :  '')  +  '/>'
-		} else {
-			output = "<button id='${attrs.hm.number}addMonthsBtn_${attrs.month}' class='dueMonthAddButton' hnid='${attrs.hm.id}' hn='${attrs.hm.number}' year='${attrs.year}' month='${attrs.month}' name='${attrs.hm.number}addMonthsBtn'>Add Due Month</button>"
-		}
-		out << body() << output
-	}
-	
-	def renderCheckAllBox = { attrs, body ->
-		out << body() <<  """
+    def getUserFName = {attrs,body->
+        Profile user = Profile.findByUser(springSecurityService.currentUser)
+        def name =  user ? user.firstName : ""
+        out << body() <<name
+    }
+
+    def renderMonthlyBox = {attrs,body->
+
+        def hmCal = new GregorianCalendar(attrs.year,attrs.month,1)
+        def hmeCal = new GregorianCalendar(attrs.year,attrs.month,1)
+        hmeCal.add(hmCal.DAY_OF_MONTH, hmCal.getActualMaximum(hmCal.DAY_OF_MONTH))
+        hmeCal.add(hmCal.SECOND, -1)
+        def output=""
+        def hmd = HouseMonth.withCriteria {
+            eq("house",attrs.hm)
+            months{
+                between('startDate',hmCal.getTime(),hmeCal.getTime())
+            }
+        }?.getAt(0)
+        if(hmd) {
+            output = "<input type='checkbox' name='${attrs.hm.number}myCheckbox${attrs.month}' hn='${attrs.hm.number}' hmdm='${hmd.months.id}' hmhn='${attrs.hm.id}' year='${attrs.year}' month='${attrs.month}' id='${attrs.hm.number}myCheckbox${attrs.month}' class='dueMonthCheckBox'" + (hmd.paid ? "checked" :  '')  +  '/>'
+        } else {
+            output = "<button id='${attrs.hm.number}addMonthsBtn_${attrs.month}' class='dueMonthAddButton' hnid='${attrs.hm.id}' hn='${attrs.hm.number}' year='${attrs.year}' month='${attrs.month}' name='${attrs.hm.number}addMonthsBtn'>Add Due Month</button>"
+        }
+        out << body() << output
+    }
+
+    def renderCheckAllBox = { attrs, body ->
+        out << body() <<  """
 		<ul class='nav navbar-nav'><li><a href='#' style="padding:0px;">${attrs.header}</a></li><li>
 		<li class='dropdown'>
 		  <a class='dropdown-toggle' data-toggle='dropdown' href='#' style="padding:0px;">
@@ -48,8 +49,16 @@ class ExtendTagsTagLib {
 			</ul>
 		  </li>
 		</ul>
-	 """	
-	
-	}
-	
+	 """
+
+    }
+
+    def renderHouseTypes = { attrs, body ->
+        def id = attrs.id ?: "housetype"
+        def name = attrs.name ?: id
+
+        out << body() <<g.select([name:name,id:id,noSelection:['all':'ALL'],from:HouseType])
+
+    }
+
 }

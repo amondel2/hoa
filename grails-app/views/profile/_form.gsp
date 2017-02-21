@@ -1,14 +1,11 @@
 <%@ page import="com.gcl.Profile" %>
 
-
-
 <div class="form-group ${hasErrors(bean: profileInstance, field: 'firstName', 'has-error')} required">
     <label for="firstName">
         <g:message code="profile.firstName.label" default="First Name" />
         <span class="required-indicator">*</span>
     </label>
     <g:textField name="firstName" class="form-control" required="" value="${profileInstance?.firstName}"/>
-
 </div>
 
 <div class="form-group ${hasErrors(bean: profileInstance, field: 'lastName', 'has-error')} required">
@@ -17,7 +14,6 @@
         <span class="required-indicator">*</span>
     </label>
     <g:textField name="lastName" class="form-control" required="" value="${profileInstance?.lastName}"/>
-
 </div>
 
 <div class="form-group ${hasErrors(bean: profileInstance, field: 'phoneNumber', 'has-error')} required">
@@ -25,7 +21,6 @@
         <g:message code="profile.phoneNumber.label" default="Phone Number" />
     </label>
     <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" value="${profileInstance?.phoneNumber}"/>
-
 </div>
 
 <div class="form-group ${hasErrors(bean: profileInstance, field: 'question1', 'has-error')} required">
@@ -34,7 +29,6 @@
         <span class="required-indicator">*</span>
     </label>
     <input type="text" id="question1" name="question1" required class="form-control" value="${profileInstance?.question1}"/>
-
 </div>
 <div class="form-group ${hasErrors(bean: profileInstance, field: 'answer1', 'has-error')} required">
     <label for="answer1">
@@ -49,7 +43,6 @@
         <span class="required-indicator">*</span>
     </label>
     <input type="text" id="question2" name="question2" required class="form-control" value="${profileInstance?.question2}"/>
-
 </div>
 <div class="form-group ${hasErrors(bean: profileInstance, field: 'answer2', 'has-error')} required">
     <label for="answer2">
@@ -68,5 +61,4 @@
     </div>
 </sec:ifAnyGranted>
 
-
-<input type="hidden" style="display:none" id="user" name="user.id" required="" value="${profileInstance.user.id}" />
+<input type="hidden" style="display:none" id="user" name="user.id" required="" value="${profileInstance.user ? profileInstance.user.id : user.id }" />

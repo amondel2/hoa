@@ -24,7 +24,7 @@
                     <tr>
                         <td><g:message code="profile.firstName.label" default="First Name" /></td>
                         <td><g:fieldValue bean="${profileInstance}" field="firstName"/></td>
-                    </tr>
+                    </tr>table
                 </g:if>
 
 
@@ -73,7 +73,27 @@
                     </tbody>
                 </table>
             </div>
+
+            <g:if  test="${fee && fee.size() > 0}">
+                <h3>Outstanding Fees</h3>
+                <div style="text-align:left;">
+                    <g:each in='${fee}' var="f">
+
+                        <ul>
+                            <li>${f.description}
+                                <ul>
+                                    <li>Amount: ${'$' + f.amount}</li>
+                                    <li> Due Date: <g:formatDate format="MM-dd-yyyy" date="${f.dueDate}" /></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </g:each>
+                </div>
+            </g:if>
+
         </g:if>
+
+
 
 
 
