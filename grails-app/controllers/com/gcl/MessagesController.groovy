@@ -7,16 +7,6 @@ import static org.springframework.http.HttpMethod.*
 
 
 @Secured(["ROLE_USER","ROLE_ADMIN",'ROLE_BOARDMEMBER'])
-class MessagesController extends RestfulController {
-	def messagesService
-   static responseFormats = ['json']
-   MessagesController(){
-	   super(Messages)
-   }
-   
-   @Override
-   def index(Integer max) {
-	   params.max = Math.min(max ?: 10, 100)
-	   respond messagesService.getMessages(params), [status: OK]
-   }
+class MessagesController  {
+    static scaffold=Messages
 }

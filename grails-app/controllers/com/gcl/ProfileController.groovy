@@ -19,7 +19,8 @@ class ProfileController {
     def index(Integer max) {
         if(SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
             params.max = Math.min(max ?: 10, 100)
-            respond Profile.list(params), model:[profileInstanceCount: Profile.count()]
+            respond Profile.list(params), model:[profileCount: Profile.count()]
+
         } else {
             redirect(action:"show")
         }
@@ -106,7 +107,12 @@ class ProfileController {
 
     @Secured(["permitAll"])
     def edit(Profile profileInstance) {
-        if(!profileInstance) {
+        if(SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
+            if (!profileInstance) {
+                profileInstance = Profile.findByUser(springSecurityService.currentUser)
+            }
+        } else {
+            //prevent other users from modifing profiles they don't have access to
             profileInstance = Profile.findByUser(springSecurityService.currentUser)
         }
         respond profileInstance, model:[user: springSecurityService.currentUser,hl:House.list()]
@@ -157,11 +163,20 @@ class ProfileController {
             notFound()
             return
         }
+        if(!SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
+            //make sure this is my profile
+            def tmpprofileInstance = Profile.findByUser(springSecurityService.currentUser)
+            if(tmpprofileInstance.id != profileInstance.id) {
+                redirect action: "edit"
+            }
+        }
 
         if (profileInstance.hasErrors()) {
             respond profileInstance.errors, view:'edit', model:[user: springSecurityService.currentUser,hl:House.list()]
             return
         }
+
+
 
         profileInstance.save flush:true
 

@@ -25,6 +25,17 @@ class UserController extends grails.plugin.springsecurity.ui.UserController {
         }
     }
 
+    @Secured(['permitAll'])
+    def show(){
+        def id
+        try {
+            def p = Profile.findByUser(User.findById(params.id))
+            id = p.id
+        } catch(Exception e ) {
+        }
+        redirect(controller:"profile",action:"show",params: [ id: id])
+    }
+
     @Secured(['ROLE_BOARDMEMBER'])
     def listMailingAddress(){
         def test = House.list().collect{ it.toString() }
@@ -54,6 +65,7 @@ class UserController extends grails.plugin.springsecurity.ui.UserController {
                 order "id"
             }
         }
-        respond matchingActs
+
+     	respond matchingActs, model:['userInstanceList':matchingActs]
     }
 }
