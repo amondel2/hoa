@@ -8,6 +8,7 @@
         <title>Create ${entityName}</title>
         <script type="text/javascript">
          var redirectURL = '<g:resource dir="profile" file="createFromUser" absolute="true" />';
+          redirectURL = redirectURL.replace('static/','');
         </script>
     </head>
     <body>

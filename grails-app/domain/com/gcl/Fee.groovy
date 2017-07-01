@@ -1,8 +1,11 @@
 package com.gcl
+
 import com.gcl.FeeType;
 
-class Fee {
-	
+class Fee implements Serializable {
+
+	private static final long serialVersionUID = 1
+
 	FeeType feetype
 	BigDecimal amount
 	House house
@@ -10,11 +13,11 @@ class Fee {
 	Date dueDate
 	Date paidDate
 	String description
-	
-	static belongsTo=[house:House]
-	
-    static constraints = {
+
+	static belongsTo = [house: House]
+
+	static constraints = {
 		amount min: new BigDecimal(0)
-		paidDate nullable:true,blank:true
-    }
+		paidDate nullable: true, blank: true
+	}
 }

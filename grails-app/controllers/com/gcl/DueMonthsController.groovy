@@ -9,7 +9,7 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured(["ROLE_BOARDMEMBER"])
 @Transactional(readOnly = true)
 class DueMonthsController {
-	static scaffold=true
+	static scaffold=DueMonths
 	
 	
 }

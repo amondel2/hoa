@@ -10,5 +10,5 @@ import grails.plugin.springsecurity.annotation.Secured
 @Transactional(readOnly = true)
 class HouseMonthController {
 
-	static scaffold=true
+	static scaffold=HouseMonth
 }
