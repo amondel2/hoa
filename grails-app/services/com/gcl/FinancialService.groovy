@@ -78,7 +78,7 @@ class FinancialService {
                 if(startDate && endDate) {
                     between("startDate",startDate,endDate)
                 } else if (startDate ) {
-                    ge("startDate",startDate)
+                    between("startDate",startDate,new GregorianCalendar().getInstance().getTime())
                 } else if (endDate) {
                     le("startDate",endDate)
                 } else {
@@ -153,7 +153,7 @@ class FinancialService {
                 if(startDate && endDate) {
                     between("startDate",startDate,endDate)
                 } else if (startDate ) {
-                    ge("startDate",startDate)
+                    between("startDate",startDate,new GregorianCalendar().getInstance().getTime())
                 } else if (endDate) {
                     le("startDate",endDate)
                 } else {
@@ -178,7 +178,9 @@ class FinancialService {
         //			money = row.amount
         //		}
         //		money.toString()
-        Bank.list()?.getAt(0)?.amount ?: 0
+        def amount = 0
+        Bank.list()?.each{ amount += (it.amount ?: 0) }
+        amount
     }
 
     def getHOATotalDebtPaid(startDate,endDate){

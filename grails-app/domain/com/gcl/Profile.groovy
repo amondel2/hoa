@@ -6,17 +6,19 @@ class Profile implements Serializable {
 	private static final long serialVersionUID = 1
 
 	static belongsTo = [ user: User, home:House ]
-	User user
+	Long id
 	String firstName
 	String lastName
+	User user
 	House home
 	String phoneNumber
 	String question1
 	String answer1
 	String question2
 	String answer2
-	Long id
+
     static constraints = {
+		id  unique:true,nullable:true,display:true
 		user unique:true
 		home  nullable:true
 		question1 minSize: 10, maxSize: 300,validator: { val, obj -> 
@@ -37,7 +39,11 @@ class Profile implements Serializable {
 		}
 		phoneNumber nullable:true,blank:true
     }
-	
+
+	static mapping = {
+		id column: 'id'
+	}
+
 	String toString() {
 		return this.firstName + " " + this.lastName 	
 	}
