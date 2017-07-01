@@ -14,7 +14,7 @@ import com.gcl.HouseType
 class FinancialController {
 
     def financialService
-    def grailsApplication
+
 
     @Secured(["ROLE_BOARDMEMBER"])
     def index() {
@@ -91,6 +91,7 @@ class FinancialController {
         try{
             def h = House.findById(params.long('hmhn'))
             def hm = HouseMonth.get(h.id,params.long('hmdm')).delete(flush:true)
+//            def c = ApplicationHolder.application.mainContext.getBean('com.gcl.ExtendTagsTagLib')
             def c = grailsApplication.mainContext.getBean('com.gcl.ExtendTagsTagLib')
             def output = c.renderMonthlyBox(year:params.int('year'),month:params.int('month'),hm:h)
             obj = [status:true,amount:h.calculateAmountOwed(),output:output]
@@ -126,6 +127,7 @@ class FinancialController {
             def dm = DueMonths.findById(params.long('dmId'))
             def hm = HouseMonth.create(h, dm,true)
             def c = grailsApplication.mainContext.getBean('com.gcl.ExtendTagsTagLib')
+//            def c = ApplicationHolder.application.mainContext.getBean('com.gcl.ExtendTagsTagLib')
             def hmCal = new GregorianCalendar().getInstance()
             hmCal.setTime(dm.startDate)
             def output = c.renderMonthlyBox(year:hmCal.get(hmCal.YEAR),month:hmCal.get(hmCal.MONTH),hm:h)

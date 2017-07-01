@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
-	<head>
+<html lang="en" class="no-js">
+<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<title>Gwynedd Chase Lansdale</title>
 		<meta name="description" content="Gwynedd Chase Lansdale HOA Page">
 		<meta name="keywords" content="Gwynedd Chase,Lansdale,Gwynedd,Penngrove,Ryan,HOA,Penngrove Terrace">
@@ -51,8 +47,8 @@
           			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Messages
         				<span class="caret"></span></a>
         				<ul class="dropdown-menu">
-          					<li><g:link controller="messageEditor" action="index">List</g:link></li>
-          					<li><g:link controller="messageEditor" action="create">Create New</g:link></li>
+          					<li><g:link controller="messages" action="index">List</g:link></li>
+          					<li><g:link controller="messages" action="create">Create New</g:link></li>
         				</ul>
           		</li>
           		<li class="dropdown">
@@ -63,6 +59,7 @@
           					<li><g:link controller="financial" action="index">Financial Overview</g:link></li>
           					<li><g:link controller="financial" action="admin">Hoa Manager</g:link></li>
           					<li><g:link controller="vendor" action="index">Contractors</g:link></li>
+          					<li><g:link controller="bank" action="index">Bank</g:link></li>
           					<li><g:link controller="vendorFin" action="index">Contractor Manager</g:link></li>
           					<li><g:link controller="fee" action="index">Fees</g:link></li>
         				</ul>
@@ -92,7 +89,7 @@
      </div>
      
      <footer class="navbar-fixed-bottom navbar-inverse">
-     		<div class="container" style="color:#FFFFFF;">&copy; 2015<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Gwynedd Chase HOA. <g:meta name="app.version"/>
+     		<div class="container" style="color:#FFFFFF;">&copy; 2015<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Gwynedd Chase HOA. <g:meta name="info.app.version"/>
      		</div>
     </footer>
 	</body>

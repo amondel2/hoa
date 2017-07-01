@@ -9,7 +9,7 @@ import org.hibernate.NonUniqueResultException
 
 import grails.validation.Validateable
 
-import org.codehaus.groovy.grails.web.servlet.mvc.SynchronizerTokensHolder
+import org.grails.web.servlet.mvc.SynchronizerTokensHolder
 
 class RegisterController extends grails.plugin.springsecurity.ui.RegisterController {
 

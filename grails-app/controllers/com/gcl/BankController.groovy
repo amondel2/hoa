@@ -9,18 +9,5 @@ import com.gcl.Bank
 @Transactional(readOnly = true)
 class BankController {
 	static scaffold=Bank
-	
-	def show(Bank bankInstance) {
-		if(!bankInstance) {
-			bankInstance = Bank.findByAmount(params.id)
-		}
-		respond bankInstance
-	}
-	
-	def edit(Bank bankInstance) {
-		if(!bankInstance) {
-			bankInstance = Bank.findByAmount(params.id)
-		}
-		respond bankInstance
-	}
+
 }

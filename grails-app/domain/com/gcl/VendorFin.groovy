@@ -1,17 +1,19 @@
 package com.gcl
 
 import java.util.Date;
-import org.grails.databinding.BindingFormat
+import grails.databinding.BindingFormat
 
-class VendorFin {
+class VendorFin implements Serializable {
 
-    static constraints = {
-		vendor nullable:false
-		paidDate nullable:true
-    }
-	
-	static belongsTo = [vendor:Vendor]
-	
+	private static final long serialVersionUID = 1
+
+	static constraints = {
+		vendor nullable: false
+		paidDate nullable: true
+	}
+
+	static belongsTo = [vendor: Vendor]
+
 	Vendor vendor
 	BigDecimal amount
 	@BindingFormat('MM/dd/yyyy')

@@ -1,4 +1,11 @@
-/target/
-/.settings/
-/bin/
-/ROOT.war
+Thumbs.db
+.DS_Store
+.gradle
+build/
+.idea
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
