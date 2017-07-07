@@ -27,13 +27,13 @@ class HouseMonthService {
     }
 
     def getFirstPaymentYear(hid) {
-        (HouseMonth.withCriteria{
+        ( HouseMonth.withCriteria{
                 eq('house',House.findById(hid))
                 months{
                     order "startDate", "ASC"
                 }
                 maxResults 1
                 firstResult 0
-            }?.get(0)?.months.startDate.getYear() ?: 100) + 1900
+            }?.get(0)?.months?.startDate?.getYear() ?: 100) + 1900
     }
 }
