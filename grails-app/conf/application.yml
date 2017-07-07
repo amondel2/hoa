@@ -110,7 +110,7 @@ environments:
             dbCreate: update
             username: root
             password: splatt66
-            url: jdbc:mysql://localhost:3306/tomcat?useUnicode=yes&characterEncoding=UTF-8
+            url: jdbc:mysql://localhost:3306/tomcat?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
     test:
         dataSource:
             dbCreate: update
@@ -118,7 +118,7 @@ environments:
     production:
         dataSource:
             dbCreate: none
-            url: jdbc:mysql://127.5.26.130:3306/gwyneddchase?useUnicode=yes&characterEncoding=UTF-8
+            url: jdbc:mysql://127.5.26.130:3306/gwyneddchase?useUnicode=yes&characterEncoding=UTF-8useSSL=false
             properties:
                 jmxEnabled: true
                 initialSize: 5
