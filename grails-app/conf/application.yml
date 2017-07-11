@@ -118,7 +118,7 @@ environments:
     production:
         dataSource:
             dbCreate: none
-            url: jdbc:mysql://127.5.26.130:3306/gwyneddchase?useUnicode=yes&characterEncoding=UTF-8useSSL=false
+            url: jdbc:mysql://127.5.26.130:3306/gwyneddchase?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
             properties:
                 jmxEnabled: true
                 initialSize: 5
