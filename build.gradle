@@ -19,6 +19,7 @@ apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"asset-pipeline"
+apply plugin: "java"
 
 repositories {
     mavenLocal()
@@ -57,6 +58,20 @@ bootRun {
     addResources = true
 }
 
+compileJava {
+//raise heap
+    options.fork = true
+    options.forkOptions.with {
+        memoryMaximumSize = '4g'
+    }
+}
+
+tasks.withType(GroovyCompile) {
+    configure(groovyOptions.forkOptions) {
+        memoryMaximumSize = '4g'
+        jvmArgs = ['-XX:MaxPermSize=2g', '-Xms2g', '-Xmx4g']
+    }
+}
 
 assets {
     minifyJs = true
