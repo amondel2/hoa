@@ -16,6 +16,9 @@ class Profile implements Serializable {
 	String answer1
 	String question2
 	String answer2
+	Boolean showEmailInfo = false
+	Boolean showAddressInfo = false
+    Boolean showPhone = false
 
     static constraints = {
 		id  unique:true,nullable:true,display:true
@@ -38,6 +41,9 @@ class Profile implements Serializable {
 				return ["default.not.unique.message",'answer2','Profile',val]
 		}
 		phoneNumber nullable:true,blank:true
+		showEmailInfo nullable:true,blank:false
+		showAddressInfo nullable:true,blank:false
+        showPhone nullable:true,blank:false
     }
 
 	static mapping = {
