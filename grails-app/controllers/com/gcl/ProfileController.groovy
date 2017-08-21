@@ -93,6 +93,9 @@ class ProfileController {
             return
         }
 
+        def email = params.email
+        profileInstance.user.email = email
+
         profileInstance.save flush:true
 
         request.withFormat {
@@ -170,6 +173,10 @@ class ProfileController {
                 redirect action: "edit"
             }
         }
+
+        def email = params.email
+        profileInstance.user.email = email
+
 
         if (profileInstance.hasErrors()) {
             respond profileInstance.errors, view:'edit', model:[user: springSecurityService.currentUser,hl:House.list()]

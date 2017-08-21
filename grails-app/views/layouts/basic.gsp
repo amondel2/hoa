@@ -39,7 +39,7 @@
              <sec:ifLoggedIn>
              	<li><a href="/board">Board</a></li>
 				 <sec:ifAllGranted roles="ROLE_USER">
-				 	<li><a href="/home/contactList">ContactList</a></li>
+				 	<li><a href="/home/contactList">Contact List</a></li>
 				 </sec:ifAllGranted>
              	<li><a href="/home/contact">Contact Us</a></li>
              	<li><a href="/home/cal">Calendar</a></li>
@@ -69,16 +69,24 @@
           		</li>
           		</sec:ifAllGranted>
             </ul>
-          <ul class="nav navbar-nav navbar-right"><li>
+          <ul class="nav navbar-nav navbar-right">
           <sec:ifLoggedIn>
-          	<a href="/profile" title="Edit Profile" class="navbar-brand">Welcome <glc:getUserFName /></a>
-          	<g:link controller="logout" class="navbar-brand" elementId="logout"><g:message code='spring.security.ui.login.logout'/></g:link>
+			  <li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Welcome <glc:getUserFName />
+					  <span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					  <li><a href="/profile">Show Profile</a></li>
+					  <li><g:link elementId="logout" controller="logout"><g:message code='spring.security.ui.login.logout'/></g:link></li>
+				  </ul>
+			  </li>
           </sec:ifLoggedIn>
          
           <sec:ifNotLoggedIn>
+			  <li>
           	<g:link controller='login' action='auth'>Login</g:link>
+			  </li>
        		</sec:ifNotLoggedIn>
-       		</li></ul>
+       		</ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
