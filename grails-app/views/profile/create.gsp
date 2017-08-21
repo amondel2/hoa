@@ -27,6 +27,10 @@
             <g:form resource="${this.profile}" method="POST">
                 <fieldset class="form">
                     <f:all bean="profile" except="home,user" />
+                    <div class="fieldcontain required">
+                        <label for="email">E-Mail</label>
+                        <input id="email" required="required" name="email" value="${profile?.user?.email ?: user?.email}" type="email" minlength="6">
+                    </div>
                      <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_BOARDMEMBER">
                                         <div class="form-group">
                                             <label for="House">
