@@ -38,6 +38,9 @@
             <li><a href="/">Home</a></li>
              <sec:ifLoggedIn>
              	<li><a href="/board">Board</a></li>
+				 <sec:ifAllGranted roles="ROLE_USER">
+				 	<li><a href="/home/contactList">ContactList</a></li>
+				 </sec:ifAllGranted>
              	<li><a href="/home/contact">Contact Us</a></li>
              	<li><a href="/home/cal">Calendar</a></li>
              	<li><a href="/documents">HOA Documents</a></li>
