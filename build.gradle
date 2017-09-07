@@ -2,6 +2,7 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "http://dl.bintray.com/stefanogualdi/plugins" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
@@ -10,7 +11,7 @@ buildscript {
     }
 }
 
-version "1.18"
+version "1.19"
 group "hoa"
 
 apply plugin:"eclipse"
@@ -51,6 +52,7 @@ dependencies {
     compile 'org.grails.plugins:spring-security-core:3.1.2'
     compile 'org.grails.plugins:spring-security-ui:3.0.0.M2'
     runtime 'mysql:mysql-connector-java:5.1.39'
+    compile "org.grails.plugins:ckeditor:4.5.9.0"
 }
 
 bootRun {

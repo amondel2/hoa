@@ -23,6 +23,9 @@
 				<g:each in="${messages}" var="msg">
 					<a  class="list-group-item list-group-item-action">${msg.text}</a>
 				</g:each>
+						<div style="text-align: left;">
+						${raw(meetmins)}
+						</div>
 				</div>
 					</g:if>
 				</sec:ifLoggedIn>
