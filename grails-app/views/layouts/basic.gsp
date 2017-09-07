@@ -16,6 +16,7 @@
 		<asset:javascript src="main.js"/>
 		<asset:stylesheet src="bootstrap-datepicker3.min.css"/>
 		<asset:javascript src="bootstrap-datepicker.min.js" />
+        <ckeditor:resources/>
 		<g:layoutHead/>
 	</head>
 	<body>
@@ -65,6 +66,7 @@
           					<li><g:link controller="bank" action="index">Bank</g:link></li>
           					<li><g:link controller="vendorFin" action="index">Contractor Manager</g:link></li>
           					<li><g:link controller="fee" action="index">Fees</g:link></li>
+							<li><g:link controller="meetingMinutes" action="index">Last Meeting Minutes</g:link></li>
         				</ul>
           		</li>
           		</sec:ifAllGranted>
