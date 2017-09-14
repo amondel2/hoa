@@ -31,7 +31,18 @@ endpoints:
     enabled: false
     jmx:
         enabled: true
-
+---
+grails:
+    plugin:
+        awssdk:
+            accessKey: {ACCESS_KEY}
+            secretKey: {SECRET_KEY}
+            region: us-east-1       # Global default setting
+            ses:
+                accessKey: {ACCESS_KEY} # (optional)
+                secretKey: {SECRET_KEY} # (optional)
+                region: us-east-1     # (optional)
+                sourceEmail: gwyneddchaselansdale@gmail.com # (optional)
 ---
 grails:
     mime:
