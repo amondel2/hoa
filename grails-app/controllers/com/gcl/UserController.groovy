@@ -3,6 +3,8 @@ import grails.converters.JSON
 import grails.converters.XML
 import grails.plugin.springsecurity.annotation.Secured
 
+import java.nio.file.SecureDirectoryStream
+
 class UserController extends grails.plugin.springsecurity.ui.UserController {
 
     @Secured(['ROLE_BOARDMEMBER'])
@@ -68,4 +70,19 @@ class UserController extends grails.plugin.springsecurity.ui.UserController {
 
      	respond matchingActs, model:['userInstanceList':matchingActs]
     }
+
+    @Secured(['ROLE_BOARDMEMBER'])
+    def sendMail(){
+        int statusId = amazonSESTemplateService.sendTemplate(
+                'amondel2@gmail.com',
+                'TEST E_MAIL',
+                [],             // Subject variables, if required
+                [
+                        foo: 'Some value to use in the template',
+                        bar: 'Another value'
+                ],
+                'test'          // GSP located in '/views/template/emails/_test.gsp'
+        )
+    }
+
 }
