@@ -1,13 +1,11 @@
 package com.gcl
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
-import grails.transaction.Transactional
 import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.converters.JSON
 import java.util.UUID
 
 @Secured(["ROLE_USER"])
-@Transactional(readOnly = true)
 class ProfileController {
 
     def springSecurityService
@@ -52,7 +50,7 @@ class ProfileController {
         respond new Profile(params), model:[user: springSecurityService.currentUser,hl:House.list()]
     }
 
-    @Transactional
+
     @Secured(['ROLE_BOARDMEMBER'])
     def createFromUser() {
         Profile p = new Profile()
@@ -79,8 +77,6 @@ class ProfileController {
     }
 
 
-
-    @Transactional
     @Secured(["permitAll"])
     def save(Profile profileInstance) {
         if (profileInstance == null) {
@@ -122,7 +118,7 @@ class ProfileController {
     }
 
 
-    @Transactional
+
     @Secured(["ROLE_BOARDMEMBER","ROLE_ADMIN","ROLE_USER"])
     def readOnlyHoaPayments(){
 
@@ -159,7 +155,7 @@ class ProfileController {
         }
     }
 
-    @Transactional
+
     @Secured(["permitAll"])
     def update(Profile profileInstance) {
         if (profileInstance == null) {

@@ -42,19 +42,12 @@
 				 <sec:ifAllGranted roles="ROLE_USER">
 				 	<li><a href="/home/contactList">Contact List</a></li>
 				 </sec:ifAllGranted>
+				 <li><a href="/meetingMinutes/archive/">Meeting Minutes Archive</a></li>
              	<li><a href="/home/contact">Contact Us</a></li>
              	<li><a href="/home/cal">Calendar</a></li>
              	<li><a href="/documents">HOA Documents</a></li>
              </sec:ifLoggedIn>
               	<sec:ifAllGranted roles="ROLE_BOARDMEMBER">
-          		<li class="dropdown">
-          			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Messages
-        				<span class="caret"></span></a>
-        				<ul class="dropdown-menu">
-          					<li><g:link controller="messages" action="index">List</g:link></li>
-          					<li><g:link controller="messages" action="create">Create New</g:link></li>
-        				</ul>
-          		</li>
           		<li class="dropdown">
           			<a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration
         				<span class="caret"></span></a>
@@ -67,6 +60,7 @@
           					<li><g:link controller="vendorFin" action="index">Contractor Manager</g:link></li>
           					<li><g:link controller="fee" action="index">Fees</g:link></li>
 							<li><g:link controller="meetingMinutes" action="index">Last Meeting Minutes</g:link></li>
+							<li><g:link controller="messages" action="index">Manage Messages</g:link></li>
         				</ul>
           		</li>
           		</sec:ifAllGranted>

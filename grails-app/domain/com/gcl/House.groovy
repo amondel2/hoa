@@ -1,13 +1,11 @@
 package com.gcl
 import java.util.Calendar
 
-import org.apache.commons.logging.LogFactory
 
 class House implements Serializable {
 	
 	private static final long serialVersionUID = 1
-	private static final log = LogFactory.getLog(this)
-	
+
     static constraints = {
 		address1 nullable:false, unique: ['address2','city','state']
 		address2 nullable:true, blank:true
