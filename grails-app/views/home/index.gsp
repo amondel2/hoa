@@ -24,12 +24,13 @@
 					<a  class="list-group-item list-group-item-action">${msg.text}</a>
 				</g:each>
 
-				</div>
-					<h2>Last Meeting Minutes</h2>
-				<div style="text-align: left;">
-					${raw(meetmins)}
-				</div>
+					</div>
 					</g:if>
+
+					<h2>Last Meeting Minutes</h2>
+					<div style="text-align: left;">
+						${raw(meetmins)}
+					</div>
 				</sec:ifLoggedIn>
 		        <br>
 				
