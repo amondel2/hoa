@@ -38,7 +38,6 @@
                                             </label>
                                             <g:select name="home" from="${hl}" value="${profile.homeId}" optionKey="id" />
                                         </div>
-                       <select type="hidden" style="display:none" id="user" name="user.id" required=""
                      </sec:ifAnyGranted>
                      <input type="hidden" style="display:none" id="user" name="user.id" required="" value="${profile.user ? profile.user.id : user.id }" />
                 </fieldset>
