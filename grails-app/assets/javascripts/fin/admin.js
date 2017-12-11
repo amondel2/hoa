@@ -1,5 +1,54 @@
 var closeAllowed = true
 
+var missPayment = {
+    message: $("#missPayment").html(),
+    onhide: function(dialogRef){
+        if(!closeAllowed){
+            return false;
+        }
+    },
+    title: 'Add Missing payment',
+    buttons: [{
+        label: 'Cancel',
+        action: function(dialogRef) {
+            closeAllowed = true;
+            dialogRef.close();
+        }
+    },{
+        label: 'Add',
+        action: function(dialogRef) {
+            closeAllowed = false;
+            var myForm = (dialogRef.getModalBody()).find("form");
+            if(myForm[0].checkValidity()) {
+                var frmDate = myForm.serialize();
+                $.ajax({
+                    url: "missPayment",
+                    data: frmDate,
+                    method: "POST"
+
+                }).done(function(data){
+                    if(data.status == true) {
+                        closeAllowed = true;
+                        alert("Items Saved");
+                    } else {
+                        alert("Issues " + data.message);
+                    }
+                    dialogRef.close();
+                    window.location.reload();
+                }).fail(function(){
+                    alert("unkown Error");
+                    dialogRef.close();
+                });
+            } else {
+                closeAllowed = true;
+            }
+
+        }
+
+    }
+    ]
+};
+
 var feeAdd = {
         message: $("#feeAdd").html(),
         onhide: function(dialogRef){
@@ -224,6 +273,14 @@ $.contextMenu({
         	deleteDm(frmdata,elem);
          }
         },
+        "ParialPayment": {name: "Parial Payment", callback: function(key, opt){
+                var elem = $(this).children("input:first");
+                $("#mphmdm").val($(elem).attr('hmdm'));
+                $("#mphmhn").val($(elem).attr('hmhn'));
+                BootstrapDialog.show(missPayment);
+                modify_box(elem,true,true,true);
+            }
+        }
     }
 });
 

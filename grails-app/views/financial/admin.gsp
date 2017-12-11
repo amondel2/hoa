@@ -4,7 +4,7 @@
         <meta name="layout" content="basic"/>
         <title>Finacial Controller</title>
     <asset:stylesheet src="bootstrap-dialog.css"/>
-    <asset:stylesheet src="jquery-contextMenu.css"/>
+    <asset:stylesheet src="jquery.contextMenu.css"/>
     <asset:javascript src="bootstrap-dialog.js" />
     <asset:javascript src="jquery.contextMenu.js" />
 </head>
@@ -41,7 +41,7 @@
                             <td><glc:renderCheckAllBox header="${houseNumber}" orient="horz"/></td>
                     <td id="${houseNumber}amountOwed">${hm.calculateAmountOwed()}</td>
                     <g:each in="${0..11}" var="i">
-                        <td>
+                        <td class="contextMenu">
                         <glc:renderMonthlyBox hm="${hm}" month="${i}" year="${viewYear}" />
 
                         </td>
@@ -71,6 +71,13 @@
                 <input type="hidden" name="months" value="" />
                 <input type="hidden" name="year" value="" />
                 <input type="hidden" name="hnid" value="" />
+            </form>
+        </div>
+        <div id="missPayment">
+            <form id="missPaymentfrm">
+                <label for="misspayamount">Enter the amount</label><input type="number" min="1" step="1" required="" id="misspayamount" name="amount" />
+                <input type="hidden" id="mphmdm" name="hmdm" value="" />
+                <input type="hidden" id="mphmhn" name="hmhn" value="" />
             </form>
         </div>
     </div>

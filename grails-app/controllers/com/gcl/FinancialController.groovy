@@ -140,6 +140,27 @@ class FinancialController {
         }
     }
 
+    def missPayment(){
+        def obj = [status:true]
+        try {
+            HouseMonth hm = HouseMonth.get(params.long('hmhn'), params.long('hmdm'))
+            Fee f = new Fee()
+            f.amount = new BigDecimal(params.amount)
+            f.house = hm.house
+            f.assessmentDate = hm.months.startDate
+            f.dueDate = hm.months.endDate
+            f.feetype = FeeType.UnderPaidDues
+            f.description = "Under Paid Dues"
+            f.save()
+        } catch(Exception e) {
+            obj.status = false
+            obj.message = e.getMessage()
+        }
+        request.withFormat {
+            '*'{ render  obj as JSON }
+        }
+    }
+
     def changePaid(){
         def isPaid = params.boolean('isPaid')
         def hm = HouseMonth.get(params.long('hmhn'),params.long('hmdm'))
