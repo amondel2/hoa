@@ -16,4 +16,9 @@ class Bank implements Serializable {
 	def beforeDelete(){
 		return false
 	}
+
+	@Override
+	String toString() {
+		return this.name
+	}
 }

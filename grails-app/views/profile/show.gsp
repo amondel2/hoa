@@ -64,15 +64,7 @@
                             <h3>Outstanding Fees</h3>
                             <div style="text-align:left;">
                                 <g:each in='${fee}' var="f">
-
-                                    <ul>
-                                        <li>${f.description}
-                                            <ul>
-                                                <li>Amount: ${'$' + f.amount}</li>
-                                                <li> Due Date: <g:formatDate format="MM-dd-yyyy" date="${f.dueDate}" /></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    <div> Due Date: <g:formatDate format="MM-dd-yyyy" date="${f.dueDate}" /> ${f.toString()}</div>
                                 </g:each>
                             </div>
                         </g:if>

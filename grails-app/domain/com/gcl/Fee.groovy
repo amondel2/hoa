@@ -20,4 +20,10 @@ class Fee implements Serializable {
 		amount min: new BigDecimal(0)
 		paidDate nullable: true, blank: true
 	}
+
+	@Override
+	String toString() {
+		return this.feetype.toString() + " for " + this.amount + " " + this.description
+	}
+
 }
