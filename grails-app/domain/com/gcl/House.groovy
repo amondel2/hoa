@@ -16,7 +16,7 @@ class House implements Serializable {
 		type nullable:false
     }
 	
-	static hasMany=[fees:Fee,profiles:Profile]
+	static hasMany=[fees:Fee,profiles:Profile,cars:HouseCar]
 
 	String toString() {
 		"${this.address1}, " + (this.address2 ? "${this.address2}, " : "") + "${this.city}, ${this.state} ${this.zip1}" + (this.zip2  ? "-${this.zip2}" : "")
