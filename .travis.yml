@@ -3,8 +3,7 @@ deploy:
   skip_cleanup: true
   provider: elasticbeanstalk
   access_key_id: AKIAJ45W6Z7JOHBLW5EQ
-  secret_access_key:
-    secure: "yRUDIYyQNWCtJZ9BisMbxyrIvAP4ehbAGv8wTQDDRJRI5kP9Np1sjNtfO4CHaKXHJ0Urb3Sh73bSoPmwYOm9zWAtwywh4E9hlExdsT871OLxyUqzHjEqZF1qHbS7D67bsdlKcRVZ3F/xDc2IP9p2xqj9fQJgCoMBWcfxEPaYx3F3yogFur0tAy0/ORej/Lb0Kb4Qzk5/F4nenlatzVUKJvhlZF/JpHj+7/PwStYkGofd0nBCQZlCLigiiIxxq/9CK7l1ehVDSE89CrGRwhfqSpuWGejipKQaBBRp5pps+SqKNl5H5KLcWM7soXCQVd/SCdnvemgs4QldSl1kC4tkebNQUaVJyEIUu2NQnHoHi1hLyuBlI9PUdwqLCFEuGEekA+cAxKhFLt9W5EIN3Q4NBz9s4v6fiMLqmBy0Hl0ND+ALP5LbrfE+EvuZ2jnApVnKfzFsaL+eyQ5Nm+Ee6+BAv+2rB9VPTMWJHR8+DXkupc4gCvhQaNmyrHvPOVGuakYr263qMeK3D0b2dRqydx4Yx6qAQAt24AnoGS60sIjhz1Ta5F42PwU0PeNFJS4PZkclVOf9H0bLuHzEtecTCHZgG8/1TKu43q5mdKO32BKRh0xlv+jlreRCXja9a54IHIzIh2+LCbg2rYkSnkUP1r5jwL62ou1tj8C/9jc/3akp+3A="
+  secret_access_key: AsHVokSAyllMC9wvbIdwOrYdsgYk+r6sagE/af8O
   zip_file: "build/libs/hoa-1.25.war"
   region: "us-east-1"
   app: "Gwyneedchase2"
