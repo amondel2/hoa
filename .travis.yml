@@ -4,6 +4,6 @@ deploy:
   access_key_id:  AKIAJM4WUFGASDOUUFMA
   secret_access_key: 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
   region: "us-east-1"
-  app: "gwyneedchase"
+  app: "Gwyneedchase2"
   env: "e-mippm9ymdv"
   bucket_name: "elasticbeanstalk-us-east-1-731090865469"
