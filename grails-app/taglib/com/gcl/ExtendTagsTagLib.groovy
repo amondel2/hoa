@@ -38,16 +38,13 @@ class ExtendTagsTagLib {
 
     def renderCheckAllBox = { attrs, body ->
         out << body() <<  """
-		<ul class='nav navbar-nav'><li><a href='#' style="padding:0px;">${attrs.header}</a></li><li>
-		<li class='dropdown'>
-		  <a class='dropdown-toggle' data-toggle='dropdown' href='#' style="padding:0px;">
-			<span class="checkBox_Bass"></span>
-			<span class='caret'></span></a>
-			<ul class='dropdown-menu'>
-				  <li class="checkAllBtn" orient="${attrs.orient}"><a href='#'>All</a></li>
-				  <li class="checkNoneBtn" orient="${attrs.orient}"><a href='#'>None</a></li>
-			</ul>
-		  </li>
+		<ul class='nav navbar-nav'><li class='dropdown nav-item'><a class="dropdown-toggle nav-link" data-toggle="dropdown" href='#' style="padding:0px;">${attrs.header}
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+		    <li class="nav-item dropdown-item checkAllBtn" orient="${attrs.orient}"><a class="nav-link" href='#'>All</a></li>
+		    <li class="nav-item dropdown-item checkNoneBtn" orient="${attrs.orient}"><a class="nav-link" href='#'>None</a></li>
+		</ul>
+		</li>
 		</ul>
 	 """
 
