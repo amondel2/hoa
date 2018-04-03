@@ -1,8 +1,10 @@
 language: groovy
 deploy:
+  skip_cleanup: true
   provider: elasticbeanstalk
   access_key_id:  AKIAJM4WUFGASDOUUFMA
   secret_access_key: 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
+  zip_file: 'build/libs/hoa-1.24.war'
   region: "us-east-1"
   app: "Gwyneedchase2"
   env: "gwyneedchase"
