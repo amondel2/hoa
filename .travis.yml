@@ -1,1 +1,10 @@
 language: groovy
+deploy:
+  provider: elasticbeanstalk
+  access_key_id:  AKIAJM4WUFGASDOUUFMA
+  secret_access_key:
+    secure: "Encypted CGcDGo1mZn17p39Qx0KMYF2c4uzJzmKsJYkJeiXE="
+  region: "us-east-1"
+  app: "gwyneedchase"
+  env: "e-mippm9ymdv"
+  bucket_name: "elasticbeanstalk-us-east-1-731090865469"
