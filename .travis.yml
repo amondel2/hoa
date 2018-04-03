@@ -5,5 +5,5 @@ deploy:
   secret_access_key: CGcDGo1mZn17p39Qx0KMYF2c4uzJzmKsJYkJeiXE
   region: "us-east-1"
   app: "Gwyneedchase2"
-  env: "e-mippm9ymdv"
+  env: "gwyneedchase"
   bucket_name: "elasticbeanstalk-us-east-1-731090865469"
