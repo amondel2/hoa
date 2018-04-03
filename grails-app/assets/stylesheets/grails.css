@@ -31,7 +31,9 @@ pre {
     margin-bottom: 0px;
     padding-right: 110px;
 }
-
+.navbar .container {
+    margin: 10px;
+}
 .navbar-default a {
     color: #ffffff !important;
     font-size: 18px !important;
@@ -42,7 +44,6 @@ pre {
 
 }
 .navbar-default, .navbar-static-top {
-    background-color: #4D8618;
     border: 0px;
 }
 a.navbar-brand {
@@ -51,23 +52,22 @@ a.navbar-brand {
 }
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
     background-color: transparent;
-    color: white;
+
 }
 .navbar-nav>li.active>a {
     color: white !important;
 }
 .navbar-nav>li>a:hover {
-    background-color: #db4800;
-    color: white !important;
+
 }
 .navbar-nav>li>a {
-    color: #c0d3db;
+
 }
 .navbar-default .navbar-toggle .icon-bar {
-    background-color: white;
+
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-    background-color: #db4800;
+
 }
 
 @media (min-width: 768px) {
@@ -111,7 +111,7 @@ a.navbar-brand {
 
 #band {
     /*grey =#808080*/
-    background: #79B94C  no-repeat 50% 30%;
+    background: #808080  no-repeat 50% 30%;
     height: 400px;
 }
 
@@ -233,15 +233,15 @@ a.navbar-brand {
 
 @media (max-width: 1010px) {
     .event-logo {
-        height: ;
+        height: 100px;
     }
-
 }
 
 @media (max-width: 690px) {
     .event-logo {
         height: 60px;
-    }}
+    }
+}
 
 @media (max-width: 475px) {
     .event-logo {
@@ -379,12 +379,10 @@ body, html {
 }
 
 a {
-    color: #db4800;
     text-decoration: underline;
 }
 
 a:hover {
-    color: #db4800;
     text-decoration: none
 }
 
@@ -408,17 +406,7 @@ h4 {
     font-weight: bold;
 }
 
-h5 {
-    font-size: 1.125em;
-    font-weight: bold;
-    color: #db4800;
-}
 
-h6 {
-    font-size: 1.08em;
-    font-weight: normal;
-    color: #db4800;
-}
 
 h7 {
     font-weight: bold;
@@ -751,14 +739,14 @@ h8 {
 
 #content.page-1 .row article h1 {
     margin: 0;
-    paddnig: 0;
+    padding: 0;
     text-align: left;
     font-size: 26px
 }
 
 #content.page-1 .row article h2 {
     margin: 0;
-    paddnig: 0
+    padding: 0
 }
 
 #content.page-1 .row article h3 {
@@ -804,7 +792,7 @@ ul.nav-sidebar li.active a {
 .table thead tr th {
     padding: 10px;
     font-weight: normal;
-    font-size: 18px
+
 }
 
 .table tbody tr td {
@@ -861,7 +849,8 @@ html, body, .st-container, .st-pusher, .st-content {
 
 .st-pusher {
     position: relative;
-    left: 0;
+    left: 0;background-color: #ffffff;
+    border: 1px solid #eeeeee;
     z-index: 99;
     height: 100%;
     -webkit-transition: -webkit-transform .5s;
@@ -897,7 +886,7 @@ html, body, .st-container, .st-pusher, .st-content {
     visibility: hidden;
     width: 300px;
     height: 100%;
-    background: #79B94C;
+    background: #2559a7;
     -webkit-transition: all .5s;
     transition: all .5s;
     right: -600px

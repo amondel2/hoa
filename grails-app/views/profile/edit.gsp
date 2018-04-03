@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="basic" />
+        <meta name="layout" content="basic_scaf" />
         <g:set var="entityName" value="${message(code: 'profile.label', default: 'Profile')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#edit-profile" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_BOARDMEMBER">
         <div class="nav" role="navigation">
             <ul>
