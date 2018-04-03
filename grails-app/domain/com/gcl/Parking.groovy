@@ -6,6 +6,6 @@ class Parking {
     }
 
     static hasMany = [parkingSpotReservations:ParkingSpotReservation]
-    def spotNumber
+    String spotNumber
 
 }
