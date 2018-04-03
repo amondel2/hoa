@@ -105,5 +105,26 @@
      		<div class="container" style="color:#FFFFFF;">&copy; 2015<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Gwynedd Chase HOA. <g:meta name="info.app.version"/>
      		</div>
     </footer>
+	<sec:ifLoggedIn>
+	<script>
+
+		function logout(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $("#_logout").attr("href"),
+                method: "post",
+                success: function (data, textStatus, jqXHR) {
+                    window.location = $("#_afterLogout").attr("href");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Logout error, textStatus: " + textStatus + ", errorThrown: " + errorThrown);
+                }
+            });
+        }
+			$(document).ready(function() {
+                $("#logout").click(logout);
+            });
+	</script>
+	</sec:ifLoggedIn>
 	</body>
 </html>
