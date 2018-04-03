@@ -22,9 +22,9 @@ function generateReadOnlyHoa(year) {
                 if (item == -1) {
                     htmlData += "N/A";
                 } else if (item == 0 || !item) {
-                    htmlData += "<span class='glyphicon glyphicon glyphicon-remove'></span>";
+                    htmlData += "<span class='oi oi-x' style='color:red'></span>";
                 } else {
-                    htmlData += "<span class='glyphicon glyphicon glyphicon-ok'></span>";
+                    htmlData += "<span class='oi oi-check' style='color:green;'></span>";
                 }
                 htmlData += "</td>";
             }

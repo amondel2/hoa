@@ -11,7 +11,6 @@
             </script>
     </head>
     <body>
-        <a href="#show-profile" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_BOARDMEMBER">
         <div class="nav" role="navigation">
             <ul>
@@ -34,8 +33,8 @@
             </ol>
                    <g:if  test="${profile.homeId}">
                         <label for="dueYear">Select a Year</label><g:select name="dueYear" id="dueYear" from="${getFirstPayment..endYear}" value="${endYear}" />
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
+
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Amount Owed</th>
@@ -58,7 +57,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+
 
                         <g:if  test="${fee && fee.size() > 0}">
                             <h3>Outstanding Fees</h3>
