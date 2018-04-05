@@ -30,3 +30,57 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		[pattern: '/**/favicon.ico', filters: 'none'],
 		[pattern: '/**',             filters: 'JOINED_FILTERS']
 ]
+
+
+String pass = System.getProperty("DB_PASSWORD")?.toString() ?: "splatt66"
+String user = System.getProperty("DB_USER")?.toString() ?: "root"
+dataSource {
+	pooled = true
+	jmxExport = true
+	driverClassName = "com.mysql.jdbc.Driver"
+	dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+}
+
+environments {
+	development {
+		dataSource {
+			password = pass
+			dbCreate = "update"
+			username = user
+			url= "jdbc:mysql://localhost:3306/gwyneddchase?useUnicode=yes&characterEncoding=UTF-8&useSSL=false"
+		}
+	}
+	test {
+		dataSource {
+			dbCreate = "create-drop"
+			url = 'jdbc:h2:file:myDevDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE'
+		}
+	}
+	production{
+		dataSource {
+			dbCreate = "none"
+			username = user
+			password = pass
+			url= "jdbc:mysql://gwyneddchase.ccxgtpe7qnm5.us-east-1.rds.amazonaws.com:3306/gwyneddchase?useUnicode=yes&characterEncoding=UTF-8&useSSL=false"
+			properties {
+				jmxEnabled = true
+				initialSize = 5
+				maxActive = 50
+				minIdle = 5
+				maxIdle = 25
+				maxWait = 10000
+				maxAge = 600000
+				timeBetweenEvictionRunsMillis = 5000
+				minEvictableIdleTimeMillis = 60000
+				validationQuery = "SELECT 1"
+				validationQueryTimeout = 3
+				validationInterval = 15000
+				testOnBorrow = true
+				testWhileIdle= true
+				testOnReturn = false
+				jdbcInterceptors = "ConnectionState"
+				defaultTransactionIsolation= 2 // TRANSACTION_READ_COMMITTED
+			}
+		}
+	}
+}
