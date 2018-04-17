@@ -101,7 +101,7 @@
 		 </div>
      </div>
 
-	<footer class="navbar-fixed-bottom navbar-dark bg-dark">
+	<footer class="footer navbar-fixed-bottom navbar-dark bg-dark">
      		<div class="container" style="color:#FFFFFF;">&copy; 2015<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Gwynedd Chase HOA. <g:meta name="info.app.version"/>
      		</div>
     </footer>

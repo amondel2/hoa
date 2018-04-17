@@ -1,76 +1,72 @@
 var closeAllowed = true
 
-var missPayment = {
-    message: $("#missPayment").html(),
-    onhide: function(dialogRef){
-        if(!closeAllowed){
-            return false;
-        }
-    },
-    title: 'Add Missing payment',
-    buttons: [{
-        label: 'Cancel',
-        action: function(dialogRef) {
-            closeAllowed = true;
-            dialogRef.close();
-        }
-    },{
-        label: 'Add',
-        action: function(dialogRef) {
-            closeAllowed = false;
-            var myForm = (dialogRef.getModalBody()).find("form");
-            if(myForm[0].checkValidity()) {
-                var frmDate = myForm.serialize();
-                $.ajax({
-                    url: "missPayment",
-                    data: frmDate,
-                    method: "POST"
 
-                }).done(function(data){
-                    if(data.status == true) {
-                        closeAllowed = true;
-                        alert("Items Saved");
-                    } else {
-                        alert("Issues " + data.message);
-                    }
-                    dialogRef.close();
-                    window.location.reload();
-                }).fail(function(){
-                    alert("unkown Error");
-                    dialogRef.close();
-                });
+$('#feeAddSaveBtn').on('click', function (e) {
+    var button = $(e.relatedTarget);
+    var frmDate = $("#feeAddFrm").serialize();
+    $.ajax({
+        url: "createDues",
+        data: frmDate,
+        method: "POST"
+
+    }).done(function(data){
+        if(data.status == true) {
+            alert("Items Saved");
+        } else {
+            alert("Issues " + data.message);
+        }
+        closeAllowed = true;
+        $('#feeAdd').modal('hide');
+        window.location.reload();
+    }).fail(function(){
+        alert("unkown Error");
+        closeAllowed = true;
+        $('#feeAdd').modal('hide');
+    });
+
+});
+
+$('#missPaymentbtn').on('click', function (e) {
+    var button = $(e.relatedTarget);
+    closeAllowed = false;
+    var myForm = $("#missPaymentfrm");
+    if(myForm[0].checkValidity()) {
+        var frmDate = myForm.serialize();
+        $.ajax({
+            url: "missPayment",
+            data: frmDate,
+            method: "POST"
+
+        }).done(function(data){
+            if(data.status == true) {
+                alert("Items Saved");
             } else {
-                closeAllowed = true;
+                alert("Issues " + data.message);
             }
-
-        }
-
+            closeAllowed = true;
+            window.location.reload();
+        }).fail(function(){
+            alert("unkown Error");
+            closeAllowed = true;
+            $('#missPayment').modal('hide');
+        });
+    } else {
+        closeAllowed = true;
+        $('#missPayment').modal('hide');
     }
-    ]
-};
 
-var feeAdd = {
-        message: $("#feeAdd").html(),
-        onhide: function(dialogRef){
-        	if(!closeAllowed){
-                return false;
-            }
-        },
-        title: 'Add New Month fees',
-        buttons: [{
-            label: 'Close',
-            action: function(dialogRef) {
-                dialogRef.close();
-            }
-        },{
-            label: 'Create',
-            action: function(dialogRef) {
+
+});
+
+
+$('#SingfeeAddSaveBtn').on('click', function (e) {
+
             	closeAllowed = false;
-            	var myForm = (dialogRef.getModalBody()).find("form");
+            	var myForm = $("#feeAddSinglefrm");
             	if(myForm[0].checkValidity()) {
             		var frmDate = myForm.serialize();
             		$.ajax({
-            			url: "createDues",
+            			url: "createDuesSingle",
             			data: frmDate,
             			method: "POST"
             			
@@ -81,78 +77,19 @@ var feeAdd = {
             				alert("Issues " + data.message);
             			}
             			closeAllowed = true;
-            			dialogRef.close();
             			window.location.reload();
             		}).fail(function(){
             			alert("unkown Error");
             			closeAllowed = true;
-            			dialogRef.close();
+                        $('#feeAddSingle').modal('hide');
             		});
             	} else {
             		closeAllowed = true;
+                    $('#feeAddSingle').modal('hide');
             	}
-            	
-            }
-            	
-            }
-        ]
-    };
 
-var feeAddSingle = {
-        message: $("#feeAddSingle").html(),
-        onhide: function(dialogRef){
-        	if(!closeAllowed){
-                return false;
-            }
-        },
-        onshow: function(dialogInstance) {
-        	var d  = dialogInstance.getData('data1');
-        	dialogInstance.getModalBody().find("form").find("[name=year]").val(d.attr('year'));
-        	dialogInstance.getModalBody().find("form").find("[name=months]").val(d.attr('month'));
-        	dialogInstance.getModalBody().find("form").find("[name=hnid]").val(d.attr('hnid'));
-        },
-		title: 'Add New Month fees',
-        
-        buttons: [{
-            label: 'Close',
-            action: function(dialogRef) {
-                dialogRef.close();
-            }
-        },{
-            label: 'Create',
-            action: function(dialogRef) {
-            	closeAllowed = false;
-            	var myForm = (dialogRef.getModalBody()).find("form");
-            	if(myForm[0].checkValidity()) {
-            		var frmDate = myForm.serialize();
-            		$.ajax({
-            			url: "createDuesSingle",
-            			data: frmDate,
-            			method: "POST"
-            			
-            		}).done(function(data){
-            			if(data.status == true) {
-            				var frmDate = {'dmId':data.dmId,'hnid':data.hnid};
-            				createDm(frmDate,$("#" + data.hn + "addMonthsBtn_" + data.month));
-            			} else {
-            				alert("Issues " + data.message);
-            			}
-            			closeAllowed = true;
-            			dialogRef.close();
-            		}).fail(function(){
-            			alert("unkown Error");
-            			closeAllowed = true;
-            			dialogRef.close();
-            		});
-            	} else {
-            		closeAllowed = true;
-            	}
-            	
-            }
-            	
-            }
-        ]
-    };
+    });
+
 
 function saveCheckBox(d,isLast,isAsyn) {
 	if(typeof isLast == "undefined") {isLast = true}
@@ -182,7 +119,7 @@ function modify_hoz_checkbox(d,setting) {
 	container;
 	var offset = -1;
 	var chc = container.children();
-	var len = chc.size();
+	var len = chc.length;
 	var i = 0;
 	while(offset == -1  && i < len){
 	  if(chc[i] == myElem[0]){
@@ -205,7 +142,7 @@ function modify_vert_checkbox(d,setting) {
 	var container = myElem.parent();
 	var offset = -1;
 	var chc = container.children();
-	var len = chc.size();
+	var len = chc.length;
 	var i = 0;
 	while(offset == -1  && i < len){
 	  if(chc[i] == myElem[0]){
@@ -249,8 +186,8 @@ function deleteDm(frmDate,e){
 }
 
 function modify_box(box,val,isLast,asyn) {
-	 if(box && box.size() > 0) {
-			box = box.first()
+	 if(box && box instanceof Object) {
+			// box = box.first()
 			box.prop("checked",val);
 			saveCheckBox(box,isLast,asyn);
 	} 
@@ -277,7 +214,7 @@ $.contextMenu({
                 var elem = $(this).children("input:first");
                 $("#mphmdm").val($(elem).attr('hmdm'));
                 $("#mphmhn").val($(elem).attr('hmhn'));
-                BootstrapDialog.show(missPayment);
+               	$("#missPayment").modal("show");
                 modify_box(elem,true,true,true);
             }
         }
@@ -299,7 +236,7 @@ $(document).ready(function(){
 		window.location.href = window.location.origin +  window.location.pathname + "?year=" + $("#dueYear").val();
 	});
 	
-	$("#feeAddbtn").on('click',function(){ BootstrapDialog.show(feeAdd); });
+	// $("#feeAddbtn").on('click',function(){ BootstrapDialog.show(feeAdd); });
 	
 	$("#feeAddFrm").on('submit',function(e){e.preventDefault();});
 	$(document).on('change',".dueMonthCheckBox",function(e) {
@@ -307,27 +244,16 @@ $(document).ready(function(){
 		saveCheckBox(d);
 	});
 	
-	$(document).on('click',".dueMonthAddButton",function(e) {
-		var d = $(e.currentTarget);
-		var frmDate = {'months':d.attr('month'),'year':d.attr('year')};
-		$.ajax({
-			url: "findDm",
-			data: frmDate,
-			method: "GET"
-			
-		}).done(function(data){
-			if(data.hasDM) {
-				var frmDate = {'dmId':data.dmId,'hnid':d.attr('hnid')};
-				createDm(frmDate,d);
-			} else {
-				var myCall = feeAddSingle;
-				myCall.data =  {
-	                'data1': d 
-				}
-			 BootstrapDialog.show(myCall);
-			}
-		});
-	});
+	// $(document).on('click',".dueMonthAddButton",function(e) {
+     //    $("#feeAddSingle").modal("show");
+	// });
+
+    $('#feeAddSingle').on('show.bs.modal', function (e) {
+        var d = $(e.relatedTarget);
+        $("#feeAddSinglefrm").find("[name=year]").val(d.attr('year'));
+        $("#feeAddSinglefrm").find("[name=months]").val(d.attr('month'));
+        $("#feeAddSinglefrm").find("[name=hnid]").val(d.attr('hnid'));
+    });
 	
 	$(document).on('click',".checkAllBtn",function(e) {
 		var d = $(e.currentTarget);
