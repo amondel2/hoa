@@ -6,34 +6,38 @@
 	</head>
 	<body>
 		<h2>Board Memebers</h2>
-    <ul class="nav nav-tabs">
+
+    <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active"  data-toggle="tab" href="#home" class="nav-link">President</a>
+            <a class="nav-link active" href="#President" role="tab" data-toggle="tab">President</a>
         </li>
-        <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#menu1" class="nav-link">Treasurer</a>
+        <li class="nav-item">
+            <a class="nav-link" href="#Treasurer" role="tab" data-toggle="tab">Treasurer</a>
         </li>
-        <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#menu2" class="nav-link">Secretary</a>
+        <li class="nav-item">
+            <a class="nav-link" href="#Secretary" role="tab" data-toggle="tab">Secretary</a>
         </li>
     </ul>
+
+    <!-- Tab panes -->
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-            <h3>President</h3>
+        <div role="tabpanel" class="tab-pane active" id="President">
             <h4>Aaron Mondelblatt</h4>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>Treasurer</h3>
+        <div role="tabpanel" class="tab-pane" id="Treasurer">
+
             <h4>Michael Trapani</h4>
             <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-            ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Secretary</h3>
-            <h4>Fred Snyder</h4>
+            ut aliquip ex ea commodo consequat.</p></div>
+        <div role="tabpanel" class="tab-pane" id="Secretary">
+
+            <h4>Ryan McLaughlin</h4>
             <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
             doloremque laudantium, totam rem aperiam.</p>
         </div>
     </div>
+
 	</body>
 </html>
