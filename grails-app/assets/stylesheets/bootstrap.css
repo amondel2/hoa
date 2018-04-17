@@ -7,6 +7,26 @@
 .starter-template {
     padding: 80px 15px 10px 15px;
     text-align: center;
+    margin-bottom: 20px;
 }
 .navbar-dark .navbar-nav .dropdown-item .nav-link{color:black}
 /*# sourceMappingURL=bootstrap.min.css.map */
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 1px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 20px;
+    line-height: 20px; /* Vertically center the text there */
+
+}

@@ -34,19 +34,20 @@ class FinancialService {
         ["status":true]
     }
 
-    def createSingDue(amount,monthDM,yearDM) {
-        if(!this.getDueMonth(monthDM, yearDM)) {
+    def createSingDue(amount,monthDM,yearDM,hm) {
+        DueMonths dm = this.getDueMonth(monthDM, yearDM,amount)
+        if(!dm) {
             def hmCal = new GregorianCalendar(yearDM,monthDM,1)
-            def hmeCal = new GregorianCalendar(yearDM,monthDM,1)
-            hmeCal.add(hmCal.DAY_OF_MONTH, hmCal.getActualMaximum(hmCal.DAY_OF_MONTH))
-            hmeCal.add(hmCal.SECOND, -1)
-            DueMonths dm = new DueMonths()
+            def hmeCal = new GregorianCalendar(hmCal.get(hmCal.YEAR),hmCal.get(hmCal.MONTH),hmCal.getActualMaximum(hmCal.DAY_OF_MONTH),23,59,59)
+            dm = new DueMonths()
             dm.amount = BigDecimal.valueOf(amount)
             dm.startDate = hmCal.getTime()
             dm.endDate = hmeCal.getTime()
             dm.save(flush:true, failOnError:true)
-            ["status":true,"dmId":dm.id]
         }
+        HouseMonth.create hm, dm, true
+        ["status":true,"dmId":dm.id]
+
     }
 
 
@@ -120,13 +121,30 @@ class FinancialService {
     }
 
     def getDueMonth(monthDM,yearDM) {
+        getDueMonth(monthDM,yearDM,false)
+    }
+    def getDueMonth(monthDM,yearDM,amount) {
         def hmCal = new GregorianCalendar(yearDM,monthDM,1)
-        def hmeCal = new GregorianCalendar(yearDM,monthDM,1)
-        hmeCal.add(hmCal.DAY_OF_MONTH, hmCal.getActualMaximum(hmCal.DAY_OF_MONTH))
-        hmeCal.add(hmCal.SECOND, -1)
-        DueMonths.withCriteria {
-            between('startDate',hmCal.getTime(),hmeCal.getTime())
-        }?.getAt(0)
+        def hmeCal = new GregorianCalendar(hmCal.get(hmCal.YEAR),hmCal.get(hmCal.MONTH),hmCal.getActualMaximum(hmCal.DAY_OF_MONTH),23,59,59)
+        BigDecimal am
+        if(amount) {
+            am = new BigDecimal(amount)
+        }
+        DueMonths dm
+        dm = DueMonths.withCriteria {
+            or {
+                eq('startDate', hmCal.getTime())
+                eq('endDate', hmeCal.getTime())
+            }
+
+        }?.find{
+            if(amount) {
+                it.amount.toFloat() == amount
+            } else {
+                true
+            }
+        }
+        dm
     }
 
     def getHOATotalFeePaid(startDate,endDate) {

@@ -31,7 +31,7 @@ class ExtendTagsTagLib {
         if(hmd) {
             output = "<input type='checkbox' name='${attrs.hm.number}myCheckbox${attrs.month}' hn='${attrs.hm.number}' hmdm='${hmd.months.id}' hmhn='${attrs.hm.id}' year='${attrs.year}' month='${attrs.month}' id='${attrs.hm.number}myCheckbox${attrs.month}' class='dueMonthCheckBox'" + (hmd.paid ? "checked" :  '')  +  '/>'
         } else {
-            output = "<button id='${attrs.hm.number}addMonthsBtn_${attrs.month}' class='dueMonthAddButton' hnid='${attrs.hm.id}' hn='${attrs.hm.number}' year='${attrs.year}' month='${attrs.month}' name='${attrs.hm.number}addMonthsBtn'>Add Due Month</button>"
+            output = "<button id='${attrs.hm.number}addMonthsBtn_${attrs.month}' data-toggle=\"modal\" data-target=\"#feeAddSingle\" class='dueMonthAddButton' hnid='${attrs.hm.id}' hn='${attrs.hm.number}' year='${attrs.year}' month='${attrs.month}' name='${attrs.hm.number}addMonthsBtn'>Add Due Month</button>"
         }
         out << body() << output
     }

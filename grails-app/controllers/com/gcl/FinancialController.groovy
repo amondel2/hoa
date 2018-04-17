@@ -108,7 +108,7 @@ class FinancialController {
         try{
             def amount = params.float('amount')
             House h = House.findById(params.long('hnid'))
-            obj = financialService.createSingDue(amount,params.int('months'),params.int('year'))
+            obj = financialService.createSingDue(amount,params.int('months'),params.int('year'), h)
             obj['hnid'] = h.id
             obj['hn'] = h.number
             obj.month = params.int('months')
@@ -144,14 +144,17 @@ class FinancialController {
         def obj = [status:true]
         try {
             HouseMonth hm = HouseMonth.get(params.long('hmhn'), params.long('hmdm'))
-            Fee f = new Fee()
-            f.amount = new BigDecimal(params.amount)
-            f.house = hm.house
-            f.assessmentDate = hm.months.startDate
-            f.dueDate = hm.months.endDate
-            f.feetype = FeeType.UnderPaidDues
-            f.description = "Under Paid Dues"
-            f.save()
+            BigDecimal amount = hm.months.amount - new BigDecimal(params.amount);
+            if(amount > 0) {
+                Fee f = new Fee()
+                f.amount = amount
+                f.house = hm.house
+                f.assessmentDate = hm.months.startDate
+                f.dueDate = hm.months.endDate
+                f.feetype = FeeType.UnderPaidDues
+                f.description = "Under Paid Dues"
+                f.save()
+            }
         } catch(Exception e) {
             obj.status = false
             obj.message = e.getMessage()
@@ -166,6 +169,15 @@ class FinancialController {
         def hm = HouseMonth.get(params.long('hmhn'),params.long('hmdm'))
         hm.paid = isPaid
         hm.save(flush:true,failOnError:true)
+        if(hm.paid == false) {
+            //remove any Fee for under paymnet payment fee
+            Fee.where{
+                house == hm.house
+                feetype == FeeType.UnderPaidDues
+                paidDate == null
+                assessmentDate == hm.months.startDate
+            }?.deleteAll()
+        }
         def obj = [status:true,amount:hm.house.calculateAmountOwed()]
         request.withFormat {
 			'*'{ render  obj as JSON }
