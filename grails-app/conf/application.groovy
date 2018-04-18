@@ -32,8 +32,9 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 ]
 
 
-String pass = System.getProperty("DB_PASSWORD")?.toString() ?: "splatt66"
-String user = System.getProperty("DB_USER")?.toString() ?: "root"
+String pass = System.getProperty("DB_PASSWORD")?.toString() ?: System.getenv("DB_PASSWORD")?.toString()
+String user = System.getProperty("DB_USER")?.toString()  ?: System.getenv("DB_USER")?.toString()
+String dbString = System.getProperty("JDBC_CONNECTION_STRING")?.toString()  ?: System.getenv("JDBC_CONNECTION_STRING")?.toString()
 dataSource {
 	pooled = true
 	jmxExport = true
@@ -47,7 +48,7 @@ environments {
 			password = pass
 			dbCreate = "update"
 			username = user
-			url= "jdbc:mysql://localhost:3306/gwyneddchase?useUnicode=yes&characterEncoding=UTF-8&useSSL=false"
+			url= dbString
 		}
 	}
 	test {
@@ -61,7 +62,7 @@ environments {
 			dbCreate = "none"
 			username = user
 			password = pass
-			url= "jdbc:mysql://gwyneddchase.ccxgtpe7qnm5.us-east-1.rds.amazonaws.com:3306/gwyneddchase?useUnicode=yes&characterEncoding=UTF-8&useSSL=false"
+			url= dbString
 			properties {
 				jmxEnabled = true
 				initialSize = 5
