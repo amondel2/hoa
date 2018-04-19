@@ -10,6 +10,7 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.8"
+        classpath "gradle.plugin.com.energizedwork.webdriver-binaries:webdriver-binaries-gradle-plugin:1.4"
 
     }
 }
@@ -21,6 +22,7 @@ apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"war"
 apply plugin:"org.grails.grails-web"
+apply plugin:"com.energizedwork.webdriver-binaries"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
 apply plugin: "java"
@@ -62,20 +64,21 @@ dependencies {
     testCompile "org.grails:grails-gorm-testing-support"
     testCompile "org.springframework.security:spring-security-test:4.2.3.RELEASE"
     testCompile "org.grails:grails-web-testing-support"
-    testCompile "org.grails.plugins:geb:1.1.2"
-    testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:2.47.1"
-    testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
+    testCompile("org.grails.plugins:geb") {
+        exclude group: 'org.gebish', module: 'geb-spock'
+    }
+    testCompile 'org.gebish:geb-spock:2.1'
+    testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:3.6.0"
+    testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:3.6.0"
+    testCompile "org.seleniumhq.selenium:selenium-remote-driver:3.6.0"
+    testCompile "org.seleniumhq.selenium:selenium-api:3.6.0"
+    testCompile "org.seleniumhq.selenium:selenium-support:3.6.0"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     compile 'org.grails.plugins:spring-security-core:3.2.1'
     compile 'org.grails.plugins:spring-security-ui:3.1.2'
     runtime 'mysql:mysql-connector-java:5.1.39'
     compile 'org.grails.plugins:grails-melody-plugin:1.70.0'
     compile "org.grails.plugins:ckeditor:4.5.9.0"
-    compile "org.grails.plugins:aws-sdk:1.10.74"
-    compile 'org.grails.plugins:aws-sdk-ses:2.1.17'
-
-
-
 }
 
 bootRun {
@@ -85,10 +88,10 @@ bootRun {
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
 }
 
-//webdriverBinaries {
-//    chromedriver '2.47'
-//    geckodriver '0.18.0'
-//}
+webdriverBinaries {
+    chromedriver '2.38'
+    geckodriver '0.20.0'
+}
 
 compileJava {
 //raise heap
@@ -101,9 +104,19 @@ compileJava {
 tasks.withType(Test) {
     systemProperty "geb.env", System.getProperty('geb.env')
     systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
-    systemProperty "webdriver.chrome.driver", System.getProperty('webdriver.chrome.driver')
-    systemProperty "webdriver.gecko.driver", System.getProperty('webdriver.gecko.driver')
+    beforeTest { descriptor -> logger.quiet " -- $descriptor" }
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat 'full'
+    }
 }
+
+//tasks.withType(Test) {
+//    systemProperty "geb.env", System.getProperty('geb.env')
+//    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
+//    systemProperty "webdriver.chrome.driver", "/home/aaron/chromedriver" // System.getProperty('webdriver.chrome.driver')
+////    systemProperty "webdriver.gecko.driver", System.getProperty('webdriver.gecko.driver')
+//}
 
 tasks.withType(GroovyCompile) {
     configure(groovyOptions.forkOptions) {
