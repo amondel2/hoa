@@ -39,7 +39,7 @@ dataSource {
 	pooled = true
 	jmxExport = true
 	driverClassName = "com.mysql.jdbc.Driver"
-	dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+
 }
 
 environments {
@@ -49,12 +49,16 @@ environments {
 			dbCreate = "update"
 			username = user
 			url= dbString
+			dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
 		}
 	}
 	test {
 		dataSource {
+			username = "sa"
+			password = ''
 			dbCreate = "create-drop"
-			url = 'jdbc:h2:file:myDevDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE'
+			driverClassName = "org.h2.Driver"
+//			url = "jdbc:h2:file:myDevDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
 		}
 	}
 	production{
@@ -62,6 +66,7 @@ environments {
 			dbCreate = "none"
 			username = user
 			password = pass
+			dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
 			url= dbString
 			properties {
 				jmxEnabled = true
