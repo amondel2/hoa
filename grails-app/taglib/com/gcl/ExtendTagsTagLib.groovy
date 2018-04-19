@@ -4,7 +4,7 @@ import com.gcl.Profile
 import com.gcl.HouseType
 
 class ExtendTagsTagLib {
-    static namespace="glc"
+    static namespace="gcl"
     static defaultEncodeAs = [taglib:'html']
     static encodeAsForTags = [renderMonthlyBox: 'raw',renderCheckAllBox: 'raw',renderHouseTypes:'raw']
     def springSecurityService
