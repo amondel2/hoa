@@ -59,6 +59,38 @@ $('#missPaymentbtn').on('click', function (e) {
 });
 
 
+$('#lateFeetbtn').on('click', function (e) {
+
+    closeAllowed = false;
+    var myForm = $("#lateFeefrm");
+    if(myForm[0].checkValidity()) {
+        var frmDate = myForm.serialize();
+        $.ajax({
+            url: "createLateFee",
+            data: frmDate,
+            method: "POST"
+
+        }).done(function(data){
+            if(data.status == true) {
+                alert("Late Fee Saved");
+            } else {
+                alert("Issues " + data.message);
+            }
+            closeAllowed = true;
+            window.location.reload();
+        }).fail(function(){
+            alert("unkown Error");
+            closeAllowed = true;
+            $('#lateFee').modal('hide');
+        });
+    } else {
+        closeAllowed = true;
+        $('#lateFee').modal('hide');
+    }
+
+});
+
+
 $('#SingfeeAddSaveBtn').on('click', function (e) {
 
             	closeAllowed = false;
@@ -216,6 +248,14 @@ $.contextMenu({
                 $("#mphmhn").val($(elem).attr('hmhn'));
                	$("#missPayment").modal("show");
                 modify_box(elem,true,true,true);
+            }
+        },
+        "AddLateFine": {name: "Add Late Fee", callback: function(key, opt){
+                var elem = $(this).children("input:first");
+                $("#lfhmdm").val($(elem).attr('hmdm'));
+                $("#lfhmhn").val($(elem).attr('hmhn'));
+                $("#lateFee").modal("show");
+
             }
         }
     }
