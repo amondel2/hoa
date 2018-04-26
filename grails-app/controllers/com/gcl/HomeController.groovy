@@ -11,14 +11,17 @@ class HomeController {
     def index() { 
 		def messages
 		def meetmins
+		def meetdate
 		if(springSecurityService.isLoggedIn()) {
 			messages = messagesService.getMessages(params)
 			if(!Profile.findByUser(springSecurityService.currentUser)){
 				flash.message = "Please Complete Your Profile By clicking on 'Welcome' in the Nav Bar!"
 			}
-			meetmins = MeetingMinutes.last(sort : "meetDate")?.minutes
+			meetmins = MeetingMinutes.last(sort : "meetDate")
+			meetdate = meetmins?.meetDate
+			meetmins = meetmins?.minutes
 		}
-		render(view:"index",model:[param:params,messages:messages,meetmins:meetmins])
+		render(view:"index",model:[param:params,messages:messages,meetmins:meetmins,meetminDate:meetdate])
 	}
 
 	@Secured(['ROLE_USER'])

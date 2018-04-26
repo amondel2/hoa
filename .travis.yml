@@ -1,0 +1,9 @@
+language: groovy
+#deploy:
+#  skip_cleanup: true
+#  provider: elasticbeanstalk
+#  zip_file: "build/libs/hoa-1.25.war"
+#  region: "us-east-1"
+#  app: "Gwyneedchase2"
+#  env: "gwyneedchase"
+#  bucket_name: "elasticbeanstalk-us-east-1-731090865469"

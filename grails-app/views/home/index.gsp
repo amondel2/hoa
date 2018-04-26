@@ -26,11 +26,12 @@
 
 					</div>
 					</g:if>
-
-					<h2>Last Meeting Minutes</h2>
-					<div style="text-align: left;">
-						${raw(meetmins)}
-					</div>
+					<g:if test="${meetminDate}" >
+						<h2>Last Meeting Minutes from <g:formatDate date="${meetminDate}" type="date" dateStyle="MEDIUM" /></h2>
+						<div style="text-align: left;">
+							${raw(meetmins)}
+						</div>
+					</g:if>
 				</sec:ifLoggedIn>
 		        <br>
 				

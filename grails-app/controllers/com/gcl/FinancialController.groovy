@@ -164,6 +164,32 @@ class FinancialController {
         }
     }
 
+    def createLateFee() {
+        def obj = [status:true]
+        try {
+            HouseMonth hm = HouseMonth.get(params.long('hmhn'), params.long('hmdm'))
+            Fee f = Fee.findWhere(house: hm.house,feetype: FeeType.Late,dueDate: hm.months.endDate)
+            if(!f) {
+                f = new Fee(house: hm.house,feetype: FeeType.Late,dueDate: hm.months.endDate)
+                Calendar c = Calendar.getInstance()
+                f.assessmentDate = c.getTime()
+                c.setTime(hm.months.endDate)
+                f.description = "Fine for late payment for " + c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH) + " of " + c.get(Calendar.YEAR)
+                f.amount = new BigDecimal(params.amount)
+                f.save(failOnError: true)
+            } else {
+                obj.status = false
+                obj.message = "Fee Already Exists"
+            }
+        } catch(Exception e) {
+            obj.status = false
+            obj.message = e.getMessage()
+        }
+        request.withFormat {
+            '*'{ render  obj as JSON }
+        }
+    }
+
     def changePaid(){
         def isPaid = params.boolean('isPaid')
         def hm = HouseMonth.get(params.long('hmhn'),params.long('hmdm'))
