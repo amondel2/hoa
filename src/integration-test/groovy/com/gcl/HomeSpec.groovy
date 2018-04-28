@@ -13,16 +13,25 @@ import geb.spock.*
 class HomeSpec extends GebSpec {
 
     def setup() {
+
     }
 
     def cleanup() {
     }
 
-    void "test something"() {
-        when:"The home page is visited"
-            go '/'
+    void "Get to Login Page"() {
+        when: "The home page is visited"
+        to HomePage
 
-        then:"The title is correct"
-        	title == "Gwynedd Chase Lansdale"
+        then: "The title is correct"
+        at HomePage
+
+        when: "Click to Login"
+        navMenu.clickon('Login')
+
+        then:
+        at LoginPage
     }
+
+
 }

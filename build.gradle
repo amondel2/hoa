@@ -67,12 +67,13 @@ dependencies {
     testCompile("org.grails.plugins:geb") {
         exclude group: 'org.gebish', module: 'geb-spock'
     }
-    testCompile 'org.gebish:geb-spock:2.1'
-    testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:3.6.0"
-    testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:3.6.0"
-    testCompile "org.seleniumhq.selenium:selenium-remote-driver:3.6.0"
-    testCompile "org.seleniumhq.selenium:selenium-api:3.6.0"
-    testCompile "org.seleniumhq.selenium:selenium-support:3.6.0"
+    testCompile "org.gebish:geb-spock:$gebVersion"
+
+    testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    testCompile "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"
+    testCompile "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
+    testCompile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     compile 'org.grails.plugins:spring-security-core:3.2.1'
     compile 'org.grails.plugins:spring-security-ui:3.1.2'
@@ -89,8 +90,8 @@ bootRun {
 }
 
 webdriverBinaries {
-    chromedriver '2.38'
-    geckodriver '0.20.0'
+    chromedriver chromeDriverVersion
+    geckodriver geckoDriverVersion
 }
 
 compileJava {
@@ -102,8 +103,13 @@ compileJava {
 }
 
 tasks.withType(Test) {
-    systemProperty "geb.env", System.getProperty('geb.env')
-    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
+    systemProperty "geb.env", (System.getProperty('geb.env') ?: System.getenv('geb.env') ) ?: 'firefox'
+    systemProperty "geb.build.reportsDir", "build/geb-reports" //reporting.file("geb/integrationTest")
+
+
+//    reportsDir "target/geb-reports"
+
+
     beforeTest { descriptor -> logger.quiet " -- $descriptor" }
     testLogging {
         events "passed", "skipped", "failed"

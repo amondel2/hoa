@@ -3,7 +3,7 @@
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<title>Gwynedd Chase Lansdale</title>
+		<title><g:layoutTitle default="Gwynedd Chase Lansdale" /></title>
 		<meta name="description" content="Gwynedd Chase Lansdale HOA Page">
 		<meta name="keywords" content="Gwynedd Chase,Lansdale,Gwynedd,Penngrove,Ryan,HOA,Penngrove Terrace">
 		<meta name="author" content="Aaron Mondelblatt">
@@ -74,7 +74,7 @@
 				<ul class="nav navbar-nav ml-auto">
           <sec:ifLoggedIn>
 			  <li class="dropdown  nav-link">
-				  <a class="dropdown-toggle  nav-link" data-toggle="dropdown" href="#">Welcome <glc:getUserFName />
+				  <a class="dropdown-toggle  nav-link" data-toggle="dropdown" href="#">Welcome <gcl:getUserFName />
 					  <span class="caret"></span></a>
 			  <ul class="dropdown-menu">
 				  <li class="nav-item dropdown-item"><a class="nav-link" href="/profile">Show Profile</a></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="basic_scaf" />
+        <meta name="layout" content="basic" />
         <g:set var="entityName" value="${message(code: 'profile.label', default: 'Profile')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>

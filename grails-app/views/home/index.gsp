@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<meta name="layout" content="basic"/>
-		<title>Lansdale Gwynedd Chase</title>
 	</head>
 	<body>
 		<h1>Gwynedd Chase Community</h1>
