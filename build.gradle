@@ -103,7 +103,7 @@ compileJava {
 }
 
 tasks.withType(Test) {
-    systemProperty "geb.env", (System.getProperty('geb.env') ?: System.getenv('geb.env') ) ?: 'firefox'
+    systemProperty "geb.env", ((System.getProperty('geb.env') ?: System.getenv('geb.env') ) ?: (System.getProperty('gebenv') ?: System.getenv('gebenv') )) ?: 'firefox'
     systemProperty "geb.build.reportsDir", "build/geb-reports" //reporting.file("geb/integrationTest")
 
 
