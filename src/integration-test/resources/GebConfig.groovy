@@ -30,7 +30,7 @@ environments {
         driver = {
             FirefoxOptions o = new FirefoxOptions()
             o.addArguments('screenshot')
-            new FirefoxDriver()
+            new FirefoxDriver(o)
 
         }
     }
@@ -41,7 +41,7 @@ environments {
         driver = {
             FirefoxOptions o = new FirefoxOptions()
             o.addArguments(['screenshot','headless'])
-            new FirefoxDriver()
+            new FirefoxDriver(o)
 
         }
     }
