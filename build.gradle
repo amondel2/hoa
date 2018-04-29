@@ -30,6 +30,7 @@ apply plugin: "java"
 
 repositories {
     mavenLocal()
+    jcenter()
     maven { url "https://repo.grails.org/grails/core" }
     maven { url 'http://dl.bintray.com/agorapulse/libs' }
 }
@@ -60,6 +61,12 @@ dependencies {
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime "com.h2database:h2"
     runtime "org.apache.tomcat:tomcat-jdbc"
+    testCompile 'com.aoe:geb-spock-reports:0.1.5'
+    // required spock libraries
+//    testCompile "org.spockframework:spock-core:1.1-groovy-2.4-rc-2"
+
+    testCompile ("com.athaydes:spock-reports:1.5.0") { transitive = false }
+
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.8"
     testCompile "org.grails:grails-gorm-testing-support"
     testCompile "org.springframework.security:spring-security-test:4.2.3.RELEASE"

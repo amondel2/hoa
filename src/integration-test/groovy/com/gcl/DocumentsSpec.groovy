@@ -9,11 +9,12 @@ import geb.spock.*
  */
 @Integration
 @Rollback
-class DocumentsSpec extends GebSpec {
+class DocumentsSpec extends GebReportingSpec {
     void "test 2"(){
         when:"Login"
         to LoginPage
         login()
+        report("Login")
         then:
         at HomePage
         when:

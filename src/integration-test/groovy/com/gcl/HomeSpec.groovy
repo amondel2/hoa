@@ -3,6 +3,7 @@ package com.gcl
 import grails.testing.mixin.integration.Integration
 import grails.transaction.*
 
+import geb.spock.GebReportingSpec
 import geb.spock.*
 
 /**
@@ -10,7 +11,7 @@ import geb.spock.*
  */
 @Integration
 @Rollback
-class HomeSpec extends GebSpec {
+class HomeSpec extends GebReportingSpec {
 
     def setup() {
 
@@ -22,6 +23,7 @@ class HomeSpec extends GebSpec {
     void "Get to Login Page"() {
         when: "The home page is visited"
         to HomePage
+        report('homePage')
 
         then: "The title is correct"
         at HomePage

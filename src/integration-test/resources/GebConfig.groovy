@@ -3,11 +3,18 @@ import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxOptions
 
+import com.aoe.gebspockreports.GebReportingListener
+
+reportingListener = new GebReportingListener()
+reportsDir = 'build/geb-spock-reports'
+
 waiting {
     timeout = 2
 }
 
 environments {
+
+
 
     // run via “./gradlew -Dgeb.env=chrome iT”
     chrome {
@@ -27,22 +34,15 @@ environments {
     firefox {
         atCheckWaiting = 1
 
-        driver = {
-            FirefoxOptions o = new FirefoxOptions()
-            o.addArguments('screenshot')
-            new FirefoxDriver(o)
-
-        }
+        driver = {new FirefoxDriver() }
     }
 
     firefoxHeadless {
         atCheckWaiting = 1
-
         driver = {
             FirefoxOptions o = new FirefoxOptions()
-            o.addArguments(['screenshot','headless'])
+            o.addArguments('headless')
             new FirefoxDriver(o)
-
         }
     }
 }
