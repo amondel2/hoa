@@ -8,25 +8,25 @@
 		<h1>Gwynedd Chase Community</h1>
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
-            <thead><tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Address</th>
-                   <th>Phone Number</th></tr></thead>
+            <thead><tr><th>Name</th><th>Phone Number</th><th>Account Number</th><th>E-Mail</th><th>Address</th>
+                   </tr></thead>
             <tbody>
                 <g:each in="${usersList}" var="pf">
                     <tr>
                         <td>
-                            ${pf.firstName}
+                            ${pf.name}
                         </td>
                         <td>
-                            ${pf.lastName}
+                            ${pf.phone}
                         </td>
                         <td>
-                            ${pf.showEmailInfo ? pf.user.email : ''}
+                            ${pf.accountNumber}
                         </td>
                         <td>
-                            ${pf.showAddressInfo ? pf.home.toString() : ''}
+                            ${pf.email}
                         </td>
                         <td>
-                            ${pf.showPhone ? pf.phoneNumber : ''}
+                            ${pf.getAddress()}
                         </td>
                     </tr>
 

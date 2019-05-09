@@ -23,19 +23,16 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="President">
             <h4>Aaron Mondelblatt</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Term ends June 30th 2019</p>
         </div>
         <div role="tabpanel" class="tab-pane" id="Treasurer">
 
-            <h4>Michael Trapani</h4>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-            ut aliquip ex ea commodo consequat.</p></div>
+            <h4>Ryan McLaughlin</h4>
+            <p>Term ends June 30th 2020</p></div>
         <div role="tabpanel" class="tab-pane" id="Secretary">
 
-            <h4>Ryan McLaughlin</h4>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-            doloremque laudantium, totam rem aperiam.</p>
+            <h4>Michael Trapani</h4>
+            <p>Term ends June 30th 2021</p>
         </div>
     </div>
 

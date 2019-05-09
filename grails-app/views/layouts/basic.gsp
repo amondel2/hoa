@@ -49,6 +49,7 @@
 				 </sec:ifAllGranted>
 				 <li class="nav-item"><a class="nav-link" href="/meetingMinutes/archive/">Meeting Minutes Archive</a></li>
              	<li class="nav-item"><a class="nav-link" href="/home/contact">Contact Us</a></li>
+				 <li class="nav-item"><a class="nav-link" href="/home/vendorContact">Vendor Contact</a></li>
              	<li class="nav-item"><a class="nav-link" href="/home/cal">Calendar</a></li>
              	<li class="nav-item"><a  class="nav-link" href="/documents">HOA Documents</a></li>
              </sec:ifLoggedIn>

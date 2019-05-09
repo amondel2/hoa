@@ -37,4 +37,12 @@ class HomeController {
 		}
 		render(view:"contactList",model:[usersList:usersList])
 	}
+
+	@Secured(['ROLE_USER'])
+	def vendorContact() {
+		def usersList = Vendor.withCriteria {
+			eq('isActive',true)
+		}
+		render(view:"vendorContact",model:[usersList:usersList])
+	}
 }

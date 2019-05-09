@@ -35,10 +35,17 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 String pass = System.getProperty("DB_PASSWORD")?.toString() ?: System.getenv("DB_PASSWORD")?.toString()
 String user = System.getProperty("DB_USER")?.toString()  ?: System.getenv("DB_USER")?.toString()
 String dbString = System.getProperty("JDBC_CONNECTION_STRING")?.toString()  ?: System.getenv("JDBC_CONNECTION_STRING")?.toString()
+
+println(user)
+println(pass)
+println(dbString)
+
 dataSource {
 	pooled = true
 	jmxExport = true
-	driverClassName = "com.mysql.jdbc.Driver"
+//	driverClassName = "com.mysql.jdbc.Driver"
+	driverClassName = "com.mysql.cj.jdbc.Driver"
+
 
 }
 
@@ -49,7 +56,7 @@ environments {
 			dbCreate = "update"
 			username = user
 			url= dbString
-			dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+			dialect = "org.hibernate.dialect.MySQL8Dialect"
 		}
 	}
 	test {
@@ -66,7 +73,7 @@ environments {
 			dbCreate = "none"
 			username = user
 			password = pass
-			dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+			dialect = "org.hibernate.dialect.MySQL8Dialect"
 			url= dbString
 			properties {
 				jmxEnabled = true

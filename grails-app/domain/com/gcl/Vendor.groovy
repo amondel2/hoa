@@ -18,6 +18,7 @@ class Vendor implements Serializable {
 		zip1 min: 10000, max: 99999
 		phone nullable: true, blank: true
 		email nullable: true, blank: true
+		accountNumber nullable: true
 	}
 
 	static hasMany = [vendorsFin: VendorFin]
@@ -30,6 +31,8 @@ class Vendor implements Serializable {
 	Integer zip1
 	String phone
 	String email
+	String accountNumber
+	Boolean isActive
 
 	def calculateAmountOwed() {
 		//find all the House Months that are not paid
@@ -46,5 +49,11 @@ class Vendor implements Serializable {
 		}
 
 		sum.setScale(2, BigDecimal.ROUND_CEILING)
+	}
+
+	String getAddress() {
+
+		return this.address1 + ", " + (this.address2 ? this.address2 + ', ' : '') + this.city + " " + this.state + "." + this.zip1
+
 	}
 }

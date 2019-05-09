@@ -15,7 +15,7 @@ buildscript {
     }
 }
 
-version "1.27"
+version "1.29"
 group "hoa"
 
 apply plugin:"eclipse"
@@ -84,7 +84,7 @@ dependencies {
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     compile 'org.grails.plugins:spring-security-core:3.2.1'
     compile 'org.grails.plugins:spring-security-ui:3.1.2'
-    runtime 'mysql:mysql-connector-java:5.1.39'
+    runtime 'mysql:mysql-connector-java:8.0.15'
     compile 'org.grails.plugins:grails-melody-plugin:1.70.0'
     compile "org.grails.plugins:ckeditor:4.5.9.0"
 }
