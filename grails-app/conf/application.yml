@@ -14,17 +14,44 @@ info:
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
 spring:
+    jmx:
+        unique-names: true
     main:
         banner-mode: "off"
     groovy:
         template:
             check-template-location: false
+    devtools:
+        restart:
+            additional-exclude:
+                - '*.gsp'
+                - '**/*.gsp'
+                - '*.gson'
+                - '**/*.gson'
+                - 'logback.groovy'
+                - '*.properties'
+management:
+    endpoints:
+        enabled-by-default: false
+upload:
+    directory:
 
-# Spring Actuator Endpoints are Disabled by Default
-endpoints:
-    enabled: false
-    jmx:
-        enabled: true
+environments:
+    production:
+        upload:
+            directory: /opt/tomcat/uploads/
+javamelody:
+    # Enable JavaMelody auto-configuration (optional, default: true)
+    enabled: true
+    # Data source names to exclude from monitoring (optional, comma-separated)
+    #excluded-datasources: secretSource,topSecretSource
+    # Enable monitoring of Spring services and controllers (optional, default: true)
+    spring-monitoring-enabled: true
+    # Initialization parameters for JavaMelody (optional)
+    # See: https://github.com/javamelody/javamelody/wiki/UserGuide#6-optional-parameters
+    init-parameters:
+        # log http requests:
+        log: true
 ---
 grails:
     mime:
@@ -74,12 +101,13 @@ grails:
             htmlcodec: xml
             codecs:
                 expression: html
-                scriptlets: html
+                scriptlet: html
                 taglib: none
                 staticparts: none
-endpoints:
-    jmx:
-        unique-names: true
+management:
+    endpoints:
+        jmx:
+            unique-names: true
 
 ---
 hibernate:

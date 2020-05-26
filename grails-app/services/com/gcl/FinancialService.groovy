@@ -1,8 +1,11 @@
 package com.gcl
 
-import com.gcl.House;
+import com.gcl.House
+import grails.gorm.transactions.Transactional;
 import groovy.sql.Sql
-import grails.transaction.Transactional
+
+import java.math.RoundingMode
+
 
 @Transactional
 class FinancialService {
@@ -75,7 +78,7 @@ class FinancialService {
         BigDecimal sum = new BigDecimal(0)
         HouseMonth.withCriteria{
             eq('paid',false)
-            months {
+            'in'( 'months', DueMonths.withCriteria {
                 if(startDate && endDate) {
                     between("startDate",startDate,endDate)
                 } else if (startDate ) {
@@ -85,7 +88,7 @@ class FinancialService {
                 } else {
                     le('startDate',new GregorianCalendar().getInstance().getTime())
                 }
-            }
+            })
         }?.each{
             sum += it.months.amount
         }
@@ -167,7 +170,7 @@ class FinancialService {
         BigDecimal sum = new BigDecimal(0)
         HouseMonth.withCriteria{
             eq('paid',true)
-            months {
+            'in'( 'months', DueMonths.withCriteria {
                 if(startDate && endDate) {
                     between("startDate",startDate,endDate)
                 } else if (startDate ) {
@@ -177,7 +180,7 @@ class FinancialService {
                 } else {
                     le('startDate',new GregorianCalendar().getInstance().getTime())
                 }
-            }
+            })
         }?.each{
             sum += it.months.amount
         }
@@ -190,12 +193,6 @@ class FinancialService {
     }
 
     def getMoneyInBack(){
-        //		def sql = new Sql(dataSource)
-        //		def money
-        //		sql.eachRow('select * from Bank') { row ->
-        //			money = row.amount
-        //		}
-        //		money.toString()
         def amount = 0
         Bank.list()?.each{ amount += (it.amount ?: 0) }
         amount
@@ -218,8 +215,7 @@ class FinancialService {
         }?.each{ VendorFin vf ->
             sum += vf.amount
         }
-        sum.setScale(2,BigDecimal.ROUND_CEILING)
-        sum
+        sum.setScale(2, RoundingMode.CEILING)
     }
 
 }

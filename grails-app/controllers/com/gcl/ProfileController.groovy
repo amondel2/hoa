@@ -40,6 +40,10 @@ class ProfileController {
                 getFirstPayment = houseMonthService.getFirstPaymentYear(profileInstance.homeId)
                 fees = Fee.findAllByHouseAndPaidDateIsNull(profileInstance.home)
             }
+            session['encryptKey'] = UUID.randomUUID().toString().replaceAll("-", "")
+            SimpleStringHiding sh = SimpleStringHiding.getInstance()
+            profileInstance.answer1 =  sh.encrypt(profileInstance.answer1,session['encryptKey']).toString()
+            profileInstance.answer2 =  sh.encrypt(profileInstance.answer2,session['encryptKey']).toString()
             def myCal  = new GregorianCalendar().getInstance()
             respond profileInstance, model:[fee:fees,user: springSecurityService.currentUser,getFirstPayment:getFirstPayment,endYear:myCal.get(myCal.YEAR)]
         }
@@ -149,7 +153,11 @@ class ProfileController {
                 i++
             }
         }
-        rtn[12] = House.load(params.hid)?.calculateAmountOwed()
+        try {
+            rtn[12] = houseMonthService.calculateAmountOwed(House.load(params.hid))
+        } catch (Exception e) {
+            rtn[12] = null
+        }
         withFormat{
            '*' { render rtn as JSON }
         }

@@ -14,6 +14,8 @@ class HouseMonth implements Serializable {
 	DueMonths months
 	Boolean paid = false
 
+	static belongsTo = [house:House,months:DueMonths]
+
 	HouseMonth(House h, DueMonths m) {
 		this()
 		house = h

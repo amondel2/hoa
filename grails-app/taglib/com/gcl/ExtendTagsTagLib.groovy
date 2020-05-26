@@ -8,11 +8,16 @@ class ExtendTagsTagLib {
     static defaultEncodeAs = [taglib:'html']
     static encodeAsForTags = [renderMonthlyBox: 'raw',renderCheckAllBox: 'raw',renderHouseTypes:'raw']
     def springSecurityService
+    def houseMonthService
 
     def getUserFName = {attrs,body->
         Profile user = Profile.findByUser(springSecurityService.currentUser)
         def name =  user ? user.firstName : ""
         out << body() <<name
+    }
+
+    def renderAmountOwed = { attrs, body ->
+        out << body() << houseMonthService.calculateAmountOwed(House.load(attrs.house.id))
     }
 
     def renderMonthlyBox = {attrs,body->
@@ -24,9 +29,10 @@ class ExtendTagsTagLib {
         def output=""
         def hmd = HouseMonth.withCriteria {
             eq("house",attrs.hm)
-            months{
+            'in'( 'months', DueMonths.withCriteria {
                 between('startDate',hmCal.getTime(),hmeCal.getTime())
-            }
+            })
+
         }?.getAt(0)
         if(hmd) {
             output = "<input type='checkbox' name='${attrs.hm.number}myCheckbox${attrs.month}' hn='${attrs.hm.number}' hmdm='${hmd.months.id}' hmhn='${attrs.hm.id}' year='${attrs.year}' month='${attrs.month}' id='${attrs.hm.number}myCheckbox${attrs.month}' class='dueMonthCheckBox'" + (hmd.paid ? "checked" :  '')  +  '/>'

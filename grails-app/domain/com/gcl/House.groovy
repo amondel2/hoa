@@ -1,10 +1,12 @@
 package com.gcl
+
 import java.util.Calendar
 
 
 class House implements Serializable {
 	
 	private static final long serialVersionUID = 1
+	def houseMonthService
 
     static constraints = {
 		address1 nullable:false, unique: ['address2','city','state']
@@ -16,7 +18,7 @@ class House implements Serializable {
 		type nullable:false
     }
 	
-	static hasMany=[fees:Fee,profiles:Profile,cars:HouseCar]
+	static hasMany=[fees:Fee,profiles:Profile,cars:HouseCar,houseMonths:HouseMonth]
 
 	String toString() {
 		"${this.address1}, " + (this.address2 ? "${this.address2}, " : "") + "${this.city}, ${this.state} ${this.zip1}" + (this.zip2  ? "-${this.zip2}" : "")
@@ -34,32 +36,4 @@ class House implements Serializable {
 	def getNumber() {
 		this.address1?.split(" ")?.getAt(0)
 	}
-	
-	def getUnpaidPaidFee() {
-		Fee.withCriteria {
-			eq("house", this)
-			isNull("paidDate")
-			projections {
-				sum("amount")
-			}
-		}?.getAt(0) ?: 0
-	}
-	
-	def calculateAmountOwed() {
-		//find all the House Months that are not paid
-		BigDecimal sum = new BigDecimal(this.getUnpaidPaidFee())
-		Date now = new GregorianCalendar().getInstance().getTime()
-		
-		HouseMonth.withCriteria{
-			eq('house',this)
-			eq('paid',false)
-			months {
-				le('startDate',now)
-			}
-			}?.each{
-				sum += it.months.amount
-			}	
-		
-		sum.setScale(2,BigDecimal.ROUND_CEILING)
-	}	   
 }

@@ -1,4 +1,6 @@
 package com.gcl
+
+import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
@@ -9,6 +11,7 @@ class MeetingMinutesController {
 
     static scaffold=MeetingMinutes
 
+    @Transactional
     @Secured(["ROLE_USER",'ROLE_BOARDMEMBER'])
     def archive(){
         MeetingMinutes meetmins

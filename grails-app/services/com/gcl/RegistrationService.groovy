@@ -1,7 +1,7 @@
 package com.gcl
 
 import grails.plugin.springsecurity.ui.RegistrationCode
-import grails.transaction.Transactional
+import grails.gorm.transactions.Transactional;
 import org.springframework.transaction.TransactionStatus
 
 @Transactional

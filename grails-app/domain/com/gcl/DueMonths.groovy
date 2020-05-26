@@ -5,7 +5,9 @@ import java.io.Serializable;
 class DueMonths implements Serializable {
 
 	private static final long serialVersionUID = 1
-	
+
+	static hasMany = [dueMonths:DueMonths]
+
     static constraints = {
 		startDate unique : 'amount', validator:{ val, obj ->
 			if( val >= obj.endDate ) {

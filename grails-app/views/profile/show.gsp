@@ -25,7 +25,7 @@
             <div class="message" role="status">${flash.message}</div>
             </g:if>
             <f:display bean="profile" />
-            <ol class="property-list profile">
+            <ol class="property-list profile" style="padding-top: 0px; margin-top: -1.25em;">
                 <li class="fieldcontain">
                     <span id="email-label" class="property-label">E-mail</span>
                     <div class="property-value" aria-labelledby="email-label">${profile.user.email}</div>

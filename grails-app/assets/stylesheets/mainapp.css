@@ -7,10 +7,10 @@
 * You're free to add application-wide styles to this file and they'll appear at the top of the
 * compiled file, but it's generally better to create a new file per style scope.
 *
-*= require grails
+*= require jquery-ui
 *= require main
-*= require mobile
 *= require bootstrap
+*= require jquery.contextMenu
 *= require_self
 */
 .checkBox_Bass{
@@ -18,4 +18,9 @@
 	height: 10px;
 	border: 1px solid black;
 	display: inline-block;
+}
+
+body, html {
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
 }

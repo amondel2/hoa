@@ -1,7 +1,6 @@
 package com.gcl
 
 import grails.plugin.springsecurity.SpringSecurityService;
-import grails.plugin.springsecurity.authentication.dao.NullSaltSource
 import grails.plugin.springsecurity.ui.RegisterCommand;
 import grails.plugin.springsecurity.ui.RegistrationCode
 
@@ -27,8 +26,7 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 		}
 
 		def user = uiRegistrationCodeStrategy.createUser(registerCommand)
-		String salt = saltSource instanceof NullSaltSource ? null : registerCommand.username
-		RegistrationCode registrationCode = uiRegistrationCodeStrategy.register(user, registerCommand.password, salt)
+		RegistrationCode registrationCode = uiRegistrationCodeStrategy.register(user, registerCommand.password)
 
 		if (registrationCode == null || registrationCode.hasErrors()) {
 			// null means problem creating the user

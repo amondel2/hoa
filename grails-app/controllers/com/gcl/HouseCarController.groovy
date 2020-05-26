@@ -11,6 +11,7 @@ class HouseCarController {
     static scaffold=HouseCar
     def springSecurityService
 
+
     def save(HouseCar profileInstance) {
         if (profileInstance == null) {
             notFound()

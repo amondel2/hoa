@@ -39,7 +39,8 @@
                         <tr>
                             <g:set var="houseNumber" value="${hm.number}" />
                             <td><gcl:renderCheckAllBox header="${houseNumber}" orient="horz"/></td>
-                    <td id="${houseNumber}amountOwed">${hm.calculateAmountOwed()}</td>
+                    <td id="${houseNumber}amountOwed"><gcl:renderAmountOwed house="${hm}" />
+
                     <g:each in="${0..11}" var="i">
                         <td class="contextMenu">
                         <gcl:renderMonthlyBox hm="${hm}" month="${i}" year="${viewYear}" />

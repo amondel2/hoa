@@ -22,19 +22,15 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="President">
-            <h4>Aaron Mondelblatt</h4>
-            <p>Term ends June 30th 2019</p>
+            <h4>Ryan McLaughlin</h4>
+            <p>Term ends July 31st 2020</p>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="Secretary">
         </div>
         <div role="tabpanel" class="tab-pane" id="Treasurer">
-
-            <h4>Ryan McLaughlin</h4>
-            <p>Term ends June 30th 2020</p></div>
-        <div role="tabpanel" class="tab-pane" id="Secretary">
-
             <h4>Michael Trapani</h4>
-            <p>Term ends June 30th 2021</p>
+            <p>Term ends July 31st 2021</p>
         </div>
     </div>
-
 	</body>
 </html>

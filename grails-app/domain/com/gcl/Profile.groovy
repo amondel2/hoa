@@ -23,7 +23,13 @@ class Profile implements Serializable {
     static constraints = {
 		id  unique:true,nullable:true,display:true
 		user unique:true
+		firstName nullable: false
+		lastName nullable: false
 		home  nullable:true
+		phoneNumber nullable:true,blank:true
+		showEmailInfo nullable:true,blank:false
+		showAddressInfo nullable:true,blank:false
+		showPhone nullable:true,blank:false
 		question1 minSize: 10, maxSize: 300,validator: { val, obj -> 
 			if(val.trim().toLowerCase() == obj.question2?.trim()?.toLowerCase())
 				return ["default.not.unique.message",'question1','Profile',val]
@@ -40,10 +46,7 @@ class Profile implements Serializable {
 			if(val.trim().toLowerCase() == obj.answer1?.trim()?.toLowerCase())
 				return ["default.not.unique.message",'answer2','Profile',val]
 		}
-		phoneNumber nullable:true,blank:true
-		showEmailInfo nullable:true,blank:false
-		showAddressInfo nullable:true,blank:false
-        showPhone nullable:true,blank:false
+
     }
 
 	static mapping = {

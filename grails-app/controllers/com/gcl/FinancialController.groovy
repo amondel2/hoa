@@ -1,5 +1,6 @@
 package com.gcl
 import grails.converters.JSON
+import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
 import java.sql.Timestamp
@@ -14,6 +15,7 @@ import com.gcl.HouseType
 class FinancialController {
 
     def financialService
+    def houseMonthService
 
 
     @Secured(["ROLE_BOARDMEMBER"])
@@ -44,6 +46,7 @@ class FinancialController {
             ])
     }
 
+    @Transactional
     @Secured(["ROLE_BOARDMEMBER"])
     def admin(){
         def cal = new GregorianCalendar().getInstance()
@@ -64,6 +67,7 @@ class FinancialController {
         render(view:"admin",model:[viewYear:params.year,hms:House.list(),lastYear:lastYear,firstYear:firstYear,currMonth:cal.get(cal.MONTH) + 1,currYear:currYear,endYear: cal.get(cal.YEAR)  + 5])
     }
 
+    @Transactional
     def createDues(){
         def obj
         try{
@@ -86,15 +90,15 @@ class FinancialController {
         }
     }
 
+    @Transactional
     def deleteDm() {
         def obj
         try{
             def h = House.findById(params.long('hmhn'))
             def hm = HouseMonth.get(h.id,params.long('hmdm')).delete(flush:true)
-//            def c = ApplicationHolder.application.mainContext.getBean('com.gcl.ExtendTagsTagLib')
             def c = grailsApplication.mainContext.getBean('com.gcl.ExtendTagsTagLib')
             def output = c.renderMonthlyBox(year:params.int('year'),month:params.int('month'),hm:h)
-            obj = [status:true,amount:h.calculateAmountOwed(),output:output]
+            obj = [status:true,amount:houseMonthService.calculateAmountOwed(h),output:output]
         } catch(Exception e) {
             obj = ["status":false,"message":e.getMessage()]
         }
@@ -103,6 +107,7 @@ class FinancialController {
         }
     }
 
+    @Transactional
     def createDuesSingle() {
         def obj
         try{
@@ -120,6 +125,7 @@ class FinancialController {
         }
     }
 
+    @Transactional
     def createHMSingle(){
         def obj
         try{
@@ -131,7 +137,7 @@ class FinancialController {
             def hmCal = new GregorianCalendar().getInstance()
             hmCal.setTime(dm.startDate)
             def output = c.renderMonthlyBox(year:hmCal.get(hmCal.YEAR),month:hmCal.get(hmCal.MONTH),hm:h)
-            obj = [status:true,amount:hm.house.calculateAmountOwed(),output:output,month:hmCal.get(hmCal.MONTH)]
+            obj = [status:true,amount:houseMonthService.calculateAmountOwed(hm.house),output:output,month:hmCal.get(hmCal.MONTH)]
         } catch(Exception e) {
             obj = ["status":false,"message":e.getMessage()]
         }
@@ -140,6 +146,7 @@ class FinancialController {
         }
     }
 
+    @Transactional
     def missPayment(){
         def obj = [status:true]
         try {
@@ -164,6 +171,7 @@ class FinancialController {
         }
     }
 
+    @Transactional
     def createLateFee() {
         def obj = [status:true]
         try {
@@ -190,6 +198,7 @@ class FinancialController {
         }
     }
 
+    @Transactional
     def changePaid(){
         def isPaid = params.boolean('isPaid')
         def hm = HouseMonth.get(params.long('hmhn'),params.long('hmdm'))
@@ -204,7 +213,7 @@ class FinancialController {
                 assessmentDate == hm.months.startDate
             }?.deleteAll()
         }
-        def obj = [status:true,amount:hm.house.calculateAmountOwed()]
+        def obj = [status:true,amount:houseMonthService.calculateAmountOwed(hm.house)]
         request.withFormat {
 			'*'{ render  obj as JSON }
         }

@@ -36,9 +36,8 @@ String pass = System.getProperty("DB_PASSWORD")?.toString() ?: System.getenv("DB
 String user = System.getProperty("DB_USER")?.toString()  ?: System.getenv("DB_USER")?.toString()
 String dbString = System.getProperty("JDBC_CONNECTION_STRING")?.toString()  ?: System.getenv("JDBC_CONNECTION_STRING")?.toString()
 
-println(user)
-println(pass)
-println(dbString)
+grails.plugin.databasemigration.updateOnStart = true
+grails.plugin.databasemigration.updateOnStartFileName = 'changelog.groovy'
 
 dataSource {
 	pooled = true
@@ -53,10 +52,11 @@ environments {
 	development {
 		dataSource {
 			password = pass
-			dbCreate = "update"
+			dbCreate = "none"
 			username = user
 			url= dbString
-			dialect = "org.hibernate.dialect.MySQL8Dialect"
+			driverClassName = "org.mariadb.jdbc.Driver"
+			dialect = "org.hibernate.dialect.MariaDB53Dialect"
 		}
 	}
 	test {
