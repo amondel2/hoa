@@ -18,13 +18,12 @@ class ProfileController {
         if(SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
             params.max = Math.min(max ?: 10, 100)
             respond Profile.list(params), model:[profileCount: Profile.count()]
-
         } else {
             redirect(action:"show")
         }
     }
 
-    @Secured(["permitAll"])
+    @Secured(["ROLE_BOARDMEMBER","ROLE_USER","ROLE_ADMIN"])
     def show(Profile profileInstance) {
 
         if (!profileInstance) {

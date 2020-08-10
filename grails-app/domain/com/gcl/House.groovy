@@ -1,8 +1,5 @@
 package com.gcl
 
-import java.util.Calendar
-
-
 class House implements Serializable {
 	
 	private static final long serialVersionUID = 1

@@ -3,7 +3,7 @@ package com.gcl
 import grails.testing.gorm.DomainUnitTest
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
-import org.springframework.security.test.context.support.WithMockUser
+
 import grails.plugin.springsecurity.SpringSecurityUtils
 
 
@@ -18,7 +18,7 @@ class ProfileControllerSpec extends Specification implements ControllerUnitTest<
         NullPointerException e = thrown()
     }
 
-    @WithMockUser(username = "user1", password = "pwd", roles = "ROLE_USER")
+
     void "test show"() {
         when:"The message action is invoked"
         SpringSecurityUtils.metaClass.'static'.ifAnyGranted = { String role ->

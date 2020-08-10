@@ -1,4 +1,6 @@
 package com.gcl
+
+import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import grails.transaction.*
 

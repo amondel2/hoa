@@ -1,41 +1,74 @@
 package com.gcl
 
+import grails.config.Config
+import grails.core.support.GrailsConfigurationAware
 import grails.plugin.springsecurity.SpringSecurityService;
-import grails.plugin.springsecurity.ui.RegisterCommand;
-import grails.plugin.springsecurity.ui.RegistrationCode
 
 import org.hibernate.NonUniqueResultException
 
 import grails.validation.Validateable
 
 import org.grails.web.servlet.mvc.SynchronizerTokensHolder
+import org.springframework.beans.factory.InitializingBean
 
-class RegisterController extends grails.plugin.springsecurity.ui.RegisterController {
+class RegisterController implements GrailsConfigurationAware, InitializingBean {
 
 	def registrationService
 	def springSecurityService
-	
+	String serverURL
+
+	static defaultAction = 'register'
+
 	def register(RegisterCommand registerCommand) {
 
 		if (!request.post) {
 			return [registerCommand: new RegisterCommand()]
 		}
+		withForm {
+			if (registerCommand.hasErrors()) {
+				return [registerCommand: registerCommand]
+			}
 
-		if (registerCommand.hasErrors()) {
-			return [registerCommand: registerCommand]
+			User user =  registrationService.createUser(registerCommand)
+		}.invalidToken {
+			flash.message = "Invalid Form Submission"
+			redirect(controller: "login", action: "auth")
 		}
-
-		def user = uiRegistrationCodeStrategy.createUser(registerCommand)
-		RegistrationCode registrationCode = uiRegistrationCodeStrategy.register(user, registerCommand.password)
-
-		if (registrationCode == null || registrationCode.hasErrors()) {
-			// null means problem creating the user
-			flash.error = message(code: 'spring.security.ui.register.miscError')
-			return [registerCommand: registerCommand]
-		}
-
-		String url = generateLink('verifyRegistration', [t: registrationCode.token])
 		redirect(url: url)
+	}
+
+	def forgotPassword(ForgotPasswordCommand forgotPasswordCommand) {
+
+		if (!request.post) {
+			ForgotPasswordCommand fpc = new ForgotPasswordCommand()
+			return [forgotPasswordCommand: fpc]
+		}
+		withForm {
+			if (forgotPasswordCommand.hasErrors()) {
+
+				return [forgotPasswordCommand: forgotPasswordCommand]
+			}
+
+			def user = findUserByUsername(forgotPasswordCommand.username)
+			if (!user) {
+				forgotPasswordCommand.errors.rejectValue 'username', 'spring.security.ui.forgotPassword.user.notFound'
+
+				return [forgotPasswordCommand: forgotPasswordCommand]
+			}
+
+			if (forgotPasswordExtraValidation && forgotPasswordExtraValidation.size() > 0 && forgotPasswordExtraValidationDomainClassName ) {
+				redirect uri: generateLink('securityQuestions', [username: forgotPasswordCommand.username])
+			} else {
+				if (requireForgotPassEmailValidation) {
+					processForgotPasswordEmail(forgotPasswordCommand, user)
+				} else {
+					redirect uri: processForgotPasswordEmail(forgotPasswordCommand, user)
+				}
+			}
+		}.invalidToken {
+			flash.message = "Invalid Form Submission"
+			redirect(controller: "login", action: "auth")
+		}
 	}
 
 	def showChanallage() {
@@ -74,29 +107,19 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 						render(view:"showChanallage",model:[profinstance:prof])				
 					}
 				}
-
-
 			}
-
 		}.invalidToken {
 			flash.message = "Invalid Form Submission"
 			redirect(controller: "login", action: "auth")
 		}
 	}
 
-	@Override
 	def verifyRegistration() {
 
 		String token = params.t
 
-		RegistrationCode registrationCode = token ? RegistrationCode.findByToken(token) : null
-		if (!registrationCode) {
-			flash.error = message(code: 'spring.security.ui.register.badCode')
-			redirect uri: successHandlerDefaultTargetUrl
-			return
-		}
 
-		def user = uiRegistrationCodeStrategy.finishRegistration(registrationCode)
+		def user = registrationService.finishRegistration(token)
 
 		if (!user) {
 			flash.error = message(code: 'spring.security.ui.register.badCode')
@@ -108,12 +131,29 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 			// expected to be handled already by ErrorsStrategy.handleValidationErrors
 			return
 		}
-		def r = registerPostRegisterUrl ?: successHandlerDefaultTargetUrl
+		def r = successHandlerDefaultTargetUrl
 		flash.message = message(code: 'spring.security.ui.register.complete')
 		springSecurityService.reauthenticate user.username
 		redirect uri: "/profile/create" //+ "?autologout=true"
 	}
-	
+
+	def resetPassword(ResetPasswordCommand resetPasswordCommand) {
+		if (!request.post) {
+			return [resetPasswordCommand: new ResetPasswordCommand(),token:params.token]
+		}
+		if (resetPasswordCommand.hasErrors()) {
+			return [resetPasswordCommand: resetPasswordCommand,token: resetPasswordCommand.token ?: params.token]
+		}
+
+
+		if (!registrationService.updatePassword(resetPasswordCommand)) {
+			resetPasswordCommand.errors.rejectValue 'password', 'spring.security.ui.forgotPassword.user.notFound'
+			return [resetPasswordCommand: resetPasswordCommand, token:resetPasswordCommand.token]
+		}
+
+		flash.message = "Your Password Has Been Updated"
+		redirect(action: 'auth',controller: 'login')
+	}
 	
 	def checkChallenge() {
 		Profile p
@@ -128,9 +168,10 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 				redirect(controller: "login", action: "auth")
 			}
 			if(params.question1.trim().toLowerCase() == qa[0].trim().toLowerCase() && params.question2.trim().toLowerCase() == qa[1].trim().toLowerCase() ) {
-				RegistrationCode registrationCode = registrationService.getForgotPassLink(p)
-				String url = generateLink('resetPassword', [t: registrationCode.token])
-				redirect(url: url)
+
+				String token = registrationService.getForgotPassLink(p.user)
+
+				redirect(action: 'resetPassword', params:[token:token])
 			} else {
 				def tokenurlnya = "/register/showChanallage"
 				def tokensHolder = SynchronizerTokensHolder.store(session)
@@ -158,5 +199,59 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 				redirect(controller: "login", action: "auth")
 			}
 		}
+	}
+
+	protected static int passwordMaxLength
+	protected String validationUserLookUpProperty
+	protected static int passwordMinLength
+	protected static String passwordValidationRegex
+	protected String successHandlerDefaultTargetUrl
+
+	void afterPropertiesSet() {
+		RegisterCommand.User = User
+		RegisterCommand.usernamePropertyName = "username"
+
+		validationUserLookUpProperty = 'user'
+		successHandlerDefaultTargetUrl = '/'
+		passwordMaxLength =  64
+		passwordMinLength =  8
+		passwordValidationRegex = '^.*(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&]).*$'
+	}
+
+	static boolean checkPasswordMinLength(String password, command) {
+		password && password.length() >= passwordMinLength
+	}
+
+	static boolean checkPasswordMaxLength(String password, command) {
+		password && password.length() <= passwordMaxLength
+	}
+
+	static boolean checkPasswordRegex(String password, command) {
+		password && password.matches(passwordValidationRegex)
+	}
+
+	static final passwordValidator = { value, command ->
+		if (command.hasProperty('username') && command.username && command.username.equals(value)) {
+			return 'command.password.error.username'
+		}
+
+		if (!checkPasswordMinLength(value, command) || !checkPasswordMaxLength(value, command)) {
+			return ['command.password.error.length', passwordMinLength, passwordMaxLength]
+		}
+		if (!checkPasswordRegex(value, command)) {
+			return 'command.password.error.strength'
+		}
+		return true
+	}
+
+	static final password2Validator = { value, command ->
+		if (command.password != command.password2) {
+			return 'command.password2.error.mismatch'
+7		}
+	}
+
+	@Override
+	void setConfiguration(Config co) {
+		serverURL = co.getProperty('grails.serverURL', String)
 	}
 }

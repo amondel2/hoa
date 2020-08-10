@@ -1,4 +1,3 @@
-<g:set var='securityConfig' value='${applicationContext.springSecurityService.securityConfig}'/>
 <html>
 	<head>
 		<meta name="layout" content="basic"/>

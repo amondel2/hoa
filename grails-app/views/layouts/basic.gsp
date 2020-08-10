@@ -22,7 +22,7 @@
 	<body>
 		<span id="logoutLink" style="display:none">
                         <g:link elementId='_logout' controller='logout'/>
-                        <a href="${request.contextPath}${securityConfig.logout.afterLogoutUrl}" id="_afterLogout"></a>
+                        <a href="" id="_afterLogout"></a>
         </span>
 		<nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-md">
       	<div class="container">

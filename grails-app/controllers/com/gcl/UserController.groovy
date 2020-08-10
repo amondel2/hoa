@@ -5,7 +5,10 @@ import grails.plugin.springsecurity.annotation.Secured
 
 import java.nio.file.SecureDirectoryStream
 
-class UserController extends grails.plugin.springsecurity.ui.UserController {
+@Secured(['ROLE_ADMIN'])
+class UserController  {
+
+    static scaffold=User
 
     @Secured(['ROLE_BOARDMEMBER'])
     def listEmail(){

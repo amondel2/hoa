@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<<meta name="layout" content="basic">
-		<s2ui:title messageCode='spring.security.ui.resetPassword.title'/>
+		<title><g:message messageCode='spring.security.ui.resetPassword.title'/></title>
 	</head>
 	<body>
 		<h1>Reset Password</h1>
@@ -12,10 +12,10 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<s2ui:form  type='resetPassword' focus='password'>
+			<g:form action="resetPassword"  type='resetPassword' focus='password'>
 			<fieldset class="form">
-				<g:hiddenField name='t' value='${token}'/>
-				<h3><g:message code='spring.security.ui.resetPassword.description'/></h3>
+				<input type="hidden" name='token' id="token" value="${token}" />
+				<h3><g:message default="description" code='spring.security.ui.resetPassword.description'/></h3>
 				<div class="form-group ${hasErrors(bean: resetPasswordCommand, field: 'password', 'has-error')} required">
 					<label for="password">Password <span  class="required-indicator">*</span></label>
 					<input type="password" name="password" id="password" class="form-control" required="" value="" />
@@ -28,8 +28,8 @@
 					</div>
 				</fieldset>
 			    <fieldset class="buttons">
-					<g:submitButton name="create"  class="btn btn-primary btn-sm active" value="${message(code: 'spring.security.ui.resetPassword.submit', default: 'Reset')}" />
+					<g:submitButton name="create"  class="btn btn-primary btn-sm active" value="${g.message(default:'Reset', code:'spring.security.ui.resetPassword.submit')}"/>
 				</fieldset>
-			</s2ui:form>
+			</g:form>
 	</body>
 </html>

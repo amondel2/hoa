@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta name="layout" content="basic">
-		<s2ui:title messageCode='spring.security.ui.register.title'/>
+		<title><g:message code='spring.security.ui.register.title'/></title>
 	</head>
 	<body>
 	<h1>Register</h1>
@@ -12,7 +12,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<s2ui:form type='register' focus='username'>
+			<g:form ethod='POST'  controller='register' action='checkChallenge' useToken="true">
 				<fieldset class="form">
 					<div class="form-group required  ${hasErrors(bean: registerCommand, field: 'username', 'has-error')}">
 						<label for="username">Username <span  class="required-indicator">*</span></label>
@@ -38,6 +38,6 @@
 			    <fieldset class="buttons">
 					<g:submitButton name="create"  class="btn btn-primary btn-sm active" value="${message(code: 'spring.security.ui.register.submit', default: 'Create')}" />
 				</fieldset>
-			</s2ui:form>
+			</g:form>
 	</body>
 </html>
