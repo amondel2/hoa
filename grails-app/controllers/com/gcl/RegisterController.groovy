@@ -26,7 +26,8 @@ class RegisterController implements GrailsConfigurationAware, InitializingBean {
 		}
 		withForm {
 			if (registerCommand.hasErrors()) {
-				return [registerCommand: registerCommand]
+				redirect(controller: "register", action: "register", params: [ registerCommand : registerCommand])
+				return
 			}
 
 			User user =  registrationService.createUser(registerCommand)
@@ -34,7 +35,7 @@ class RegisterController implements GrailsConfigurationAware, InitializingBean {
 			flash.message = "Invalid Form Submission"
 			redirect(controller: "login", action: "auth")
 		}
-		redirect(url: url)
+		redirect(controller: "register", action: "register")
 	}
 
 	def forgotPassword(ForgotPasswordCommand forgotPasswordCommand) {
@@ -162,12 +163,12 @@ class RegisterController implements GrailsConfigurationAware, InitializingBean {
 			try{
 			def pid = params.pid
 			 p = Profile.get(pid)
-			 qa = [p.answer1,p.answer2]
+			 qa = [p?.answer1,p?.answer2]
 			} catch (Exception e) {
-				flash.message = "Profile Not Completed..Please contanct Site Admin for help"
+				flash.message = "Profile Not Completed..Please contact the Site Admin for help"
 				redirect(controller: "login", action: "auth")
 			}
-			if(params.question1.trim().toLowerCase() == qa[0].trim().toLowerCase() && params.question2.trim().toLowerCase() == qa[1].trim().toLowerCase() ) {
+			if(params.question1?.trim().toLowerCase() == qa[0]?.trim().toLowerCase() && params.question2?.trim().toLowerCase() == qa[1]?.trim().toLowerCase() ) {
 
 				String token = registrationService.getForgotPassLink(p.user)
 

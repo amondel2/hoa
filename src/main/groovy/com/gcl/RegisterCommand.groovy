@@ -12,7 +12,7 @@ class RegisterCommand implements  grails.validation.Validateable {
     static constraints = {
         username validator: { value, command ->
             if (!value) {
-                return
+                return  'registerCommand.username.unique'
             }
 
             if (User.findWhere((usernamePropertyName): value)) {

@@ -37,12 +37,19 @@ class RegistrationService {
         findUserByToken(token)
     }
 
+    Boolean addUserToUserRole(User user) {
+        UserRole ur = new UserRole()
+        ur.user = user
+        ur.role = Role.findByAuthority("ROLE_USER")
+        ur.save(flush:true)
+    }
+
     User createUser(RegisterCommand rc) {
         User u = new User()
         u.email = rc.email
         u.username = rc.username
         u.password = rc.password
-        u.restToken = java.util.UUID.randomUUID().toString().replaceAll('-','')
+        u.restToken = null
         u.save()
         u
     }

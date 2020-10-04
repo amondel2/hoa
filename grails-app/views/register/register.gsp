@@ -12,7 +12,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form ethod='POST'  controller='register' action='checkChallenge' useToken="true">
+			<g:form ethod='POST'  controller='register' action='register' useToken="true">
 				<fieldset class="form">
 					<div class="form-group required  ${hasErrors(bean: registerCommand, field: 'username', 'has-error')}">
 						<label for="username">Username <span  class="required-indicator">*</span></label>
