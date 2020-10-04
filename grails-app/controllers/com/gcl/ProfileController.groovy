@@ -1,4 +1,7 @@
 package com.gcl
+
+import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugin.springsecurity.SpringSecurityUtils
@@ -10,6 +13,7 @@ class ProfileController {
 
     def springSecurityService
     def houseMonthService
+    ProfileService profileService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     static scaffold=Profile
 
@@ -17,20 +21,22 @@ class ProfileController {
     def index(Integer max) {
         if(SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
             params.max = Math.min(max ?: 10, 100)
-            respond Profile.list(params), model:[profileCount: Profile.count()]
+            respond profileService.list(params), model:[profileCount: profileService.count()]
         } else {
             redirect(action:"show")
         }
     }
 
     @Secured(["ROLE_BOARDMEMBER","ROLE_USER","ROLE_ADMIN"])
-    def show(Profile profileInstance) {
-
-        if (!profileInstance) {
+    def show(Long id) {
+        Profile profileInstance
+        if (!id) {
             profileInstance = Profile.findByUser(springSecurityService.currentUser)
+        } else {
+            profileInstance =  profileService.get(id)
         }
 
-        if(!profileInstance) {
+        if(!profileInstance ) {
             redirect(action:"create")
         } else {
             def getFirstPayment
@@ -79,33 +85,30 @@ class ProfileController {
         }
     }
 
-
     @Secured(["permitAll"])
-    def save(Profile profileInstance) {
-        if (profileInstance == null) {
+    def save(Profile profile) {
+        if (profile == null) {
             notFound()
             return
         }
 
-        if (profileInstance.hasErrors()) {
-            respond profileInstance.errors, view:'create', model:[user: springSecurityService.currentUser]
+        try {
+            def email = params.email
+            profile.user.email = email
+            profileService.save(profile)
+        } catch (ValidationException e) {
+            respond profile.errors, view:'create'
             return
         }
 
-        def email = params.email
-        profileInstance.user.email = email
-
-        profileInstance.save flush:true
-
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'profile.label', default: 'Profile'), profileInstance.id])
-                redirect profileInstance
+                flash.message = message(code: 'default.created.message', args: [message(code: 'profile.label', default: 'Profile'), profile.id])
+                redirect profile
             }
-            '*' { respond profileInstance, [status: CREATED] }
+            '*' { respond profile, [status: CREATED] }
         }
     }
-
 
     @Secured(["permitAll"])
     def edit(Profile profileInstance) {
@@ -162,40 +165,48 @@ class ProfileController {
         }
     }
 
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'profile.label', default: 'Profile'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
+    }
 
     @Secured(["permitAll"])
-    def update(Profile profileInstance) {
-        if (profileInstance == null) {
+    def update(Profile profile) {
+        if (profile == null) {
             notFound()
             return
         }
         if(!SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER")) {
             //make sure this is my profile
             def tmpprofileInstance = Profile.findByUser(springSecurityService.currentUser)
-            if(tmpprofileInstance.id != profileInstance.id) {
+            if(tmpprofileInstance.id != profile.id) {
                 redirect action: "edit"
             }
         }
-
-        def email = params.email
-        profileInstance.user.email = email
-
-
-        if (profileInstance.hasErrors()) {
-            respond profileInstance.errors, view:'edit', model:[user: springSecurityService.currentUser,hl:House.list()]
+        try {
+            def email = params.email
+            profile.user.email = email
+            profileService.save(profile)
+        } catch (ValidationException e) {
+            respond profile.errors, view:'edit'
+            return
+        } catch (Exception e) {
+            flash.error = "Not Saved ${e.getMessage()}"
+            redirect action: "edit"
             return
         }
 
-
-
-        profileInstance.save flush:true
-
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Profile.label', default: 'Profile'), profileInstance.id])
-                redirect profileInstance
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'profile.label', default: 'Profile'), profile.id])
+                redirect profile
             }
-            '*'{ respond profileInstance, [status: OK] }
+            '*'{ respond profile, [status: OK] }
         }
     }
 

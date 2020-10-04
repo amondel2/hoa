@@ -1,7 +1,10 @@
 package com.gcl
 
+import grails.gorm.transactions.Transactional
+
 import java.math.RoundingMode;
 
+@Transactional
 class HouseMonthService {
 
     def getHouseMonthByHouseId(hid){
@@ -55,16 +58,20 @@ class HouseMonthService {
     }
 
     def getFirstPaymentYear(hid) {
-        ( HouseMonth.withCriteria{
-            'in'( 'house', House.withCriteria {
-                eq('id',hid)
+        (HouseMonth.withCriteria {
+            'in'('house', House.withCriteria {
+                eq('id', hid)
             })
 
-                'in'( 'months', DueMonths.withCriteria {
-                    order "startDate", "ASC"
-                })
-                maxResults 1
-                firstResult 0
-            }?.get(0)?.months?.startDate?.getYear() ?: 100) + 1900
+            'in'('months', DueMonths.withCriteria {
+                order "startDate", "ASC"
+            })
+            maxResults 1
+            firstResult 0
+        }?.get(0)?.months?.startDate?.getYear() ?: 100) + 1900
+    }
+
+    Boolean saveProfile(Profile profileInstance) {
+        return profileInstance.save(flush:true)
     }
 }
