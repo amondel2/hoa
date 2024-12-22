@@ -2,6 +2,7 @@ Thumbs.db
 .DS_Store
 .gradle
 build/
+target/
 out/
 .idea
 *.iml
@@ -11,3 +12,4 @@ out/
 .settings
 .classpath
 .asscache
+.factorypath

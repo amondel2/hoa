@@ -1,8 +1,9 @@
 package com.gcl
 
 import grails.gorm.services.Service
+import grails.gorm.transactions.Transactional
 
-@Service(Profile)
+@Transactional
 class ProfileService {
 
     Profile get(Serializable id) {
@@ -10,7 +11,7 @@ class ProfileService {
     }
 
     List<Profile> list(Map args) {
-        Profile.last(args)
+        Profile.list(args)
     }
 
     Long count() {
@@ -22,7 +23,7 @@ class ProfileService {
     }
 
     Profile save(Profile profile) {
-        profile.save(flush:true)
+        profile.save(flush:true,failonError:true)
     }
 
 }

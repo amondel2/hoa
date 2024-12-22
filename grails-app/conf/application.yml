@@ -1,58 +1,8 @@
----
-grails:
-    profile: web
-    codegen:
-        defaultPackage: hoa
-    gorm:
-        reactor:
-            # Whether to translate GORM events into Reactor events
-            # Disabled by default for performance reasons
-            events: false
 info:
     app:
         name: '@info.app.name@'
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
-spring:
-    jmx:
-        unique-names: true
-    main:
-        banner-mode: "off"
-    groovy:
-        template:
-            check-template-location: false
-    devtools:
-        restart:
-            additional-exclude:
-                - '*.gsp'
-                - '**/*.gsp'
-                - '*.gson'
-                - '**/*.gson'
-                - 'logback.groovy'
-                - '*.properties'
-management:
-    endpoints:
-        enabled-by-default: false
-upload:
-    directory:
-
-environments:
-    production:
-        upload:
-            directory: /opt/tomcat/uploads/
-javamelody:
-    # Enable JavaMelody auto-configuration (optional, default: true)
-    enabled: true
-    # Data source names to exclude from monitoring (optional, comma-separated)
-    #excluded-datasources: secretSource,topSecretSource
-    # Enable monitoring of Spring services and controllers (optional, default: true)
-    spring-monitoring-enabled: true
-    # Initialization parameters for JavaMelody (optional)
-    # See: https://github.com/javamelody/javamelody/wiki/UserGuide#6-optional-parameters
-    init-parameters:
-        # log http requests:
-        log: true
----
 grails:
     mime:
         disable:
@@ -70,32 +20,23 @@ grails:
             csv: text/csv
             form: application/x-www-form-urlencoded
             html:
-              - text/html
-              - application/xhtml+xml
+                - text/html
+                - application/xhtml+xml
             js: text/javascript
             json:
-              - application/json
-              - text/json
+                - application/json
+                - text/json
             multipartForm: multipart/form-data
             pdf: application/pdf
             rss: application/rss+xml
             text: text/plain
             hal:
-              - application/hal+json
-              - application/hal+xml
+                - application/hal+json
+                - application/hal+xml
             xml:
-              - text/xml
-              - application/xml
-    urlmapping:
-        cache:
-            maxsize: 1000
-    controllers:
-        defaultScope: singleton
-    converters:
-        encoding: UTF-8
+                - text/xml
+                - application/xml
     views:
-        default:
-            codec: html
         gsp:
             encoding: UTF-8
             htmlcodec: xml
@@ -104,24 +45,83 @@ grails:
                 scriptlet: html
                 taglib: none
                 staticparts: none
+        default:
+            codec: html
+    codegen:
+        defaultPackage: com.gcl
+    profile: web
+    plugin:
+        databasemigration:
+            updateOnStart: true
+            updateOnStartFileName: changelog.groovy
 management:
     endpoints:
-        jmx:
-            unique-names: true
+        enabled-by-default: false
+upload:
+    directory:
+defaults:
+    adminUser: ${ADMIN_USER:aaron}
+    adminPassword: ${ADMIN_PASSWORD:test@me12345}
+    adminEmail: ${ADMIN_PASSWORD:amondel2@test.com}
+dataSource:
+    driverClassName: org.mariadb.jdbc.Driver
+    dialect: org.hibernate.dialect.MariaDBDialect
+    username: ${DB_USER}
+    password:  ${DB_PASSWORD}
+    pooled: true
+    jmxExport: true
+environments:
+    development:
+        dataSource:
+            dbCreate: none
+            url: ${JDBC_CONNECTION_STRING}
+    production:
+        dataSource:
+            dbCreate: none
+            url: ${JDBC_CONNECTION_STRING}
+            properties:
+                jmxEnabled: true
+                initialSize: 5
+                maxActive: 50
+                minIdle: 5
+                maxIdle: 25
+                maxWait: 10000
+                maxAge: 600000
+                timeBetweenEvictionRunsMillis: 5000
+                minEvictableIdleTimeMillis: 60000
+                validationQuery: SELECT 1
+                validationQueryTimeout: 3
+                validationInterval: 15000
+                testOnBorrow: true
+                testWhileIdle: true
+                testOnReturn: false
+                jdbcInterceptors: ConnectionState
+                defaultTransactionIsolation: 2
+        upload:
+            directory: /opt/tomcat/uploads/
+    test:
+        dataSource:
+            username: sa
+            password: ''
+            dbCreate: create-drop
+            driverClassName: org.h2.Driver
+            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+javamelody:
+    # Enable JavaMelody auto-configuration (optional, default: true)
+    enabled: true
+    # Data source names to exclude from monitoring (optional, comma-separated)
+    #excluded-datasources: secretSource,topSecretSource
+    # Enable monitoring of Spring services and controllers (optional, default: true)
+    spring-monitoring-enabled: true
+    authorized-users: user1:pwd1
+    # Initialization parameters for JavaMelody (optional)
+    # See: https://github.com/javamelody/javamelody/wiki/UserGuide#6-optional-parameters
+    init-parameters:
+        # log http requests:
+        log: true
 
----
 hibernate:
-    allow_update_outside_transaction: true
     cache:
         queries: false
         use_second_level_cache: false
         use_query_cache: false
-        region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
-
-javamelody:
-    authorized-users: user1:pwd1
-
-environments:
-    test:
-        dataSource:
-            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE

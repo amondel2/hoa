@@ -3,7 +3,6 @@ package com.gcl
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
-import org.apache.commons.codec.binary.Base64
 
 @Singleton
 class SimpleStringHiding implements Serializable {
@@ -19,7 +18,7 @@ class SimpleStringHiding implements Serializable {
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
             byte[] encrypted = cipher.doFinal(value.getBytes());
-            return Base64.encodeBase64String(encrypted);
+            return Base64.encoder.encode(encrypted).toString();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -33,7 +32,7 @@ class SimpleStringHiding implements Serializable {
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-            byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
+            byte[] original = cipher.doFinal(Base64.decoder.decode(encrypted));
 
             return new String(original);
         } catch (Exception ex) {

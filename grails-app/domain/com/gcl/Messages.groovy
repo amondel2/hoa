@@ -11,6 +11,10 @@ class Messages implements Serializable  {
     static constraints = {
 		expireDate validator: { val, obj -> val?.after(new Date()) }
     }
+
+	static mapping = {
+		version false
+	}
 	
 	Long id
 	Long orderNumber

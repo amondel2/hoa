@@ -16,6 +16,10 @@ class Fee implements Serializable {
 
 	static belongsTo = [house: House]
 
+	static mapping = {
+		version false
+	}
+
 	static constraints = {
 		amount min: new BigDecimal(0)
 		paidDate nullable: true, blank: true

@@ -9,6 +9,10 @@ class HouseCar implements Serializable {
         licensePlate unquie:true,nullable: false, blank: false
     }
 
+    static mapping = {
+        version false
+    }
+
     static belongsTo = [house:House]
     static hasMany = [parkingSpotReservations:ParkingSpotReservation]
 

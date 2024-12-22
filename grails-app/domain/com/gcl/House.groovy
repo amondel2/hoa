@@ -14,6 +14,10 @@ class House implements Serializable {
 		zip2 nullable:true,min:1000,max:9999
 		type nullable:false
     }
+
+	static mapping = {
+		version false
+	}
 	
 	static hasMany=[fees:Fee,profiles:Profile,cars:HouseCar,houseMonths:HouseMonth]
 

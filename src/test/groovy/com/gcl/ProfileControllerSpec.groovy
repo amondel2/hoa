@@ -32,11 +32,17 @@ class ProfileControllerSpec extends Specification implements ControllerUnitTest<
 
 
     void "test show stuff"() {
+        setup:
+        controller.profileService = Mock(ProfileService) {
+            count() >> 0
+            list(_) >> []
+
+        }
         when:"The message action is invoked"
         SpringSecurityUtils.metaClass.'static'.ifAnyGranted = { String role ->
             return true
         }
-        controller.index()
+        controller.index(10)
 
         then:"Goto to SHOWd"
         model.profileCount == 0

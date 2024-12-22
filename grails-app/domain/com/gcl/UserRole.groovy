@@ -7,7 +7,7 @@ import org.codehaus.groovy.util.HashCodeHelper
 import grails.compiler.GrailsCompileStatic
 
 @GrailsCompileStatic
-@ToString(cache=true, includeNames=true, includePackage=false)
+@ToString(includeNames=true, includePackage=false)
 class UserRole implements Serializable {
 
 	private static final long serialVersionUID = 1
@@ -35,11 +35,11 @@ class UserRole implements Serializable {
 	}
 
 	static UserRole get(long userId, long roleId) {
-		criteriaFor(userId, roleId).get()
+		criteriaFor(userId, roleId).get() as UserRole
 	}
 
 	static boolean exists(long userId, long roleId) {
-		criteriaFor(userId, roleId).count()
+		criteriaFor(userId, roleId).count() > 0
 	}
 
 	private static DetachedCriteria criteriaFor(long userId, long roleId) {
@@ -50,7 +50,7 @@ class UserRole implements Serializable {
 	}
 
 	static UserRole create(User user, Role role, boolean flush = false) {
-		def instance = new UserRole(user: user, role: role)
+		UserRole instance = new UserRole(user: user, role: role)
 		instance.save(flush: flush)
 		instance
 	}

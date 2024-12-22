@@ -4,7 +4,11 @@
         <meta name="layout" content="basic" />
         <g:set var="entityName" value="${message(code: 'meetingMinutes.label', default: 'MeetingMinutes')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
-        <ckeditor:resources/>
+        		<script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+<link
+  href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
+  rel="stylesheet"
+/>
     </head>
     <body>
         <div class="nav" role="navigation">
@@ -25,19 +29,52 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.meetingMinutes}" method="PUT">
+            <g:form name="mtgMinsFrm" resource="${this.meetingMinutes}" method="PUT">
                 <g:hiddenField name="version" value="${this.meetingMinutes?.version}" />
                  <fieldset class="form">
                      <g:datePicker name="meetDate" value="${this.meetingMinutes?.meetDate}" precision="day"
                                    relativeYears="[-1..1]"/>
-                     <ckeditor:editor name="minutes" height="400px" width="80%">
-                        ${this.meetingMinutes?.minutes}
-                    </ckeditor:editor>
+                     <div id="minutesEdit" name="minutesEdit" height="400px" width="80%">${raw(this.meetingMinutes?.minutes)}</div>
+                    <textarea id="minutes" name="minutes" class="ui-helper-hidden"></textarea>
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                 </fieldset>
             </g:form>
         </div>
+                <script>
+                const toolbarOptions = [
+                  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                  ['blockquote', 'code-block'],
+                  ['link', 'formula'],
+
+                  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                  [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+                  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+                  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+                  [{ 'direction': 'rtl' }],                         // text direction
+
+                  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+                  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                  [{ 'font': [] }],
+                  [{ 'align': [] }],
+                ];
+
+         const quill = new Quill("#minutesEdit", {
+          modules: {
+             toolbar: toolbarOptions
+           },
+            theme: "snow",
+          });
+
+          $('#mtgMinsFrm').on('submit', function() {
+
+              $("#minutes").val(quill.getSemanticHTML());
+              return true;
+          });
+
+                </script>
     </body>
 </html>

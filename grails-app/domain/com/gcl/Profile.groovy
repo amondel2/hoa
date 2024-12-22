@@ -50,7 +50,7 @@ class Profile implements Serializable {
     }
 
 	static mapping = {
-		id column: 'id'
+		version false
 	}
 
 	String toString() {

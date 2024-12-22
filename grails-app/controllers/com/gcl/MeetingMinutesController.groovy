@@ -31,8 +31,8 @@ class MeetingMinutesController {
             meetmins = MeetingMinutes.last(sort : "meetDate")
             curr = totalEntries
         }
-        meetminDate = meetmins.meetDate
-        meetminText = meetmins.minutes
-        render(view:"archive",model:[meetmins:meetminText,meetminDate:meetminDate,mid:meetmins.id,totalEntries:totalEntries,curr:curr])
+        meetminDate = meetmins?.meetDate
+        meetminText = meetmins?.minutes
+        render(view:"archive",model:[meetmins:meetminText,meetminDate:meetminDate,mid:meetmins?.id,totalEntries:totalEntries,curr:curr])
     }
 }

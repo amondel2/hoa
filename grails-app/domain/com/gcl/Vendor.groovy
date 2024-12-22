@@ -21,6 +21,10 @@ class Vendor implements Serializable {
 		accountNumber nullable: true
 	}
 
+	static mapping = {
+		version false
+	}
+
 	static hasMany = [vendorsFin: VendorFin]
 
 	String name

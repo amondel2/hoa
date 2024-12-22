@@ -12,6 +12,10 @@ class VendorFin implements Serializable {
 		paidDate nullable: true
 	}
 
+	static mapping = {
+		version false
+	}
+
 	static belongsTo = [vendor: Vendor]
 
 	Vendor vendor

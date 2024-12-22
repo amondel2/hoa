@@ -22,6 +22,10 @@ class DueMonths implements Serializable {
 		amount min: new BigDecimal(0)
 	
     }
+	static mapping = {
+		version false
+	}
+
 	
 	BigDecimal amount
 	Date startDate

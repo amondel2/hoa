@@ -17,6 +17,10 @@ class Bank implements Serializable {
 		return false
 	}
 
+	static mapping = {
+		version false
+	}
+
 	@Override
 	String toString() {
 		return this.name

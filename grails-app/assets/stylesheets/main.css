@@ -112,6 +112,15 @@ img {
     zoom: 1;
 }
 
+.starter-template {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.scaffold-create, .scaffold-edit {
+    text-align: left;
+}
+
 .starter-template .nav li{
     float: left;
 }
@@ -131,6 +140,12 @@ img {
     -moz-border-radius: 0.3em;
     -webkit-border-radius: 0.3em;
     border-radius: 0.3em;
+}
+
+.nav li.dropdown-item a {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 .nav a:active, .nav a:visited {
@@ -168,7 +183,9 @@ img {
     background-image: url(../images/skin/database_add.png);
 }
 
-
+.nav li.dropdown.show ul.dropdown-menu {
+    background-color: #424649;
+}
 
 /* CREATE/EDIT FORMS AND SHOW PAGES */
 

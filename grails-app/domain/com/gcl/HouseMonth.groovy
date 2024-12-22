@@ -55,6 +55,8 @@ class HouseMonth implements Serializable {
 		}
 	}
 
+
+
 	static HouseMonth create(House house, DueMonths month, boolean flush = false) {
 		def instance = new HouseMonth(house,month)
 		instance.save(flush: flush, insert: true, failOnError:true)

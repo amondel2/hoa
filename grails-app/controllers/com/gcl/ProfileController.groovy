@@ -1,5 +1,6 @@
 package com.gcl
 
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.validation.ValidationException
 
 import static org.springframework.http.HttpStatus.*
@@ -11,8 +12,8 @@ import java.util.UUID
 @Secured(["ROLE_USER"])
 class ProfileController {
 
-    def springSecurityService
-    def houseMonthService
+    SpringSecurityService springSecurityService
+    HouseMonthService houseMonthService
     ProfileService profileService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     static scaffold=Profile
@@ -98,6 +99,9 @@ class ProfileController {
             profileService.save(profile)
         } catch (ValidationException e) {
             respond profile.errors, view:'create'
+            return
+        } catch(Exception e) {
+            respond [:], view:'create'
             return
         }
 
