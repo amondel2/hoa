@@ -18,7 +18,8 @@ class SimpleStringHiding implements Serializable {
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
             byte[] encrypted = cipher.doFinal(value.getBytes());
-            return Base64.encoder.encode(encrypted).toString();
+            return Base64.getEncoder().encodeToString(encrypted)
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -32,7 +33,8 @@ class SimpleStringHiding implements Serializable {
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-            byte[] original = cipher.doFinal(Base64.decoder.decode(encrypted));
+            byte[] enc =  Base64.getDecoder().decode(encrypted)
+            byte[] original = cipher.doFinal(enc);
 
             return new String(original);
         } catch (Exception ex) {

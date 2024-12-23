@@ -1,5 +1,6 @@
 package com.gcl
 
+import grails.core.GrailsApplication
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.validation.ValidationException
 
@@ -9,7 +10,7 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.converters.JSON
 import java.util.UUID
 
-@Secured(["ROLE_USER"])
+@Secured("ROLE_USER")
 class ProfileController {
 
     SpringSecurityService springSecurityService
@@ -17,6 +18,8 @@ class ProfileController {
     ProfileService profileService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     static scaffold=Profile
+
+    GrailsApplication grailsApplication
 
     @Secured(["permitAll"])
     def index(Integer max) {
@@ -28,14 +31,15 @@ class ProfileController {
         }
     }
 
-    @Secured(["ROLE_BOARDMEMBER","ROLE_USER","ROLE_ADMIN"])
+    @Secured("ROLE_USER")
     def show(Long id) {
         Profile profileInstance
-        if (!id) {
+        if (!SpringSecurityUtils.ifAnyGranted("ROLE_BOARDMEMBER") || !id) {
             profileInstance = Profile.findByUser(springSecurityService.currentUser)
         } else {
             profileInstance =  profileService.get(id)
         }
+
 
         if(!profileInstance ) {
             redirect(action:"create")
@@ -61,18 +65,19 @@ class ProfileController {
     }
 
 
-    @Secured(['ROLE_BOARDMEMBER'])
+    @Secured('ROLE_BOARDMEMBER')
     def createFromUser() {
         Profile p = new Profile()
         def rtn = []
         try{
+            SimpleStringHiding sh = SimpleStringHiding.getInstance()
             p.user = User.load(params.uid)
             p.firstName =  p.user.username
             p.lastName = "ChangeME"
             p.question1 = "What is the  number (Please change me)"
-            p.answer1 = UUID.randomUUID().toString().replaceAll("-", "");
+            p.answer1 = sh.encrypt(UUID.randomUUID().toString().replaceAll("-", ""),grailsApplication.config.getProperty('encyptKey'))
             p.question2 =  "What is the letters (Please change me)"
-            p.answer2 = UUID.randomUUID().toString().replaceAll("-", "");
+            p.answer2 = sh.encrypt(UUID.randomUUID().toString().replaceAll("-", ""),grailsApplication.config.getProperty('encyptKey'))
             if (!p.validate()) {
                 thorw new Exception(p.errors.join(" "))
             }
@@ -96,6 +101,14 @@ class ProfileController {
         try {
             def email = params.email
             profile.user.email = email
+
+            if (!profile.validate()) {
+                render(view: "create", model: [profile:profile,user: springSecurityService.currentUser,hl:House.list()])
+                return
+            }
+            SimpleStringHiding sh = SimpleStringHiding.getInstance()
+            profile.answer1 = sh.encrypt(profile.answer1,grailsApplication.config.getProperty('encyptKey'))
+            profile.answer2 = sh.encrypt(profile.answer2,grailsApplication.config.getProperty('encyptKey'))
             profileService.save(profile)
         } catch (ValidationException e) {
             respond profile.errors, view:'create'
@@ -106,9 +119,12 @@ class ProfileController {
         }
 
         request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'profile.label', default: 'Profile'), profile.id])
-                redirect profile
+            if(profile.id) {
+                form multipartForm {
+                    flash.message = message(code: 'default.created.message',
+                                            args: [message(code: 'profile.label', default: 'Profile'), profile.id])
+                    redirect profile
+                }
             }
             '*' { respond profile, [status: CREATED] }
         }
@@ -124,12 +140,15 @@ class ProfileController {
             //prevent other users from modifing profiles they don't have access to
             profileInstance = Profile.findByUser(springSecurityService.currentUser)
         }
+        SimpleStringHiding sh = SimpleStringHiding.getInstance()
+        profileInstance.answer1 = sh.decrypt(profileInstance.answer1,grailsApplication.config.getProperty('encyptKey'))
+        profileInstance.answer2 = sh.decrypt(profileInstance.answer2,grailsApplication.config.getProperty('encyptKey'))
         respond profileInstance, model:[user: springSecurityService.currentUser,hl:House.list()]
     }
 
 
 
-    @Secured(["ROLE_BOARDMEMBER","ROLE_ADMIN","ROLE_USER"])
+    @Secured("ROLE_USER")
     def readOnlyHoaPayments(){
 
         def year
@@ -195,6 +214,13 @@ class ProfileController {
         try {
             def email = params.email
             profile.user.email = email
+            if (!profile.validate()) {
+                render(view: "edit", model: [profile:profile,user: springSecurityService.currentUser,hl:House.list()])
+                return
+            }
+            SimpleStringHiding sh = SimpleStringHiding.getInstance()
+            profile.answer1 = sh.encrypt(profile.answer1,grailsApplication.config.getProperty('encyptKey'))
+            profile.answer2 = sh.encrypt(profile.answer2,grailsApplication.config.getProperty('encyptKey'))
             profileService.save(profile)
         } catch (ValidationException e) {
             respond profile.errors, view:'edit'

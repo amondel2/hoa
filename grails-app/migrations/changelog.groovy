@@ -389,11 +389,14 @@ databaseChangeLog = {
     }
     changeSet(author: "aaron (generated)", id: "1734834606748-24") {
         createTable(tableName: "user_role") {
-            column(name: "user_id", type: "BIGINT") {
+            column(autoIncrement: "true", name: "id", type: "BIGINT") {
                 constraints(nullable: "false", primaryKey: "true")
             }
+            column(name: "user_id", type: "BIGINT") {
+                constraints(nullable: "false")
+            }
             column(name: "role_id", type: "BIGINT") {
-                constraints(nullable: "false", primaryKey: "true")
+                constraints(nullable: "false")
             }
         }
     }

@@ -30,3 +30,8 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		[pattern: '/**/favicon.ico', filters: 'none'],
 		[pattern: '/**',             filters: 'JOINED_FILTERS']
 ]
+
+grails.plugin.springsecurity.roleHierarchy= '''
+	ROLE_ADMIN > ROLE_BOARDMEMBER
+	ROLE_BOARDMEMBER > ROLE_USER
+'''

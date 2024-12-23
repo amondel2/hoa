@@ -133,7 +133,6 @@ class FinancialController {
             def dm = DueMonths.findById(params.long('dmId'))
             def hm = HouseMonth.create(h, dm,true)
             def c = grailsApplication.mainContext.getBean('com.gcl.ExtendTagsTagLib')
-//            def c = ApplicationHolder.application.mainContext.getBean('com.gcl.ExtendTagsTagLib')
             def hmCal = new GregorianCalendar().getInstance()
             hmCal.setTime(dm.startDate)
             def output = c.renderMonthlyBox(year:hmCal.get(hmCal.YEAR),month:hmCal.get(hmCal.MONTH),hm:h)

@@ -1,6 +1,7 @@
 package com.gcl
 
 import grails.config.Config
+import grails.core.GrailsApplication
 import grails.core.support.GrailsConfigurationAware
 import grails.plugin.springsecurity.SpringSecurityService;
 
@@ -13,9 +14,11 @@ import org.springframework.beans.factory.InitializingBean
 
 class RegisterController implements GrailsConfigurationAware, InitializingBean {
 
-	def registrationService
-	def springSecurityService
+	RegistrationService registrationService
+	SpringSecurityService springSecurityService
 	String serverURL
+
+	GrailsApplication grailsApplication
 
 	static defaultAction = 'register'
 
@@ -26,16 +29,20 @@ class RegisterController implements GrailsConfigurationAware, InitializingBean {
 		}
 		withForm {
 			if (registerCommand.hasErrors()) {
-				redirect(controller: "register", action: "register", params: [ registerCommand : registerCommand])
+				render(view:"register",model: [registerCommand: registerCommand])
 				return
 			}
 
 			User user =  registrationService.createUser(registerCommand)
+			flash.message = "User Created. Please login!"
+			redirect(controller: "login", action: "auth")
+			return
 		}.invalidToken {
 			flash.message = "Invalid Form Submission"
 			redirect(controller: "login", action: "auth")
+			return
 		}
-		redirect(controller: "register", action: "register")
+		return [registerCommand: new RegisterCommand()]
 	}
 
 	def forgotPassword(ForgotPasswordCommand forgotPasswordCommand) {
@@ -163,7 +170,9 @@ class RegisterController implements GrailsConfigurationAware, InitializingBean {
 			try{
 			def pid = params.pid
 			 p = Profile.get(pid)
-			 qa = [p?.answer1,p?.answer2]
+				SimpleStringHiding sh = SimpleStringHiding.getInstance()
+
+			 qa = [sh.decrypt(p?.answer1,grailsApplication.config.getProperty('encyptKey')),sh.decrypt(p?.answer2,grailsApplication.config.getProperty('encyptKey'))]
 			} catch (Exception e) {
 				flash.message = "Profile Not Completed..Please contact the Site Admin for help"
 				redirect(controller: "login", action: "auth")
