@@ -2,6 +2,7 @@ package com.gcl
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 import org.hibernate.FetchMode
+import org.springframework.security.access.prepost.PreAuthorize
 
 @Secured(['permitAll'])
 class HomeController {
@@ -22,6 +23,11 @@ class HomeController {
 			meetmins = meetmins?.minutes
 		}
 		render(view:"index",model:[param:params,messages:messages,meetmins:meetmins,meetminDate:meetdate])
+	}
+
+	@Secured("isAuthenticated()")
+	def contact() {
+		render(view: "contact")
 	}
 
 	@Secured(['ROLE_USER'])
