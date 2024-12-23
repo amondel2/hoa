@@ -11,13 +11,6 @@
             <strong> E-mail</strong>
             <p><a href="mailto:gwyneddchaselansdale@gmail.com">gwyneddchaselansdale@gmail.com</a></p>
         </div>
-        <div>
-            <strong>Mail</strong>
-            <p>Gywneed Chase Planned Community</p>
-            <p>PO Box 73</p>
-            <p>1741 VALLEY FORGE RD</p>
-            <p>WORCESTER, PA 19490 </p>
-        </div>
     </p>
     <g:if test="${param?.autologout}">
         <script type="text/javascript">
